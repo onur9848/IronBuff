@@ -12,8 +12,16 @@
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_login_default.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_login.xml" value="0.24010416666666667" />
-        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_main.xml" value="0.20599409033347404" />
-        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_splash.xml" value="0.3793103448275862" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_main_menu.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/activity_splash.xml" value="0.2" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/bottom_navigation_menu.xml" value="0.20778110303548525" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/drawer_layout.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_forget_password.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_login.xml" value="0.16" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_signup.xml" value="0.2" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/header_navigationview.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

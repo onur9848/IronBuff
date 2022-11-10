@@ -5,57 +5,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".activity.LoginActivity">
 
-    <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tema Uygulaması"
-            android:textSize="20sp"
-            android:layout_marginTop="64dp" app:layout_constraintStart_toEndOf="@+id/analogClock1"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="62dp"
-            app:layout_constraintBottom_toTopOf="@+id/button1" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="28dp"/>
-    <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView1"
-            android:text="Button"
-            app:layout_constraintTop_toBottomOf="@+id/textView1" android:layout_marginEnd="68dp"
-            android:layout_marginBottom="201dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/datePicker1"/>
-    <DatePicker
-            android:id="@+id/datePicker1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_alignLeft="@+id/button1"
-            android:layout_below="@+id/button1"
-            app:layout_constraintTop_toBottomOf="@+id/button1" android:layout_marginBottom="28dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="16dp" android:layout_marginEnd="16dp"/>
-    <AnalogClock
-            android:id="@+id/analogClock1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/datePicker1"
-            android:layout_marginTop="33dp"
-            app:layout_constraintEnd_toStartOf="@+id/textView1" android:layout_marginBottom="55dp"
-            app:layout_constraintBottom_toTopOf="@+id/switch1" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="1dp" android:layout_marginEnd="35dp"/>
-    <Switch
-            android:text="Switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/switch1"
-            app:layout_constraintTop_toBottomOf="@+id/analogClock1"
-            android:layout_marginBottom="406dp" app:layout_constraintEnd_toEndOf="@+id/button1"
-            app:layout_constraintStart_toStartOf="@+id/datePicker1"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="119dp"
-            android:layout_marginEnd="120dp"/>
+    <androidx.fragment.app.FragmentContainerView
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="409dp"
+            android:layout_height="808dp" app:navGraph="@navigation/login_graph" app:defaultNavHost="true"
+            tools:layout_editor_absoluteY="1dp" tools:layout_editor_absoluteX="1dp"
+            android:id="@+id/fragmentContainerView" tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
