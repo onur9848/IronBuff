@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_nav_graph"
+            app:startDestination="@id/mainMenuFragment">
+
+    <fragment android:id="@+id/mainMenuFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.MainMenuFragment"
+              android:label="@string/main_menu"
+              tools:layout="@layout/fragment_main_menu"/>
+
+    <fragment android:id="@+id/messageFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.MessageFragment"
+              android:label="@string/message"
+              tools:layout="@layout/fragment_message"/>
+
+    <fragment android:id="@+id/myProfileFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.MyProfileFragment"
+              android:label="@string/my_profile" tools:layout="@layout/fragment_my_profile"/>
+
+    <fragment android:id="@+id/trainingProgramFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.TrainingProgramFragment"
+              android:label="@string/training_program" tools:layout="@layout/fragment_training_program"/>
+
+    <fragment android:id="@+id/settingsFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.SettingsFragment"
+              android:label="@string/settings" tools:layout="@layout/fragment_settings"/>
+</navigation>

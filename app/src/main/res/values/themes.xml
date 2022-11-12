@@ -14,7 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="HiddenTitleThema" parent="Theme.IronBuff">
-        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+    <style name="Theme.MyApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
 </resources>

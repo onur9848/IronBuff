@@ -5,16 +5,30 @@
         tools:showIn="navigation_view"
 >
     <group
-            android:id="@+id/group1"
             android:checkableBehavior="single"
     >
         <item
-                android:id="@+id/page_1"
+                android:id="@+id/myProfileFragment"
                 android:icon="@drawable/logo"
-                android:title="birinci item"/>
+                android:title="@string/my_profile"/>
         <item
-                android:id="@+id/page_2"
+                android:id="@+id/mainMenuFragment"
                 android:icon="@drawable/logo"
-                android:title="ikinci item"/>
+                android:title="@string/main_menu"/>
+        <item
+                android:id="@+id/trainingProgramFragment"
+                android:icon="@drawable/logo"
+                android:title="@string/training_program"/>
+        <item
+                android:id="@+id/messageFragment"
+                android:icon="@drawable/logo"
+                android:title="@string/message"/>
+        <item
+                android:id="@+id/settingsFragment"
+                android:icon="@drawable/logo"
+                android:title="@string/settings"/>
+
+
     </group>
+
 </menu>

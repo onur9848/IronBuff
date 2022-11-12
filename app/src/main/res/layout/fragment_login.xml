@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:background="@drawable/bg_default"
-        tools:context=".fragment.LoginFragment">
+        tools:context=".loginFragment.LoginFragment">
     <RelativeLayout
             android:layout_margin="20dp"
             android:layout_width="wrap_content"
@@ -77,6 +77,7 @@
                             android:background="@drawable/et_bg"
                             android:fontFamily="sans-serif-light"
                             android:paddingLeft="15dp"
+                            android:textColor="@color/white"
                             android:paddingRight="15dp"
                             android:singleLine="true"
                             android:textSize="15sp"/>
@@ -107,6 +108,7 @@
                             android:background="@drawable/et_bg"
                             android:fontFamily="sans-serif-light"
                             android:singleLine="true"
+                            android:textColor="@color/white"
                             android:inputType="textPassword"
                             android:paddingLeft="15dp"
                             android:paddingRight="15dp"

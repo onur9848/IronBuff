@@ -4,13 +4,13 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/login_graph"
             app:startDestination="@id/loginFragment2">
 
-    <fragment android:id="@+id/loginFragment2" android:name="com.senerunosoft.ironbuff.fragment.LoginFragment"
+    <fragment android:id="@+id/loginFragment2" android:name="com.senerunosoft.ironbuff.loginFragment.LoginFragment"
               android:label="fragment_login" tools:layout="@layout/fragment_login">
         <action android:id="@+id/goto_forgetpassword" app:destination="@id/forgetPasswordFragment2"/>
         <action android:id="@+id/goto_signup" app:destination="@id/signupFragment"/>
     </fragment>
-    <fragment android:id="@+id/forgetPasswordFragment2" android:name="com.senerunosoft.ironbuff.fragment.ForgetPasswordFragment"
+    <fragment android:id="@+id/forgetPasswordFragment2" android:name="com.senerunosoft.ironbuff.loginFragment.ForgetPasswordFragment"
               android:label="fragment_forget_password" tools:layout="@layout/fragment_forget_password"/>
-    <fragment android:id="@+id/signupFragment" android:name="com.senerunosoft.ironbuff.fragment.SignupFragment"
+    <fragment android:id="@+id/signupFragment" android:name="com.senerunosoft.ironbuff.loginFragment.SignupFragment"
               android:label="fragment_signup" tools:layout="@layout/fragment_signup"/>
 </navigation>
