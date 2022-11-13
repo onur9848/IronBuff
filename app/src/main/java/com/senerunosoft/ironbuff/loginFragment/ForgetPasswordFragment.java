@@ -14,40 +14,40 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.senerunosoft.ironbuff.R;
+import com.senerunosoft.ironbuff.databinding.FragmentForgetPasswordBinding;
 import org.jetbrains.annotations.NotNull;
 
 
 public class ForgetPasswordFragment extends Fragment {
 
-
-    EditText email_edittext;
-    Button send_mail;
+    FragmentForgetPasswordBinding binding;
     FirebaseAuth auth;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forget_password, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentForgetPasswordBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        email_edittext = view.findViewById(R.id.forget_password_email);
-        send_mail = view.findViewById(R.id.forget_password_sendemail);
         auth = FirebaseAuth.getInstance();
-
         buttonprocess();
+    }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void buttonprocess() {
-        send_mail.setOnClickListener(new View.OnClickListener() {
+        binding.forgetPasswordSendemail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = email_edittext.getText().toString();
+                String email = binding.forgetPasswordEmail.getText().toString();
                 if (email.isEmpty()) {
                     Toast.makeText(getContext(), "E-mail Adresinizi Giriniz", Toast.LENGTH_SHORT).show();
                 } else {
@@ -62,8 +62,6 @@ public class ForgetPasswordFragment extends Fragment {
                             Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
-
                 }
             }
         });
