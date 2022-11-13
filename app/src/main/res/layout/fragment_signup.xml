@@ -12,9 +12,9 @@
             android:animateLayoutChanges="true"
             tools:context=".activity.SplashActivity">
         <RelativeLayout
-                android:layout_margin="40dp"
+                android:layout_margin="40sp"
                 android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
+
                 android:gravity="center"
                 android:layout_height="wrap_content">
             <LinearLayout android:layout_width="match_parent"
@@ -162,6 +162,94 @@
                                 android:textSize="15sp"/>
 
                     </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginTop="20dp"
+                                  android:orientation="horizontal">
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-light"
+                                    android:text="@string/age"
+                                    android:textAllCaps="true"
+                                    android:textSize="15sp"/>
+
+                            <EditText
+                                    android:id="@+id/signup_age"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="30sp"
+                                    android:background="@drawable/btn_bg"
+                                    android:fontFamily="sans-serif-light"
+                                    android:singleLine="true"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:textSize="15sp"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-light"
+                                    android:text="@string/weight"
+                                    android:textAllCaps="true"
+                                    android:textSize="15sp"/>
+
+                            <EditText
+                                    android:id="@+id/signup_weight"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="30sp"
+                                    android:background="@drawable/btn_bg"
+                                    android:fontFamily="sans-serif-light"
+                                    android:singleLine="true"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:textSize="15sp"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_marginTop="20sp"
+                                  android:layout_height="wrap_content">
+                        <RadioGroup android:layout_width="match_parent"
+                                    android:orientation="horizontal"
+                                    android:id="@+id/profil_sex_radiogroup"
+                                    android:layout_height="wrap_content">
+                            <RadioButton android:layout_width="match_parent"
+                                         android:id="@+id/signup_female"
+                                         android:layout_weight="1"
+                                         android:text="@string/sex_female"
+                                         android:paddingHorizontal="20sp"
+                                         android:textSize="20sp"
+                                         android:layout_height="wrap_content"/>
+                            <RadioButton android:layout_width="match_parent"
+                                         android:id="@+id/signup_male"
+                                         android:layout_weight="1"
+                                         android:textSize="20sp"
+                                         android:text="@string/sex_male"
+                                         android:layout_height="wrap_content"/>
+                        </RadioGroup>
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
                 <Button
@@ -169,17 +257,16 @@
                         android:layout_height="40dp"
                         android:layout_below="@+id/linlay1"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="50dp"
-                        android:background="@drawable/btn_bg"
-
+                        android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="70dp"
                         android:paddingRight="70dp"
                         android:text="@string/register"
                         android:textAllCaps="false"
+                        android:onClick="funtoast"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:id="@+id/register_button"/>
+                        android:id="@+id/signup_register_button"/>
 
             </RelativeLayout>
 

@@ -9,25 +9,34 @@
     >
         <item
                 android:id="@+id/myProfileFragment"
-                android:icon="@drawable/logo"
+                android:icon="@drawable/ic_baseline_account_circle_24"
                 android:title="@string/my_profile"/>
         <item
                 android:id="@+id/mainMenuFragment"
-                android:icon="@drawable/logo"
+                android:icon="@drawable/ic_baseline_home_24"
                 android:title="@string/main_menu"/>
         <item
                 android:id="@+id/trainingProgramFragment"
-                android:icon="@drawable/logo"
+                android:icon="@drawable/ic_baseline_sports_24"
                 android:title="@string/training_program"/>
         <item
                 android:id="@+id/messageFragment"
-                android:icon="@drawable/logo"
+                android:icon="@drawable/ic_baseline_message_24"
                 android:title="@string/message"/>
         <item
                 android:id="@+id/settingsFragment"
-                android:icon="@drawable/logo"
+                android:icon="@drawable/ic_baseline_settings_24"
                 android:title="@string/settings"/>
+    </group>
+    <group
+            android:checkableBehavior="single"
+            android:id="@+id/logout_group">
 
+        <item
+                android:id="@+id/logout_drawer"
+                android:icon="@drawable/ic_baseline_login_24"
+                android:title="@string/logout"
+        />
 
     </group>
 
