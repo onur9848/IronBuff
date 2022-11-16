@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id = "@+id/container"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            app:cardCornerRadius="25dp"
+            android:layout_height="wrap_content"
+    >
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:background="?colorSecondaryContainer"
+                      android:layout_height="wrap_content">
+<!--            <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:gravity="center"-->
+<!--                    android:padding="5dp"-->
+<!--                    android:layout_height="wrap_content">-->
+<!--                <TextView android:layout_width="wrap_content"-->
+<!--                          android:background="@drawable/bg_lineat"-->
+<!--                          android:padding="10dp"-->
+<!--                          android:gravity="center"-->
+<!--                          android:text="@string/test_date"-->
+<!--                          android:layout_height="wrap_content"/>-->
+<!--            </LinearLayout>-->
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="20sp"
+                    android:orientation="horizontal"
+            >
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_weight="7"
+                            android:layout_margin="20dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="@string/test_date"
+                                android:background="@drawable/bg_top_radius"
+                                android:layout_weight="1"
+                                tools:ignore="NestedWeights"/>
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:id="@+id/measurement_weight"
+                                android:text="@string/test_weight"
+                                android:background="@drawable/bg_bottom_radius"
+                                android:layout_weight="1"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:padding="1dp"
+                            android:background="@drawable/bg_table_radius"
+                            android:orientation="horizontal"
+                            android:id="@+id/linearLayout21"
+                    >
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_radius_left"
+                                android:orientation="vertical"
+                                android:padding="5dp"
+                                android:divider="?dividerHorizontal"
+                                android:showDividers="middle"
+                                android:layout_weight="8">
+                            <TextView android:layout_width="match_parent"
+                                      android:text="1" android:gravity="center"
+                                      android:layout_height="match_parent"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="2" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="3" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="4" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="5" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="6" android:gravity="center"
+                                      android:layout_gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="7" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="8" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="9" android:gravity="center"
+                                      android:layout_weight="1"/>
+
+
+                        </LinearLayout>
+                        <com.google.android.material.divider.MaterialDivider style="@style/Divider.horizantal"/>
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="?colorPrimary"
+                                android:divider="?dividerHorizontal"
+                                android:showDividers="middle"
+                                android:padding="5dp"
+                                android:orientation="vertical"
+                                android:layout_weight="5">
+
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/chest" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/left_arm" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/right_arm" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/waist" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/hips" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/left_thigh" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/right_thigh" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/left_calf" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:text="@string/right_calf" android:gravity="center"
+                                      android:layout_weight="1"/>
+
+                        </LinearLayout>
+                        <com.google.android.material.divider.MaterialDivider style="@style/Divider.horizantal"/>
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_radius_right"
+                                android:divider="?dividerHorizontal"
+                                android:showDividers="middle"
+                                android:padding="5dp"
+                                android:orientation="vertical"
+                                android:layout_weight="7">
+
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text"
+                                      android:id="@+id/measurement_chest" android:gravity="center"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_left_arm"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_right_arm"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_waist"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_hips"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_left_thigh"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_right_thigh"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_left_calf"
+                                      android:layout_weight="1"/>
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                                      android:hint="@string/cm_text" android:gravity="center"
+                                      android:id="@+id/measurement_right_calf"
+                                      android:layout_weight="1"/>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_marginTop="10dp"
+                              android:orientation="vertical"
+
+                >
+                    <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:src="@drawable/body_measurement_image"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

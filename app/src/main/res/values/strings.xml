@@ -25,4 +25,19 @@
     <string name="height">Height</string>
     <string name="sex_female">Female</string>
     <string name="sex_male">Male</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="neck">Neck</string>
+    <string name="chest">Chest</string>
+    <string name="left_arm">Left Arm</string>
+    <string name="right_arm">Right Arm</string>
+    <string name="waist">Waist</string>
+    <string name="hips">Hips</string>
+    <string name="left_thigh">Left Thigh</string>
+    <string name="right_thigh">Right Thigh</string>
+    <string name="left_calf">Left Calf</string>
+    <string name="right_calf">Right Calf</string>
+    <string name="cm_text" translatable="false">... cm</string>
+    <string name="test_date">Date: 11/11/1998</string>
+    <string name="test_weight">Weight: 80 kg</string>
 </resources>

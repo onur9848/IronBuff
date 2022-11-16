@@ -16,4 +16,24 @@
     <string name="message">Mesajlaşma</string>
     <string name="settings">Ayarlar</string>
     <string name="logout">Çıkış Yap</string>
+    <string name="sex_female">Kadın</string>
+    <string name="sex_male">Erkek</string>
+    <string name="open_camera">Kamerayı Aç</string>
+    <string name="open_gallery">Galeriyi Aç</string>
+    <string name="neck">Boyun</string>
+    <string name="chest">Göğüs</string>
+    <string name="left_arm">Sol Kol</string>
+    <string name="right_arm">Sağ kol</string>
+    <string name="waist">Bel</string>
+    <string name="hips">Kalça</string>
+    <string name="left_thigh">Sol Bacak</string>
+    <string name="right_thigh">Sağ Bacak</string>
+    <string name="left_calf">Sol Baldır</string>
+    <string name="right_calf">Sağ Baldır</string>
+    <string name="weight">Kilo</string>
+    <string name="height">Boy</string>
+    <string name="sex">Cinsiyet</string>
+    <string name="age">Yaş</string>
+    <string name="test_date">Tarih: 11/11/1998</string>
+    <string name="test_weight">Kilogram: 80 kg</string>
 </resources>

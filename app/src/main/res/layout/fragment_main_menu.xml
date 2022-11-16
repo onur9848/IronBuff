@@ -3,16 +3,23 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:gravity="center"
-              android:background="#F30000"
+              android:orientation="vertical"
+              android:gravity="top"
               tools:context=".MainMenuFragment.MainMenuFragment">
 
 
-    <TextView
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:textColor="@color/white"
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/main_menu_show_measurement"
+            android:layout_width="match_parent"
+            android:background="@color/black"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu"/>
+            tools:listitem="@layout/body_measurement_view"
+    />
+    <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:inputType="date"
+            android:layout_height="wrap_content" android:id="@+id/textView" android:contextClickable="false"/>
+
 
 </LinearLayout>

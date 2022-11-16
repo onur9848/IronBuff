@@ -63,7 +63,7 @@ public class SignupFragment extends Fragment {
     private void registerButtonProcess() {
 
 
-        String namesurname_text, username_text, email_text, password_text, age_text, weight_text, sex_text;
+        String namesurname_text, username_text, email_text, password_text, age_text, weight_text, sex_text,uri_text;
         if (checkField()) {
             namesurname_text = binding.signupNamesurname.getText().toString();
             username_text = binding.signupUsername.getText().toString();
@@ -72,6 +72,7 @@ public class SignupFragment extends Fragment {
             age_text = binding.signupAge.getText().toString();
             weight_text = binding.signupWeight.getText().toString();
             sex_text = getSex();
+            uri_text = "gs://iron-buff-b521e.appspot.com/image/"+username_text+"/+"+"profilimage";
             binding.profilSexRadiogroup.getCheckedRadioButtonId();
 
 
@@ -85,6 +86,7 @@ public class SignupFragment extends Fragment {
                     userData.put("Age", age_text);
                     userData.put("Weight", weight_text);
                     userData.put("Sex", sex_text);
+                    userData.put("imageUrl",uri_text);
                     firestore.collection("userTable").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
