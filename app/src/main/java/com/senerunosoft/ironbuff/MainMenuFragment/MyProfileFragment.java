@@ -70,9 +70,10 @@ public class MyProfileFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
         bottomSheetDialog = new BottomSheetDialog(getContext());
-        getDataUser();
 
+        getDataUser();
         registerLauncher();
+        imageGet();
 
 
         binding.myProfilImage.setOnClickListener(new View.OnClickListener() {
@@ -161,11 +162,10 @@ public class MyProfileFragment extends Fragment {
     private void uploadImage() {
 
 
-        String url = "image/"+binding.profilUsername.getText().toString()+"/profilimage";
+        String url = "image/" + binding.profilUsername.getText().toString() + "/profilimage";
         StorageReference storageRef = storage.getReference().child(url);
-
-
         UploadTask uploadTask = storageRef.putFile(imageData);
+
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
@@ -181,7 +181,19 @@ public class MyProfileFragment extends Fragment {
         });
     }
 
+    int i = 0;
+    private void imageGet() {
 
+        firestore.collection("image/onur123/profilimage").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                i++;
+
+            }
+        });
+
+
+    }
 
 
     private void getDataUser() {

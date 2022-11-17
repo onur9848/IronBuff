@@ -18,8 +18,13 @@
     <TextView
             android:text="TextView"
             android:layout_width="match_parent"
-            android:inputType="date"
-            android:layout_height="wrap_content" android:id="@+id/textView" android:contextClickable="false"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/deneme"/>
+    <ImageView
+            android:layout_width="100dp"
+            android:background="@color/black"
+            android:layout_height="100dp"
+            android:id="@+id/imagemenu"/>
 
 
 </LinearLayout>

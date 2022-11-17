@@ -1,5 +1,6 @@
 package com.senerunosoft.ironbuff.activity;
 
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,9 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 import com.google.firebase.storage.FirebaseStorage;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.ActivityMainMenuBinding;
@@ -30,6 +29,17 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MainMenuActivity extends AppCompatActivity {
+
+    public static final String userName = "UserName";
+    public static final String nameSurname = "NameSurname";
+    public static final String sex = "Sex";
+    public static final String age = "Age";
+    public static final String e_mail = "E-Mail";
+    public static final String height = "Height";
+    public static final String weight = "Weight";
+    public static final String imageUrl = "profilImg";
+    private CollectionReference collectionReferenceUser;
+    private Query queryUser;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainMenuBinding binding;
     TextView headerEmail, headerNameSurname;
@@ -48,8 +58,6 @@ public class MainMenuActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
-
-
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -70,6 +78,21 @@ public class MainMenuActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        signOutClick(navigationView);
+
+    }
+
+    private void signOutClick(NavigationView navigationView) {
+        navigationView.getMenu().findItem(R.id.logout_drawer).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                auth.signOut();
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return false;
+            }
+        });
     }
 
 
@@ -81,21 +104,21 @@ public class MainMenuActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
+
     private void getNavData() {
 
 //        QuerySnapshot snapshots = firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().getResult();
         firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot doc: task.getResult()){
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
                         String email = (String) doc.getData().get("E-mail");
                         String namesurname = (String) doc.getData().get("NameSurname");
                         String url = doc.getData().get("imageUrl").toString();
                         Picasso.get().load(url).into(headerImg);
                         headerNameSurname.setText(namesurname);
                         headerEmail.setText(email);
-
 
 
                     }

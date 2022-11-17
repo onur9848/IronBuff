@@ -1,5 +1,6 @@
 package com.senerunosoft.ironbuff.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,15 +10,28 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.senerunosoft.ironbuff.R;
+
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
 
+    FirebaseUser user;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        user = auth.getCurrentUser();
+        if (user != null) {
+            Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+            startActivity(intent);
+            finish();
+        }
+            setTheme(R.style.Theme_IronBuff);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
 
     }

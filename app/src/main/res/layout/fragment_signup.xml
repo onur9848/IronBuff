@@ -9,8 +9,7 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            tools:context=".activity.SplashActivity">
+            android:animateLayoutChanges="true">
         <RelativeLayout
                 android:layout_margin="40sp"
                 android:layout_width="wrap_content"
@@ -223,7 +222,34 @@
                                     android:textSize="15sp"/>
 
                         </LinearLayout>
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="sans-serif-light"
+                                    android:text="@string/height"
+                                    android:textAllCaps="true"
+                                    android:textSize="15sp"/>
+
+                            <EditText
+                                    android:id="@+id/signup_height"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="30sp"
+                                    android:background="@drawable/btn_bg"
+                                    android:fontFamily="sans-serif-light"
+                                    android:singleLine="true"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:textSize="15sp"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
                     <LinearLayout android:layout_width="match_parent"

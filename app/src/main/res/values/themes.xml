@@ -30,5 +30,8 @@
         <item name="android:layout_height">1dp</item>
         <item name="dividerColor">?colorOnPrimary</item>
     </style>
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
 
 </resources>

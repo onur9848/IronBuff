@@ -26,4 +26,5 @@
     <fragment android:id="@+id/settingsFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.SettingsFragment"
               android:label="@string/settings" tools:layout="@layout/fragment_settings"/>
+
 </navigation>
