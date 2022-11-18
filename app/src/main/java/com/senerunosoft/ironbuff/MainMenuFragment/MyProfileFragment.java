@@ -35,12 +35,27 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.senerunosoft.ironbuff.R;
+import com.senerunosoft.ironbuff.activity.MainMenuActivity;
 import com.senerunosoft.ironbuff.databinding.FragmentMyProfileBinding;
+import com.senerunosoft.ironbuff.table.UserTable;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 
 public class MyProfileFragment extends Fragment {
+    private static final String COLLECTION_NAME_USER = "userTable";
+    public static final String USERNAME = "UserName";
+    public static final String NAME_SURNAME = "NameSurname";
+    public static final String SEX = "Sex";
+    public static final String AGE = "Age";
+    public static final String EMAIL = "E-mail";
+    public static final String HEIGHT = "Height";
+    public static final String WEIGHT = "Weight";
+    public static final String IMAGE_URL = "imageUrl";
 
     FragmentMyProfileBinding binding;
     FirebaseAuth auth;
@@ -51,40 +66,50 @@ public class MyProfileFragment extends Fragment {
 
     Uri imageData;
     ActivityResultLauncher<String> permissionLauncher;
+    LinearLayout openCamera, openGallery;
+    List<UserTable> userTables;
+    String imageUrl;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        // Inflate the layout for this fragment
         return root;
     }
-
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        firestore = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
-        auth = FirebaseAuth.getInstance();
-        bottomSheetDialog = new BottomSheetDialog(getContext());
-
-        getDataUser();
+        defVariable();
         registerLauncher();
-        imageGet();
-
+        profilDataOnChanged();
 
         binding.myProfilImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showBottomSheetDialog();
-
             }
         });
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void defVariable() {
+        firestore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
+        userTables = new ArrayList<>();
+        bottomSheetDialog = new BottomSheetDialog(getContext());
+        userTables = new ArrayList<>();
+        imageUrl = "image/" + "username" + "/profilimage";
 
     }
+
 
     private void registerLauncher() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -94,7 +119,7 @@ public class MyProfileFragment extends Fragment {
                     Intent intentFromResult = result.getData();
                     if (intentFromResult != null) {
                         imageData = intentFromResult.getData();
-                        uploadImage();
+                        uploadimage();
                         bottomSheetDialog.hide();
 
                     }
@@ -114,7 +139,40 @@ public class MyProfileFragment extends Fragment {
         });
     }
 
-    LinearLayout openCamera, openGallery;
+    private void uploadimage() {
+        if (imageData != null) {
+
+            String url = "image/" + binding.profilUsername.getText().toString() + "/" + auth.getCurrentUser().getUid();
+            StorageReference reference = storage.getReference(url);
+            UploadTask uploadTask = reference.putFile(imageData);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    StorageReference newRef = storage.getReference(url);
+                    newRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String downloadUrl = uri.toString();
+                            firestore.collection(COLLECTION_NAME_USER).document(auth.getCurrentUser().getUid()).update(IMAGE_URL, uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+
+                }
+            });
+
+
+        }
+    }
 
     private void showBottomSheetDialog() {
 
@@ -153,77 +211,70 @@ public class MyProfileFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        getDataUser();
-        super.onResume();
-    }
 
-    private void uploadImage() {
-
-
-        String url = "image/" + binding.profilUsername.getText().toString() + "/profilimage";
-        StorageReference storageRef = storage.getReference().child(url);
-        UploadTask uploadTask = storageRef.putFile(imageData);
-
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+    private void profilDataOnChanged() {
+        firestore.collection(COLLECTION_NAME_USER).document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getContext(), "Başarılı", Toast.LENGTH_SHORT).show();
-                binding.myProfilImage.setImageURI(imageData);
-
-            }
-        });
-    }
-
-    int i = 0;
-    private void imageGet() {
-
-        firestore.collection("image/onur123/profilimage").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                i++;
-
-            }
-        });
-
-
-    }
-
-
-    private void getDataUser() {
-        firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        binding.profilNamesurname.setText(doc.getData().get("NameSurname").toString());
-                        binding.profilUsername.setText(doc.getData().get("UserName").toString());
-                        binding.profilEmail.setText(doc.getData().get("E-mail").toString());
-                        binding.profilAge.setText(doc.getData().get("Age").toString());
-                        binding.profilSex.setText(doc.getData().get("Sex").toString());
-                        binding.profilWeight.setText(doc.getData().get("Weight").toString());
-                        binding.profilHeight.setText(doc.getData().get("Height").toString());
-                        String url = doc.getData().get("imageUrl").toString();
-                        Picasso.get().load(url).into(binding.myProfilImage);
-
-
-                    }
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    getProfilData();
                 }
             }
         });
 
+    }
+
+
+
+    public void getProfilData() {
+        firestore.collection(COLLECTION_NAME_USER).whereEqualTo(EMAIL, auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+//                    Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
+                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                        Toast.makeText(getContext(), "for", Toast.LENGTH_SHORT).show();
+                        UserTable user = new UserTable();
+                        user.setNameSurname(doc.get(NAME_SURNAME).toString());
+                        user.setUserName(doc.get(USERNAME).toString());
+                        user.setAge(doc.get(AGE).toString());
+                        user.setSex(doc.get(SEX).toString());
+                        user.setHeight(doc.get(HEIGHT).toString());
+                        user.setWeight(doc.get(WEIGHT).toString());
+                        user.setE_mail(doc.get(EMAIL).toString());
+                        user.setImageUrl(doc.get(IMAGE_URL).toString());
+                        userTables.add(user);
+                    }
+                    setProfilData();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public void setProfilData() {
+        for (UserTable user : userTables) {
+//            Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
+            binding.profilUsername.setText(user.getUserName());
+            binding.profilNamesurname.setText(user.getNameSurname());
+            binding.profilEmail.setText(user.getE_mail());
+            binding.profilHeight.setText(user.getHeight());
+            binding.profilWeight.setText(user.getWeight());
+            binding.profilAge.setText(user.getAge());
+            binding.profilSex.setText(user.getSex());
+
+
+            Picasso.get().load(user.getImageUrl()).into(binding.myProfilImage);
+
+
+        }
     }
 }

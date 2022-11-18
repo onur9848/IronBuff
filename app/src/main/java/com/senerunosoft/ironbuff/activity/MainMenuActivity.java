@@ -7,39 +7,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.storage.FirebaseStorage;
+import com.senerunosoft.ironbuff.MainMenuFragment.MyProfileFragment;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.ActivityMainMenuBinding;
+import com.senerunosoft.ironbuff.table.UserTable;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    public static final String userName = "UserName";
-    public static final String nameSurname = "NameSurname";
-    public static final String sex = "Sex";
-    public static final String age = "Age";
-    public static final String e_mail = "E-Mail";
-    public static final String height = "Height";
-    public static final String weight = "Weight";
-    public static final String imageUrl = "profilImg";
-    private CollectionReference collectionReferenceUser;
-    private Query queryUser;
+
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainMenuBinding binding;
     TextView headerEmail, headerNameSurname;
@@ -47,6 +45,8 @@ public class MainMenuActivity extends AppCompatActivity {
     FirebaseStorage storage;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
+    FragmentManager manager;
+    List<UserTable> userTables;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,8 @@ public class MainMenuActivity extends AppCompatActivity {
         headerNameSurname = headerView.findViewById(R.id.header_namesurname);
         headerImg = headerView.findViewById(R.id.header_profil_image);
 
-        getNavData();
+        onChangeFireStore();
+        onChangeFireStoredat();
 
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.myProfileFragment, R.id.mainMenuFragment, R.id.trainingProgramFragment, R.id.messageFragment, R.id.settingsFragment, R.id.logout_drawer)
@@ -77,8 +78,11 @@ public class MainMenuActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
         signOutClick(navigationView);
+
+
+        userTables = new ArrayList<>();
+        manager = getSupportFragmentManager();
 
     }
 
@@ -87,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 auth.signOut();
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
                 return false;
@@ -105,6 +109,23 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
+    private void onChangeFireStoredat(){
+        firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+            }
+        });
+    }
+
+    private void onChangeFireStore(){
+        firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                getNavData();
+            }
+        });
+    }
     private void getNavData() {
 
 //        QuerySnapshot snapshots = firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().getResult();
@@ -126,6 +147,8 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
 
 

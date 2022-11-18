@@ -1,6 +1,10 @@
 package com.senerunosoft.ironbuff.table;
 
-public class userTable {
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserTable {
 
     String userName;
     String nameSurname;
@@ -10,6 +14,12 @@ public class userTable {
     String height;
     String weight;
     String imageUrl;
+
+    public UserTable(){
+
+    }
+
+
 
 
     public String getUserName() {
@@ -75,4 +85,6 @@ public class userTable {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
 }

@@ -16,16 +16,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.activity.MainMenuActivity;
 import com.senerunosoft.ironbuff.databinding.FragmentSignupBinding;
+import com.senerunosoft.ironbuff.table.UserTable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 public class SignupFragment extends Fragment {
+    private static final String COLLECTION_NAME_USER = "userTable";
+    UserTable user = new UserTable();
     FirebaseAuth auth;
     FirebaseFirestore firestore;
+    FirebaseStorage storage;
     FragmentSignupBinding binding;
 
     @Override
@@ -41,23 +48,11 @@ public class SignupFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tanimla(view);
-
-
-
-
         signupButton();
+
+
     }
 
-    private void signupButton() {
-        binding.signupRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                registerButtonProcess();
-
-            }
-        });
-    }
 
     private void finishActivity() {
         //fragment sonlandırma
@@ -72,79 +67,113 @@ public class SignupFragment extends Fragment {
         binding = null;
     }
 
+    private void signupButton() {
+        binding.signupRegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (checkField()) {
+                    user.setNameSurname(binding.signupNamesurname.getText().toString());
+                    user.setUserName(binding.signupUsername.getText().toString());
+                    user.setE_mail(binding.signupEmail.getText().toString());
+                    user.setAge(binding.signupAge.getText().toString());
+                    user.setWeight(binding.signupWeight.getText().toString());
+                    user.setHeight(binding.signupHeight.getText().toString());
+                    user.setSex(getSex());
+                    uploadimage();
+                }
+
+
+            }
+        });
+    }
+
+    private void uploadimage() {
+        String url = "image/" + user.getUserName() + "/profilimage";
+        StorageReference reference = storage.getReference().child(url);
+
+        UploadTask uploadTask = reference.putFile(Uri.parse("android.resource://com.senerunosoft.ironbuff/" + R.drawable.profil));
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                StorageReference newRef = storage.getReference(url);
+                newRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        registerButtonProcess(uri);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+
+                    }
+                });
+
+            }
+        });
+    }
+
     private void tanimla(@NotNull View view) {
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
     }
 
-    private void registerButtonProcess() {
+    private void registerButtonProcess(Uri uri) {
 
 
-        String namesurname_text, username_text, email_text, password_text, age_text, weight_text, sex_text,uri_text,height_text;
-        if (checkField()) {
-            namesurname_text = binding.signupNamesurname.getText().toString();
-            username_text = binding.signupUsername.getText().toString();
-            email_text = binding.signupEmail.getText().toString();
-            password_text = binding.signupPassword.getText().toString();
-            age_text = binding.signupAge.getText().toString();
-            weight_text = binding.signupWeight.getText().toString();
-            height_text = binding.signupHeight.getText().toString();
+        auth.createUserWithEmailAndPassword(binding.signupEmail.getText().toString(),
+                binding.signupPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                HashMap<String, Object> userData = new HashMap<>();
+                userData.put("NameSurname", user.getNameSurname());
+                userData.put("UserName", user.getUserName());
+                userData.put("E-mail", user.getE_mail());
+                userData.put("Age", user.getAge());
+                userData.put("Weight", user.getWeight());
+                userData.put("Sex", user.getSex());
+                userData.put("Height", user.getHeight());
+                userData.put("imageUrl", uri);
+                auth.signInWithEmailAndPassword(user.getE_mail(), binding.signupPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        firestore.collection(COLLECTION_NAME_USER).document(authResult.getUser().getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
 
-            sex_text = getSex();
-            uri_text = "gs://iron-buff-b521e.appspot.com/image/"+username_text+"/+"+"profilimage";
-            binding.profilSexRadiogroup.getCheckedRadioButtonId();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                        startActivity(intent);
+                        finishActivity();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull @NotNull Exception e) {
+                        Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-
-            auth.createUserWithEmailAndPassword(email_text, password_text).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                @Override
-                public void onSuccess(AuthResult authResult) {
-                    HashMap<String, Object> userData = new HashMap<>();
-                    userData.put("NameSurname", namesurname_text);
-                    userData.put("UserName", username_text);
-                    userData.put("E-mail", email_text);
-                    userData.put("Age", age_text);
-                    userData.put("Weight", weight_text);
-                    userData.put("Sex", sex_text);
-                    userData.put("Height",height_text);
-                    userData.put("imageUrl",uri_text);
-                    firestore.collection("userTable").add(userData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getContext(), "başarılı", Toast.LENGTH_SHORT).show();
-                            auth.signInWithEmailAndPassword(email_text,password_text).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Intent intent = new Intent(getActivity(), MainMenuActivity.class);
-                                    startActivity(intent);
-                                    finishActivity();
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-
-                                }
-                            });
-
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull @NotNull Exception e) {
-                    Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-        }
 
     }
 
@@ -158,7 +187,7 @@ public class SignupFragment extends Fragment {
     }
 
     private boolean checkField() {
-        boolean is_namesurname, is_username, is_email, is_password, is_age, is_weight, is_sex,is_height;
+        boolean is_namesurname, is_username, is_email, is_password, is_age, is_weight, is_sex, is_height;
         is_namesurname = binding.signupNamesurname.getText().toString().isEmpty();
         is_username = binding.signupUsername.getText().toString().isEmpty();
         is_email = binding.signupEmail.getText().toString().isEmpty();
