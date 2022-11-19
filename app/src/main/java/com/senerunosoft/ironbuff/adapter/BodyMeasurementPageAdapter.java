@@ -8,23 +8,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
-import com.senerunosoft.ironbuff.MainMenuFragment.MainMenuFragment;
 import com.senerunosoft.ironbuff.R;
-import com.senerunosoft.ironbuff.table.userMeasurementTable;
+import com.senerunosoft.ironbuff.table.UserMeasurementTable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class BodyMeasurementPageAdapter extends RecyclerView.Adapter<BodyMeasurementPageAdapter.ViewHolder> {
 
-    private final List<userMeasurementTable> table;
+    private final List<UserMeasurementTable> table;
     ViewPager2 viewPager2;
     LayoutInflater layoutInflater;
 
-    public BodyMeasurementPageAdapter(Context context, List<userMeasurementTable> table, ViewPager2 viewPager2) {
+    public BodyMeasurementPageAdapter(Context context, List<UserMeasurementTable> table, ViewPager2 viewPager2) {
         this.table = table;
         this.viewPager2 = viewPager2;
         this.layoutInflater = LayoutInflater.from(context);

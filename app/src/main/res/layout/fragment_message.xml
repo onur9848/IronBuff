@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".MainMenuFragment.MessageFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              tools:context=".MainMenuFragment.MessageFragment">
+    <ListView android:layout_width="match_parent"
+              android:background="#039BE5"
+              android:id="@+id/exerciseZone"
+              android:layout_weight="1"
+              android:layout_height="match_parent"/>
+    <ListView android:layout_width="match_parent"
+              android:background="#E53935"
+              android:layout_weight="1"
+              android:id="@+id/backExercise"
+              android:layout_height="match_parent"/>
+    <ListView android:layout_width="match_parent"
+              android:background="#43A047"
+              android:id="@+id/chestExercise"
+              android:layout_weight="1"
+              android:layout_height="match_parent"/>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+</LinearLayout>

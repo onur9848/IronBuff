@@ -1,10 +1,8 @@
 package com.senerunosoft.ironbuff.table;
 
-import java.util.Date;
+public class UserMeasurementTable {
 
-public class userMeasurementTable {
-
-    public userMeasurementTable() {
+    public UserMeasurementTable() {
     }
 
     String chest, leftArm, rightArm, waist, hips, leftThigh, rightThigh, leftCalf, rightCalf,weight;

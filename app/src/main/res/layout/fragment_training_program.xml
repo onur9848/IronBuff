@@ -6,14 +6,12 @@
               android:orientation="vertical"
               android:gravity="center"
               tools:context=".MainMenuFragment.TrainingProgramFragment">
-    <include
-            android:id="@+id/traning_include_view"
-            layout="@layout/training_card_view"
-    />
+
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:listitem="@layout/training_card_view"
             android:id="@+id/training_recycler_view"
     />
 
