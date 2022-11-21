@@ -10,9 +10,9 @@
             android:id="@+id/my_card_view"
             app:cardCornerRadius="20dp"
             android:padding="10dp"
-            app:cardBackgroundColor="@color/nightSecondaryColor"
+            app:cardBackgroundColor="#034c00"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="250dp">
         <LinearLayout android:layout_width="match_parent"
                       android:orientation="horizontal"
                       android:gravity="center"
@@ -28,7 +28,7 @@
                         android:textSize="28dp"
                         android:id="@+id/day_test"
                         android:paddingHorizontal="10dp"
-                        android:paddingBottom="10dp"
+                        android:paddingBottom="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -39,6 +39,13 @@
                         android:textStyle="bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                <ListView
+                        tools:listitem="@layout/list_item_program"
+                        android:padding="20sp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:id="@+id/trainingExerciseList"
+                        android:layout_height="wrap_content"/>
 
             </LinearLayout>
             <Button
@@ -47,6 +54,7 @@
                     android:background="@drawable/bg_table_radius"
                     android:textSize="14sp"
                     android:paddingVertical="10dp"
+                    android:id="@+id/training_card_view_button"
                     android:text="Start"
                     android:layout_height="wrap_content"
             />

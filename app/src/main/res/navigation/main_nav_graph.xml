@@ -21,10 +21,26 @@
 
     <fragment android:id="@+id/trainingProgramFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.TrainingProgramFragment"
-              android:label="@string/training_program" tools:layout="@layout/fragment_training_program"/>
+              android:label="@string/training_program" tools:layout="@layout/fragment_training_program">
+        <action android:id="@+id/gotoTrainingDetail"
+                app:destination="@id/trainingDetailFragment">
+
+        </action>
+    </fragment>
 
     <fragment android:id="@+id/settingsFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.SettingsFragment"
               android:label="@string/settings" tools:layout="@layout/fragment_settings"/>
+    <fragment android:id="@+id/trainingDetailFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.TrainingDetailFragment"
+              android:label="fragment_training_detail" tools:layout="@layout/fragment_training_detail"/>
+    <fragment android:id="@+id/adminFragment" android:name="com.senerunosoft.ironbuff.AdminPage.AdminFragment"
+              android:label="fragment_admin" tools:layout="@layout/fragment_admin">
+        <action android:id="@+id/adminToAddUserTrainingProgram"
+                app:destination="@id/adminUserAddProgramFragment"/>
+    </fragment>
+    <fragment android:id="@+id/adminUserAddProgramFragment"
+              android:name="com.senerunosoft.ironbuff.AdminPage.AdminUserAddProgramFragment"
+              android:label="fragment_admin_user_add_program" tools:layout="@layout/fragment_admin_user_add_program"/>
 
 </navigation>

@@ -1,12 +1,6 @@
 package com.senerunosoft.ironbuff.MainMenuFragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,16 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
-import com.google.firebase.storage.FirebaseStorage;
-import com.senerunosoft.ironbuff.R;
-import com.senerunosoft.ironbuff.adapter.TrainingViewPageAdapter;
+import com.senerunosoft.ironbuff.MainMenuFragment.adapter.TrainingViewPageAdapter;
 import com.senerunosoft.ironbuff.databinding.FragmentTrainingProgramBinding;
-import com.senerunosoft.ironbuff.table.TrainingProgramTable;
 import com.senerunosoft.ironbuff.table.UserTable;
 import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
@@ -62,13 +52,14 @@ public class TrainingProgramFragment extends Fragment {
         trainingTables = new ArrayList<>();
 
 
-        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).orderBy("exerciseDate").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     Map<String, Object> hashMap = new HashMap<>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         hashMap = doc.getData();
+                        hashMap.put("docId",doc.getId());
                         trainingTables.add(new UserTrainingTable(hashMap));
                     }
                     getCardView();

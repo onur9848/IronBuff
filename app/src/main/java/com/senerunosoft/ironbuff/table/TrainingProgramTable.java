@@ -1,7 +1,5 @@
 package com.senerunosoft.ironbuff.table;
 
-import com.senerunosoft.ironbuff.adapter.TrainingViewPageAdapter;
-
 public class TrainingProgramTable {
 
     private String ExerciseTarget;

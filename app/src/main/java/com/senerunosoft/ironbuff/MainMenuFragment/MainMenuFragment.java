@@ -11,7 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.storage.FirebaseStorage;
-import com.senerunosoft.ironbuff.adapter.BodyMeasurementPageAdapter;
+import com.senerunosoft.ironbuff.MainMenuFragment.adapter.BodyMeasurementPageAdapter;
 import com.senerunosoft.ironbuff.databinding.FragmentMainMenuBinding;
 import com.senerunosoft.ironbuff.table.UserMeasurementTable;
 import org.jetbrains.annotations.NotNull;

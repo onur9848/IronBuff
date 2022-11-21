@@ -20,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.internal.NavigationMenuItemView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity {
-
 
 
     private AppBarConfiguration appBarConfiguration;
@@ -73,7 +73,7 @@ public class MainMenuActivity extends AppCompatActivity {
         onChangeFireStoredat();
 
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.myProfileFragment, R.id.mainMenuFragment, R.id.trainingProgramFragment, R.id.messageFragment, R.id.settingsFragment, R.id.logout_drawer)
+                R.id.myProfileFragment, R.id.mainMenuFragment, R.id.trainingProgramFragment, R.id.messageFragment, R.id.settingsFragment, R.id.adminFragment, R.id.logout_drawer)
                 .setOpenableLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -109,7 +109,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
-    private void onChangeFireStoredat(){
+    private void onChangeFireStoredat() {
         firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
@@ -118,7 +118,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    private void onChangeFireStore(){
+    private void onChangeFireStore() {
         firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
@@ -126,6 +126,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getNavData() {
 
 //        QuerySnapshot snapshots = firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().getResult();
@@ -140,6 +141,11 @@ public class MainMenuActivity extends AppCompatActivity {
                         Picasso.get().load(url).into(headerImg);
                         headerNameSurname.setText(namesurname);
                         headerEmail.setText(email);
+
+                        if (doc.getData().containsKey("isAdmin")){
+                            binding.navigationView.getMenu().findItem(R.id.adminFragment).setVisible(true);
+
+                        }
 
 
                     }

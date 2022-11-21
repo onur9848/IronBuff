@@ -27,6 +27,12 @@
                 android:id="@+id/settingsFragment"
                 android:icon="@drawable/ic_baseline_settings_24"
                 android:title="@string/settings"/>
+        <item
+                android:id="@+id/adminFragment"
+                android:visible="false"
+                android:icon="@drawable/ic_baseline_admin_panel_settings_24"
+                android:title="@string/adminpanel"/>
+
     </group>
     <group
             android:checkableBehavior="single"

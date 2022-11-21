@@ -1,4 +1,4 @@
-package com.senerunosoft.ironbuff.adapter;
+package com.senerunosoft.ironbuff.MainMenuFragment.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

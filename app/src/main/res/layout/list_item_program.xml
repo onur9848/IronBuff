@@ -1,18 +1,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_height="match_parent"
               android:fitsSystemWindows="true">
     <TextView
-            android:id="@+id/exercise"
+            android:id="@+id/exercise_zone_listview"
             android:textSize="20sp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:text="Name"/>
     <TextView
-            android:id="@+id/exercise_count"
+            android:id="@+id/exercise_count_listview"
             android:textSize="18sp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="HomeTown"/>
+            android:text="hadi canım"/>
 </LinearLayout>
