@@ -41,4 +41,10 @@
     <string name="test_date">Date: 11/11/1998</string>
     <string name="test_weight">Weight: 80 kg</string>
     <string name="adminpanel">AdminPanel</string>
+    <string name="addProgram">Add new program</string>
+    <string name="exercise_list">Exercise List</string>
+    <string name="machine">Machine</string>
+    <string name="free_weight">Free Weight</string>
+    <string name="weight_type">Weight Type</string>
+    <string name="exercise_machine">Exercise Machine</string>
 </resources>

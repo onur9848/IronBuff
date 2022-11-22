@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-              android:gravity="center"
-             tools:context=".AdminPage.AdminUserAddProgramFragment">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".AdminPage.AdminUserAddProgramFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/denemeTaht"
-            android:text="@string/hello_blank_fragment"/>
 
+    <ListView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/admin_user_training_list"
+              tools:listitem="@layout/list_item_program"
+              android:layout_weight="1"/>
+    <Button
+            android:text="@string/addProgram"
+            android:id="@+id/add_new_program_button"
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+    />
 </LinearLayout>

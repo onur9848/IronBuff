@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              tools:context=".AdminPage.AdminAddTrainingFragment">
+    <LinearLayout android:layout_width="match_parent"
+                  android:gravity="center"
+                  android:orientation="horizontal"
+                  android:layout_height="200dp">
+        <ImageView android:layout_width="150dp"
+                   android:layout_height="150dp"
+                   android:layout_margin="20dp"
+                   android:padding="1dp"
+                   android:background="#FF0000"
+                   android:scaleType="fitXY"
+                   android:adjustViewBounds="true"
+                   android:id="@+id/add_training_image_1"
+                   android:src="@drawable/header_background"
+        />
+        <ImageView android:layout_width="150dp"
+                   android:layout_margin="20dp"
+                   android:padding="1dp"
+                   android:background="#FF0000"
+                   android:scaleType="fitXY"
+                   android:adjustViewBounds="true"
+                   android:layout_height="150dp"
+                   android:id="@+id/add_training_image_2"
+                   android:src="@drawable/header_background"
+        />
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Exercise Name"
+                android:textAllCaps="true"
+                android:textSize="15sp"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:id="@+id/add_exercise_name"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Exercise Main Target"
+                android:textAllCaps="true"
+                android:textSize="15sp"/>
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg"
+                android:id="@+id/spinner"
+        />
+
+        <!--        <EditText-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:background="@drawable/btn_bg"-->
+        <!--                android:fontFamily="sans-serif-light"-->
+        <!--                android:paddingLeft="15dp"-->
+        <!--                android:paddingRight="15dp"-->
+        <!--                android:singleLine="true"-->
+        <!--                android:textSize="15sp"/>-->
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Exercise Detail"
+                android:textAllCaps="true"
+                android:textSize="15sp"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_bg"
+                android:fontFamily="sans-serif-light"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:singleLine="true"
+                android:layout_weight="10"
+                android:textSize="15sp"/>
+
+    </LinearLayout>
+    <RadioGroup android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/free_or_machine_radiogroup"
+    >
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/free_weight"
+                android:text="@string/free_weight"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/machine"
+                android:text="@string/machine"
+        />
+    </RadioGroup>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/selected_machine"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/exercise_machine"
+                android:textAllCaps="true"
+                android:textSize="15sp"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="match_parent">
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="10"
+                    android:background="@drawable/btn_bg"
+                    android:fontFamily="sans-serif-light"
+                    android:id="@+id/machine_spinner"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:singleLine="true"
+                    android:textSize="15sp"/>
+
+            <ImageView android:layout_width="40dp"
+                       android:layout_height="40dp"
+                       android:layout_weight="1"
+                       android:id="@+id/add_machine_button"
+                       android:src="@drawable/ic_baseline_add_24"
+            />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:id="@+id/selected_free_weight"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/weight_type"
+                android:textAllCaps="true"
+                android:textSize="15sp"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_height="match_parent">
+            <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight="10"
+                    android:background="@drawable/btn_bg"
+                    android:id="@+id/weight_spinner"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:singleLine="true"
+                    android:textSize="15sp"/>
+            <ImageView android:layout_width="40dp"
+                       android:layout_height="40dp"
+                       android:layout_weight="1"
+                       android:id="@+id/add_free_weight_button"
+                       android:src="@drawable/ic_baseline_add_24"
+            />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

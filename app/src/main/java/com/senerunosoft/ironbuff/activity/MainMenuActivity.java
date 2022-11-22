@@ -122,7 +122,11 @@ public class MainMenuActivity extends AppCompatActivity {
         firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                getNavData();
+                if (error == null){
+                    getNavData();
+                }
+
+
             }
         });
     }
@@ -142,7 +146,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         headerNameSurname.setText(namesurname);
                         headerEmail.setText(email);
 
-                        if (doc.getData().containsKey("isAdmin")){
+                        if (doc.getData().containsKey("isAdmin")) {
                             binding.navigationView.getMenu().findItem(R.id.adminFragment).setVisible(true);
 
                         }

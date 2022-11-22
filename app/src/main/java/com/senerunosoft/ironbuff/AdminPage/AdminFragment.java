@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,6 +56,7 @@ public class AdminFragment extends Fragment {
         userDocId = new ArrayList<>();
         userImg = new ArrayList<>();
         getUserList();
+        clickAction();
 
 
     }
@@ -85,11 +88,12 @@ public class AdminFragment extends Fragment {
         });
     }
 
-    private void selectedItem() {
-        binding.userList.setOnClickListener(new View.OnClickListener() {
+    private void clickAction() {
+        binding.addExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "deneme", Toast.LENGTH_SHORT).show();
+                NavDirections directions = AdminFragmentDirections.gotoAdminAddExercise();
+                Navigation.findNavController(view).navigate(directions.getActionId());
             }
         });
     }
