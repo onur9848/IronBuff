@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/btn_bg"
-                android:id="@+id/spinner"
+                android:id="@+id/exercise_zone_spinner"
         />
 
         <!--        <EditText-->
@@ -106,6 +106,7 @@
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:id="@+id/add_exercise_detail"
                 android:background="@drawable/btn_bg"
                 android:fontFamily="sans-serif-light"
                 android:paddingLeft="15dp"
@@ -196,7 +197,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="10"
                     android:background="@drawable/btn_bg"
-                    android:id="@+id/weight_spinner"
+                    android:id="@+id/free_weight_spinner"
                     android:fontFamily="sans-serif-light"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
@@ -210,5 +211,13 @@
             />
         </LinearLayout>
     </LinearLayout>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_bg"
+            android:id="@+id/add_training_save_button"
+            android:text="@string/save"
+    />
 
 </LinearLayout>

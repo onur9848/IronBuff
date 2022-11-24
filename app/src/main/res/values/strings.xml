@@ -47,4 +47,5 @@
     <string name="free_weight">Free Weight</string>
     <string name="weight_type">Weight Type</string>
     <string name="exercise_machine">Exercise Machine</string>
+    <string name="save">save</string>
 </resources>

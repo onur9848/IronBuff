@@ -52,21 +52,21 @@ public class TrainingProgramFragment extends Fragment {
         trainingTables = new ArrayList<>();
 
 
-        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).orderBy("exerciseDate").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Map<String, Object> hashMap = new HashMap<>();
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        hashMap = doc.getData();
-                        hashMap.put("docId",doc.getId());
-                        trainingTables.add(new UserTrainingTable(hashMap));
-                    }
-                    getCardView();
-
-                }
-            }
-        });
+//        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).orderBy("exerciseDate").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Map<String, Object> hashMap = new HashMap<>();
+//                    for (QueryDocumentSnapshot doc : task.getResult()) {
+//                        hashMap = doc.getData();
+//                        hashMap.put("docId",doc.getId());
+//                        trainingTables.add(new UserTrainingTable(hashMap));
+//                    }
+//                    getCardView();
+//
+//                }
+//            }
+//        });
     }
 
     private void getCardView() {

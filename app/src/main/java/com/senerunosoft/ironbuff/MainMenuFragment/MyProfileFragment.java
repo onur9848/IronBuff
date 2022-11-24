@@ -257,6 +257,12 @@ public class MyProfileFragment extends Fragment {
 
             }
         });
+        firestore.collection(COLLECTION_NAME_USER).document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+//               task.getResult().getData().t
+            }
+        });
 
     }
 

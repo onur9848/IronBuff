@@ -1,53 +1,74 @@
 package com.senerunosoft.ironbuff.table;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class UserTrainingTable {
-    String[] ExerciseName;
-    String[] ExerciseCount;
-    String ExerciseDay;
-    String DocId;
+
+    private String date;
+    private ArrayList<String> exerciseZone;
+    private int exerciseCount;
+    private int exerciseZoneCount;
+    private ArrayList<String> exerciseName;
+    private ArrayList<String> exerciseRepsAndSets;
+
 
     public UserTrainingTable(){
 
     }
-    public UserTrainingTable(Map param){
-        this.ExerciseName = param.get("exerciseZone").toString().replaceAll("[\\p{Ps}\\p{Pe}]","").split(", ");;
-        this.ExerciseCount = param.get("exerciseCount").toString().replaceAll("[\\p{Ps}\\p{Pe}]","").split(", ");
-        this.ExerciseDay = param.get("exerciseDate").toString();
-        this.DocId = param.get("docId").toString();
+//    public UserTrainingTable(Map param){
+//        this.ExerciseName = param.get("exerciseZone").toString().replaceAll("[\\p{Ps}\\p{Pe}]","").split(", ");;
+//        this.ExerciseCount = param.get("exerciseCount").toString().replaceAll("[\\p{Ps}\\p{Pe}]","").split(", ");
+//        this.ExerciseDay = param.get("exerciseDate").toString();
+//        this.DocId = param.get("docId").toString();
+//    }
+
+
+    public String getDate() {
+        return date;
     }
 
-
-    public String[] getExerciseName() {
-        return ExerciseName;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setExerciseName(String[] exerciseName) {
-        ExerciseName = exerciseName;
+    public ArrayList<String> getExerciseZone() {
+        return exerciseZone;
     }
 
-    public String[] getExerciseCount() {
-        return ExerciseCount;
+    public void setExerciseZone(ArrayList<String> exerciseZone) {
+        this.exerciseZone = exerciseZone;
     }
 
-    public void setExerciseCount(String[] exrtciseCount) {
-        ExerciseCount = exrtciseCount;
+    public int getExerciseCount() {
+        return exerciseCount;
     }
 
-    public String getExerciseDay() {
-        return ExerciseDay;
+    public void setExerciseCount(int exerciseCount) {
+        this.exerciseCount = exerciseCount;
     }
 
-    public void setExerciseDay(String exerciseDay) {
-        ExerciseDay = exerciseDay;
+    public int getExerciseZoneCount() {
+        return exerciseZoneCount;
     }
 
-    public String getDocId() {
-        return DocId;
+    public void setExerciseZoneCount(int exerciseZoneCount) {
+        this.exerciseZoneCount = exerciseZoneCount;
     }
 
-    public void setDocId(String docId) {
-        DocId = docId;
+    public ArrayList<String> getExerciseName() {
+        return exerciseName;
+    }
+
+    public void setExerciseName(ArrayList<String> exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
+    public ArrayList<String> getExerciseRepsAndSets() {
+        return exerciseRepsAndSets;
+    }
+
+    public void setExerciseRepsAndSets(ArrayList<String> exerciseRepsAndSets) {
+        this.exerciseRepsAndSets = exerciseRepsAndSets;
     }
 }

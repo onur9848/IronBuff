@@ -42,18 +42,18 @@ public class TrainingViewPageAdapter extends RecyclerView.Adapter<TrainingViewPa
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         final UserTrainingTable getPositionTable = trainingTables.get(position);
 
-        holder.dateText.setText(getPositionTable.getExerciseDay());
-        TrainingListViewAdapter adapter = new TrainingListViewAdapter(layoutInflater.getContext(),getPositionTable.getExerciseName(),getPositionTable.getExerciseCount());
-        holder.listView.setAdapter(adapter);
-        holder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("DocId",getPositionTable.getDocId());
-                NavDirections directions = TrainingProgramFragmentDirections.gotoTrainingDetail();
-                Navigation.findNavController(view).navigate(directions.getActionId(),bundle);
-            }
-        });
+//        holder.dateText.setText(getPositionTable.getExerciseDay());
+//        TrainingListViewAdapter adapter = new TrainingListViewAdapter(layoutInflater.getContext(),getPositionTable.getExerciseName(),getPositionTable.getExerciseCount());
+//        holder.listView.setAdapter(adapter);
+//        holder.button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("DocId",getPositionTable.getDocId());
+//                NavDirections directions = TrainingProgramFragmentDirections.gotoTrainingDetail();
+//                Navigation.findNavController(view).navigate(directions.getActionId(),bundle);
+//            }
+//        });
 
     }
 

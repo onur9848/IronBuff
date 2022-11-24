@@ -8,6 +8,8 @@
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable-v24/grad_bg.xml" value="0.124" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_bottom_radius.xml" value="0.202" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_linear_color_primary.xml" value="0.1155" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_linear_color_variant.xml" value="0.1155" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_lineat.xml" value="0.1" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_radius_left.xml" value="0.15" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/bg_radius_right.xml" value="0.202" />
@@ -17,6 +19,7 @@
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic__4___loadingsplash.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1365" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2595" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.1885" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/ic_login_default.xml" value="0.12" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/drawable/splash_screen.xml" value="0.2245" />
@@ -38,8 +41,8 @@
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/content_main.xml" value="0.20599409033347404" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/drawer_layout.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin.xml" value="0.19709277469003847" />
-        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_add_training.xml" value="0.29743589743589743" />
-        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_add_user_program.xml" value="0.19709277469003847" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_add_training.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_add_user_program.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_update_userprogram.xml" value="0.20863616930312098" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_admin_user_add_program.xml" value="0.19709277469003847" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/fragment_forget_password.xml" value="0.1" />
@@ -54,6 +57,7 @@
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/header_navigationview.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/image_uploaded_bottom_sheet_diaolog.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/list_item_program.xml" value="0.264" />
+        <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/my_grid_view.xml" value="0.19833178869323448" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/nav_header_main.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/training_card_view.xml" value="0.264" />
         <entry key="..\:/FurkanSpor/a/app/src/main/res/layout/user_list.xml" value="0.264" />

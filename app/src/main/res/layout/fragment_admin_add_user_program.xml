@@ -1,14 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".AdminPage.AdminAddUserProgramFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:padding="10dp"
+              android:layout_height="match_parent"
+              tools:context=".AdminPage.AdminAddUserProgramFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/bg_linear_color_primary"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50sp">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:layout_height="match_parent"
+                      android:gravity="center|end"
+                      android:text="Exercise Date: "
+            />
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:hint="01/01/2023"
+                      android:id="@+id/selected_exercise_date"
+                      android:gravity="center_vertical"
+                      android:layout_height="match_parent"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="right"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_baseline_add_24"
+                           android:id="@+id/show_exercise_date"/>
+            </LinearLayout>
 
-</FrameLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:background="@drawable/bg_linear_color_variant"
+                      android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="center"
+                          android:visibility="gone"
+                          android:id="@+id/add_user_program_exercisedate_gridview"
+                          android:orientation="horizontal"
+                          android:layout_height="100dp">
+
+                <TextView android:layout_width="match_parent"
+                          android:layout_weight="2"
+                          android:gravity="end|center"
+                          android:text="Exercise Date:"
+                          android:layout_height="match_parent"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:id="@+id/gridview_date_text"
+                        android:layout_height="wrap_content"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_weight="2"
+                              android:layout_height="match_parent">
+                    <ImageView android:layout_width="wrap_content"
+                               android:src="@drawable/ic_baseline_calendar_month_24"
+                               android:id="@+id/gridview_date_diaolog"
+                               android:layout_height="match_parent"/>
+                    <Button android:layout_width="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="5dp"
+                            android:text="ok"
+                            android:id="@+id/gridview_add_date_button"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/bg_linear_color_primary"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50sp">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:layout_height="match_parent"
+                      android:gravity="center|end"
+                      android:text="Exercise Zone: "
+            />
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:hint="Chest"
+                      android:id="@+id/selected_exercise_zone_text"
+                      android:gravity="center_vertical"
+                      android:layout_height="match_parent"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="right"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_baseline_add_24"
+                           android:id="@+id/show_exercise_zones"/>
+            </LinearLayout>
+        </LinearLayout>
+        <GridView
+                android:visibility="gone"
+                android:background="@drawable/bg_linear_color_variant"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                android:fitsSystemWindows="true"
+                android:numColumns="2"
+                android:id="@+id/add_user_program_exercisezone_gridview"
+        />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:background="@drawable/bg_linear_color_primary"
+                  android:layout_marginTop="5dp"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50sp">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:layout_height="match_parent"
+                      android:gravity="center|end"
+                      android:text="Exercise Name: "
+            />
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:hint="Bench Press"
+                      android:id="@+id/selected_exercise_name"
+                      android:gravity="center_vertical"
+                      android:layout_height="match_parent"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="right"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_baseline_add_24"
+                           android:id="@+id/show_exercises"/>
+            </LinearLayout>
+        </LinearLayout>
+        <GridView
+                android:visibility="gone"
+                android:background="@drawable/bg_linear_color_variant"
+                android:padding="10dp"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                android:fitsSystemWindows="true"
+                android:numColumns="2"
+                android:id="@+id/add_user_program_exercisename_gridview"
+        />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/bg_linear_color_primary"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50sp">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:layout_height="match_parent"
+                      android:gravity="center|end"
+                      android:text="Sets and Reps: "
+            />
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:hint="3x12"
+                      android:id="@+id/selected_exercise_sets_and_reps"
+                      android:gravity="center_vertical"
+                      android:layout_height="match_parent"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="right"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_baseline_add_24"
+                           android:id="@+id/show_exercise_set_and_reps"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="vertical"
+                      android:id="@+id/add_user_program_set_and_reps_gridview"
+                      android:visibility="gone"
+                      android:background="@drawable/bg_linear_color_variant"
+                      android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="horizontal">
+
+                <TextView android:layout_width="match_parent"
+                          android:layout_weight="3"
+                          android:gravity="center|end"
+                          android:text="Reps:"
+                          android:layout_height="match_parent"/>
+                <EditText android:layout_width="match_parent"
+                          android:layout_weight="2"
+                          android:layout_marginRight="50dp"
+                          android:id="@+id/gridview_add_reps"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="horizontal">
+
+                <TextView android:layout_width="match_parent"
+                          android:layout_weight="3"
+                          android:gravity="center|end"
+                          android:text="Sets:"
+                          android:layout_height="match_parent"/>
+                <EditText android:layout_width="match_parent"
+                          android:layout_weight="2"
+                          android:layout_marginRight="50dp"
+                          android:id="@+id/gridview_add_sets"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:id="@+id/gridview_add_reps_sets_button"
+                    android:text="Ok"
+                    android:layout_gravity="center"
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_marginTop="5dp"
+                  android:background="@drawable/bg_linear_color_primary"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50sp">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:layout_height="match_parent"
+                      android:gravity="center|end"
+                      android:text="Exercise: "
+            />
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="2"
+                      android:hint="0 zone 0 exercise"
+                      android:id="@+id/selected_exercise_zone_and_exercise"
+                      android:gravity="center_vertical"
+                      android:layout_height="match_parent"
+            />
+            <LinearLayout android:layout_width="match_parent"
+                          android:gravity="right"
+                          android:layout_weight="2"
+                          android:layout_height="match_parent">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/ic_baseline_add_24"
+                           android:id="@+id/show_exercise_zone_and_exercise"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_margin="5dp"
+                      android:layout_height="300dp"
+                      android:background="@drawable/bg_linear_color_variant"
+                      android:orientation="vertical">
+
+            <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listview_exercise_zone_and_exercise"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:gravity="center"
+                      android:layout_gravity="bottom"
+                      android:layout_height="wrap_content">
+            <Button android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="15sp"
+                    android:background="@drawable/btn_bg"
+                    android:id="@+id/add_user_exercise_button"
+                    android:layout_gravity="center"
+                    android:text="Add Exercise"
+            />
+
+            <Button android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_bg"
+                    android:id="@+id/add_user_program_button"
+                    android:layout_margin="15sp"
+                    android:layout_gravity="center"
+                    android:text="Add User Program"
+            />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

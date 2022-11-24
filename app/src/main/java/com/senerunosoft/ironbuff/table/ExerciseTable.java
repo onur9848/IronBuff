@@ -1,22 +1,17 @@
 package com.senerunosoft.ironbuff.table;
 
-public class TrainingProgramTable {
+public class ExerciseTable {
 
     private String ExerciseTarget;
+    private String ExerciseDetail;
+    private String ExerciseWeightType;
+    private String ExerciseWeightName;
     private String ExerciseName;
     private String ExerciseImg1;
     private String ExerciseImg2;
-    private String ExerciseSetsReps;
 
-    public TrainingProgramTable(){
+    public ExerciseTable(){
 
-    }
-    public TrainingProgramTable(String exerciseTarget, String exerciseName, String exerciseImg1, String exerciseImg2, String exerciseSetsReps) {
-        ExerciseTarget = exerciseTarget;
-        ExerciseName = exerciseName;
-        ExerciseImg1 = exerciseImg1;
-        ExerciseImg2 = exerciseImg2;
-        ExerciseSetsReps = exerciseSetsReps;
     }
 
     public String getExerciseTarget(){
@@ -26,6 +21,29 @@ public class TrainingProgramTable {
         ExerciseTarget = exerciseTarget;
     }
 
+    public String getExerciseDetail() {
+        return ExerciseDetail;
+    }
+
+    public void setExerciseDetail(String exerciseDetail) {
+        ExerciseDetail = exerciseDetail;
+    }
+
+    public String getExerciseWeightType() {
+        return ExerciseWeightType;
+    }
+
+    public void setExerciseWeightType(String exerciseWeightType) {
+        this.ExerciseWeightType = exerciseWeightType;
+    }
+
+    public String getExerciseWeightName() {
+        return ExerciseWeightName;
+    }
+
+    public void setExerciseWeightName(String exerciseWeightName) {
+        this.ExerciseWeightName = exerciseWeightName;
+    }
 
     public String getExerciseName() {
         return ExerciseName;
@@ -51,11 +69,4 @@ public class TrainingProgramTable {
         ExerciseImg2 = exerciseImg2;
     }
 
-    public String getExerciseSetsReps() {
-        return ExerciseSetsReps;
-    }
-
-    public void setExerciseSetsReps(String exerciseSetsReps) {
-        ExerciseSetsReps = exerciseSetsReps;
-    }
-}
+  }
