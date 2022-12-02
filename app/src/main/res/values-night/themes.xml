@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/nightPrimaryLightColor</item>
         <item name="colorPrimaryVariant">@color/nightPrimaryDarkColor</item>
         <item name="colorOnPrimary">@color/nightSecondaryTextColor</item>
+        <item name="colorPrimaryDark">@color/nightPrimaryColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/nightSecondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryLightColor</item>

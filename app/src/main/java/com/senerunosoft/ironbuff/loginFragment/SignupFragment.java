@@ -89,6 +89,9 @@ public class SignupFragment extends Fragment {
     }
 
     private void uploadimage() {
+        Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/iron-buff-b521e.appspot.com/o/ironbuff%2Fprofil.png?alt=media&token=118a4b1d-59c7-4298-9f9e-c51082596b4d");
+        registerButtonProcess(uri);
+        /*
         String url = "image/" + user.getUserName() + "/profilimage";
         StorageReference reference = storage.getReference().child(url);
 
@@ -117,7 +120,7 @@ public class SignupFragment extends Fragment {
                 });
 
             }
-        });
+        });*/
     }
 
     private void tanimla(@NotNull View view) {

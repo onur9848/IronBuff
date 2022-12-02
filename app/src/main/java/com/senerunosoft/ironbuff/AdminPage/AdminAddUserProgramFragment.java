@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -13,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
@@ -21,6 +25,7 @@ import com.senerunosoft.ironbuff.databinding.FragmentAdminAddUserProgramBinding;
 import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,11 +33,12 @@ import java.util.*;
 public class AdminAddUserProgramFragment extends Fragment {
 
     private static final String COLLECTION_NAME_EXERCISE_TABLE = "exerciseTable";
+    private static final String COLLECTION_NAME_USER_TABLE = "userTable";
     private static final String DOCUMENT_IN_EXERCISE_TABLE = "exercise";
     FragmentAdminAddUserProgramBinding binding;
     FirebaseFirestore firestore;
-    ArrayList<String> exerciseZone, exerciseName, listExercise;
-    ArrayList<String> addExerciseZone, addExerciseName, addExerciseSetsAndReps,addListView;
+    ArrayList<String> exerciseZone, exerciseName, listExercise, exerciseDetails;
+    ArrayList<String> addExerciseZone, addExerciseName, addExerciseSetsAndReps, addListView, addExerciseDetail;
     DocumentReference documentReference;
     UserTrainingTable table;
     private String DOC_ID_USER;
@@ -83,6 +89,7 @@ public class AdminAddUserProgramFragment extends Fragment {
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                             binding.selectedExerciseName.setText("");
                             exerciseName = new ArrayList<>();
+                            exerciseDetails = new ArrayList<>();
                             getExerciseName();
 
                         }
@@ -98,6 +105,7 @@ public class AdminAddUserProgramFragment extends Fragment {
             }
         });
     }
+    String selectedDetails;
 
     private void getExerciseName() {
         documentReference.collection(binding.selectedExerciseZoneText.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -106,12 +114,15 @@ public class AdminAddUserProgramFragment extends Fragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         exerciseName.add(doc.get("exerciseName").toString());
+                        exerciseDetails.add(doc.get("exerciseDetail").toString());
 
                     }
                     GridViewAdapter adapter = new GridViewAdapter(getContext(), exerciseName, binding.selectedExerciseName);
                     binding.addUserProgramExercisenameGridview.setVisibility(View.VISIBLE);
                     binding.addUserProgramExercisenameGridview.setAdapter(adapter);
-                    exerciseName = new ArrayList<>();
+
+
+//                    exerciseName = new ArrayList<>();
                 }
 
             }
@@ -250,7 +261,9 @@ public class AdminAddUserProgramFragment extends Fragment {
         addExerciseName = new ArrayList<>();
         addExerciseZone = new ArrayList<>();
         addExerciseSetsAndReps = new ArrayList<>();
-        addListView =new ArrayList<>();
+        addListView = new ArrayList<>();
+        addExerciseDetail = new ArrayList<>();
+
 
         binding.addUserExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,49 +271,110 @@ public class AdminAddUserProgramFragment extends Fragment {
                 if (!bool) {
                     Toast.makeText(getContext(), "Tüm alanları seçiniz", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    addExerciseName.add(binding.selectedExerciseName.getText().toString());
-                    addExerciseSetsAndReps.add(binding.selectedExerciseSetsAndReps.getText().toString());
-                    addExerciseZone.add(binding.selectedExerciseZoneText.getText().toString());
-                    addListView.add(binding.selectedExerciseZoneText.getText().toString()+": "+binding.selectedExerciseName.getText().toString()+"--"+binding.selectedExerciseSetsAndReps.getText().toString());
+                    addItem();
+                    removeItem();
                 }
-
-               int  zone=0, exercise=addExerciseName.size();
-                zone = getZone();
-                String exerciseText =zone+" zone "+exercise+" exercise";
-                binding.selectedExerciseZoneAndExercise.setText(exerciseText);
-
-                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, addListView);
-                binding.listviewExerciseZoneAndExercise.setAdapter(adapter);
-
                 table.setDate(binding.selectedExerciseDate.getText().toString());
-                table.setExerciseZone(exerciseZone);
+                table.setExerciseZone(addExerciseZone);
                 table.setExerciseCount(addExerciseName.size());
                 table.setExerciseName(addExerciseName);
                 table.setExerciseRepsAndSets(addExerciseSetsAndReps);
+                table.setExerciseDetail(addExerciseDetail);
                 table.setExerciseZoneCount(getZone());
-                Map map = new HashMap();
-
-
-
+                try {
+                    tableToMap();
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
 
 
             }
         });
     }
 
-    private int getZone(){
+    private void addItem() {
+        int i = exerciseName.indexOf(binding.selectedExerciseName.getText().toString());
+        addExerciseName.add(binding.selectedExerciseName.getText().toString());
+        addExerciseSetsAndReps.add(binding.selectedExerciseSetsAndReps.getText().toString());
+        addExerciseZone.add(binding.selectedExerciseZoneText.getText().toString());
+        addExerciseDetail.add(exerciseDetails.get(i));
+        addListView.add(binding.selectedExerciseZoneText.getText().toString() + ": " + binding.selectedExerciseName.getText().toString() + "--" + binding.selectedExerciseSetsAndReps.getText().toString());
+
+        listItem();
+    }
+
+    private void removeItem() {
+        binding.listviewExerciseZoneAndExercise.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                addExerciseName.remove(i);
+                addExerciseSetsAndReps.remove(i);
+                addExerciseZone.remove(i);
+                addListView.remove(i);
+                addExerciseDetail.remove(i);
+                listItem();
+            }
+        });
+    }
+
+    private void listItem() {
+        binding.selectedExerciseZoneAndExercise.setText(getExerciseText());
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, addListView);
+        binding.listviewExerciseZoneAndExercise.setAdapter(adapter);
+    }
+
+    private void tableToMap() throws IllegalAccessException {
+        Map map = new HashMap();
+        Field[] fields = table.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            Object value = field.get(table);
+            map.put(field.getName(), value);
+        }
+
+
+        binding.addUserProgramButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (table.getExerciseName().size() > 0) {
+                    firestore.collection(COLLECTION_NAME_USER_TABLE).document(DOC_ID_USER).collection(COLLECTION_NAME_EXERCISE_TABLE).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Succes" + map.values(), Toast.LENGTH_SHORT).show();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("DocId", DOC_ID_USER);
+                                NavDirections directions = AdminAddUserProgramFragmentDirections.gotoAdminUserAddProgram();
+                                Navigation.findNavController(view).navigate(directions.getActionId(), bundle);
+
+                            }
+                        }
+                    });
+
+                }
+                Log.d(getTag(), "onClickMap: " + map);
+                Log.d(getTag(), "onClickUser: " + table);
+            }
+        });
+
+
+    }
+
+    public int getZone() {
         ArrayList<String> zonecount = new ArrayList<>();
-        for (String st:addExerciseZone){
-            if (!zonecount.contains(st)){
+        for (String st : addExerciseZone) {
+            if (!zonecount.contains(st)) {
                 zonecount.add(st);
             }
         }
         return zonecount.size();
     }
 
-
-
+    private String getExerciseText() {
+        String getText;
+        getText = getZone() + " zone " + addExerciseName.size() + " exercise";
+        return getText;
+    }
 
 
     @Override

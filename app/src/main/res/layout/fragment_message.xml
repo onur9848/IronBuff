@@ -7,17 +7,7 @@
               tools:context=".MainMenuFragment.MessageFragment">
     <ListView android:layout_width="match_parent"
               android:background="#039BE5"
-              android:id="@+id/exerciseZone"
-              android:layout_weight="1"
-              android:layout_height="match_parent"/>
-    <ListView android:layout_width="match_parent"
-              android:background="#E53935"
-              android:layout_weight="1"
-              android:id="@+id/backExercise"
-              android:layout_height="match_parent"/>
-    <ListView android:layout_width="match_parent"
-              android:background="#43A047"
-              android:id="@+id/chestExercise"
+              android:id="@+id/message_user_list"
               android:layout_weight="1"
               android:layout_height="match_parent"/>
 

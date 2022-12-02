@@ -11,30 +11,33 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
+import com.senerunosoft.ironbuff.MainMenuFragment.adapter.TrainingDetailAdapter;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.FragmentTrainingDetailBinding;
+import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TrainingDetailFragment extends Fragment {
 
     FragmentTrainingDetailBinding binding;
     private static final String COLLECTION_USER_TABLE = "userTable";
-    private static final String COLLECTION_USER_EXERCISE_TABLE = "exercisePrograms";
-    private static final String COLLECTION_USER_PROGRAM_DETAIL ="exerciseDetail";
+    private static final String COLLECTION_USER_EXERCISE_TABLE = "exerciseTable";
     private String DOC_ID;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
+    DocumentReference userProramDocRef;
+    UserTrainingTable trainingProgram;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTrainingDetailBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         return root;
     }
 
@@ -51,22 +54,29 @@ public class TrainingDetailFragment extends Fragment {
         DOC_ID = getArguments().getString("DocId");
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-
+        trainingProgram = new UserTrainingTable();
+        userProramDocRef = firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).document(DOC_ID);
         getProgramDetail();
 
     }
 
     private void getProgramDetail() {
-        binding.denemeText.setText(DOC_ID);
-        CollectionReference reference = firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_USER_EXERCISE_TABLE).document(DOC_ID).collection(COLLECTION_USER_PROGRAM_DETAIL);
-        reference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        userProramDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot doc: task.getResult()){
-                    Log.d(getTag(), "onComplete: "+doc.getData());
-                }
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                Map map = task.getResult().getData();
+                trainingProgram = new UserTrainingTable(map);
+                trainingProgram.setDocID(task.getResult().getId());
+                getExerciseDetail();
             }
         });
+    }
+
+    private void getExerciseDetail() {
+
+        TrainingDetailAdapter adapter = new TrainingDetailAdapter(getContext(),trainingProgram,binding.fragmentTrainingDetailViewpager);
+        binding.fragmentTrainingDetailViewpager.setAdapter(adapter);
+
 
 
     }

@@ -27,8 +27,9 @@ import java.util.zip.Inflater;
 
 public class AdminUserAddProgramFragment extends Fragment {
     private static final String COLLECTION_USER_TABLE = "userTable";
-    private static final String COLLECTION_USER_EXERCISE_TABLE = "exercisePrograms";
+    private static final String COLLECTION_USER_EXERCISE_TABLE = "exerciseTable";
     private static final String DOC_GET_FIELD_EXERCISEZONE ="exerciseZone";
+    private static final String DOC_GET_FIELD_EXERCISEDATE ="date";
     FragmentAdminUserAddProgramBinding binding;
     FirebaseFirestore firestore;
     private String DOC_ID;
@@ -65,8 +66,8 @@ public class AdminUserAddProgramFragment extends Fragment {
                 if (task.isSuccessful()) {
 
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        String st = doc.getId();
-                        st += doc.get(DOC_GET_FIELD_EXERCISEZONE);
+                        String st = (String) doc.get(DOC_GET_FIELD_EXERCISEDATE);
+                        st +=" - Zone: "+doc.get(DOC_GET_FIELD_EXERCISEZONE);
                         userTrainingID.add(st);
                         docIdList.add(doc.getId());
                     }

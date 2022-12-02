@@ -48,4 +48,28 @@
     <string name="weight_type">Weight Type</string>
     <string name="exercise_machine">Exercise Machine</string>
     <string name="save">save</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header" translatable="false">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title" translatable="false">Your signature</string>
+    <string name="reply_title" translatable="false">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title" translatable="false">Sync email periodically</string>
+    <string name="attachment_title" translatable="false">Download incoming attachments</string>
+    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails</string>
+    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
+    <string name="cancel">Cancel</string>
+    <string name="okey">Okey</string>
+    <string name="protein">Protein</string>
+    <string name="fat">Fat</string>
+    <string name="karbonhidrat">Carbon\nHidrat</string>
+    <string name="calorie">Calorie</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="add_new_measurement">Add New Measurement</string>
+    <string name="lunch">Lunch</string>
+    <string name="extra">Extra</string>
+    <string name="dinner">Dinner</string>
 </resources>

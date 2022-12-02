@@ -37,4 +37,23 @@
     <string name="test_date">Tarih: 11/11/1998</string>
     <string name="test_weight">Kilogram: 80 kg</string>
     <string name="adminpanel">AdminPanel</string>
+    <string name="addProgram">Yeni Program Ekle</string>
+    <string name="exercise_list">Egzersiz Listesi</string>
+    <string name="machine">Makine</string>
+    <string name="free_weight">Serbest Ağırlık</string>
+    <string name="weight_type">Ağırlık Türü</string>
+    <string name="exercise_machine">Egzersiz Makinesi</string>
+    <string name="save">Kaydet</string>
+    <string name="messages_header">Mesaj</string>
+    <string name="cancel">İptal</string>
+    <string name="okey">Tamam</string>
+    <string name="protein">Protein</string>
+    <string name="fat">Yağ</string>
+    <string name="karbonhidrat">Karbon\nHidrat</string>
+    <string name="calorie">Kalori</string>
+    <string name="breakfast">Kahvaltı</string>
+    <string name="add_new_measurement">Yeni Ölçü Ekle</string>
+    <string name="lunch">Öğle Yemeği</string>
+    <string name="extra">Ekstra</string>
+    <string name="dinner">Akşam Yemeği</string>
 </resources>

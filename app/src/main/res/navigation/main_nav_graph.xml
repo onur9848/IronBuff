@@ -13,7 +13,10 @@
     <fragment android:id="@+id/messageFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.MessageFragment"
               android:label="@string/message"
-              tools:layout="@layout/fragment_message"/>
+              tools:layout="@layout/fragment_message">
+        <action android:id="@+id/goto_send_message_users"
+                app:destination="@id/messageUserFragment"/>
+    </fragment>
 
     <fragment android:id="@+id/myProfileFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.MyProfileFragment"
@@ -51,7 +54,10 @@
     </fragment>
     <fragment android:id="@+id/adminAddUserProgramFragment"
               android:name="com.senerunosoft.ironbuff.AdminPage.AdminAddUserProgramFragment"
-              android:label="User New Program" tools:layout="@layout/fragment_admin_add_user_program"/>
+              android:label="User New Program" tools:layout="@layout/fragment_admin_add_user_program">
+        <action android:id="@+id/goto_admin_user_add_program"
+                app:destination="@id/adminUserAddProgramFragment"/>
+    </fragment>
     <fragment android:id="@+id/adminUpdateUserprogramFragment"
               android:name="com.senerunosoft.ironbuff.AdminPage.AdminUpdateUserprogramFragment"
               android:label="User Program Details"
@@ -59,5 +65,8 @@
     <fragment android:id="@+id/adminAddTrainingFragment"
               android:name="com.senerunosoft.ironbuff.AdminPage.AdminAddTrainingFragment"
               android:label="New Exercise" tools:layout="@layout/fragment_admin_add_training"/>
+    <fragment android:id="@+id/messageUserFragment"
+              android:name="com.senerunosoft.ironbuff.MainMenuFragment.MessageUserFragment"
+              android:label="fragment_message_user" tools:layout="@layout/fragment_message_user"/>
 
 </navigation>

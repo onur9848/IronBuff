@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_lineat"
+        android:padding="10dp"
+        app:cardCornerRadius="30sp">
+    <LinearLayout android:layout_width="350dp"
+                  android:layout_height="wrap_content"
+                  android:padding="20sp"
+                  android:orientation="vertical">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:text="@string/weight"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:singleLine="true"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_weight_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:text="@string/chest"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:singleLine="true"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_chest_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:text="@string/left_arm"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:inputType="number"
+                      android:singleLine="true"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_l_arm_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:text="@string/right_arm"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:inputType="number"
+                      android:singleLine="true"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_r_arm_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/waist"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_waist_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/hips"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_hips_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/left_thigh"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_l_thigh_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/right_thigh"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:layout_weight="1"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_r_thigh_text"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/left_calf"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_l_calf_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent"
+                      android:layout_weight="1"
+                      android:text="@string/right_calf"
+                      android:textSize="24sp"
+                      android:gravity="fill_vertical|end"
+                      android:layout_height="match_parent"/>
+            <EditText android:layout_width="match_parent"
+                      android:singleLine="true"
+                      android:inputType="number"
+                      android:layout_marginHorizontal="10dp"
+                      android:gravity="center"
+                      android:hint="...cm"
+                      android:id="@+id/add_measurement_r_calf_text"
+                      android:layout_weight="1"
+                      android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="10sp"
+                    android:id="@+id/add_measurement_cancel_button"
+                    android:background="@drawable/btn_bg"
+                    android:text="@string/cancel"
+                    android:layout_height="match_parent"/>
+            <Button android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/okey"
+                    android:id="@+id/add_measurement_okey_button"
+                    android:layout_margin="10sp"
+                    android:background="@drawable/btn_bg"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

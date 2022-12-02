@@ -10,15 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.senerunosoft.ironbuff.R;
 
+import java.util.ArrayList;
+
 public class TrainingListViewAdapter extends ArrayAdapter<String> {
-    private String[] exerciseZone;
-    private String[] exerciseCount;
+    private ArrayList<String> exerciseZone;
+    private ArrayList<String> exerciseCount;
     private final LayoutInflater inflater;
     private ViewHolder holder;
     private final Context context;
 
 
-    public TrainingListViewAdapter(@NonNull Context context,String[] exerciseZone,String[] exerciseCount) {
+    public TrainingListViewAdapter(@NonNull Context context, ArrayList<String> exerciseZone, ArrayList<String> exerciseCount) {
         super(context,0);
         this.context = context;
         this.exerciseZone = exerciseZone;
@@ -43,8 +45,8 @@ public class TrainingListViewAdapter extends ArrayAdapter<String> {
            holder = (ViewHolder) convertView.getTag();
        }
        if (exerciseZone != null && exerciseCount != null){
-           holder.exerciseZoneText.setText(exerciseZone[position]);
-           holder.exerciseCountText.setText(exerciseCount[position]);
+           holder.exerciseZoneText.setText(exerciseZone.get(position));
+           holder.exerciseCountText.setText(exerciseCount.get(position));
        }
 
 
@@ -53,7 +55,7 @@ public class TrainingListViewAdapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        return exerciseZone.length;
+        return exerciseZone.size();
     }
 
     public static class ViewHolder{

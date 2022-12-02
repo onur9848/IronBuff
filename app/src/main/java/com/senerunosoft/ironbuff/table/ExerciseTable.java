@@ -1,5 +1,7 @@
 package com.senerunosoft.ironbuff.table;
 
+import java.util.Map;
+
 public class ExerciseTable {
 
     private String ExerciseTarget;
