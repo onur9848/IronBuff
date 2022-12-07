@@ -23,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.senerunosoft.ironbuff.AdminPage.Adapter.UserListAdapter;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.FragmentAdminBinding;
+import com.senerunosoft.ironbuff.table.UserTable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -72,14 +73,8 @@ public class AdminFragment extends Fragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-
-                        username.add(doc.get("UserName").toString());
-                        userImg.add(Uri.parse((String) doc.get("imageUrl").toString()));
-                        userDocId.add(doc.getId());
-                        doc.getData();
-                    }
-                    UserListAdapter adapter = new UserListAdapter(getContext(), username, userDocId, userImg);
+                    List<UserTable> userList = task.getResult().toObjects(UserTable.class);
+                    UserListAdapter adapter = new UserListAdapter(getContext(),userList);
                     binding.userList.setAdapter(adapter);
 
 

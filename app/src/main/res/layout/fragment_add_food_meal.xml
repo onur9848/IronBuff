@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainMenuFragment.AddFoodMealFragment">
+
+    <SearchView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:background="@drawable/bg_table_radius"
+                android:layout_margin="20dp"
+                android:id="@+id/add_meal_search_view"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    <ListView android:layout_width="0dp" android:layout_height="0dp"
+              android:id="@+id/add_food_list"
+              app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/add_meal_search_view"
+              app:layout_constraintBottom_toTopOf="@+id/list_selected_food"/>
+    <LinearLayout android:layout_width="0dp" android:orientation="vertical"
+                  android:layout_height="250dp"
+                  android:translationY="250dp"
+                  android:layout_marginHorizontal="20dp"
+                  android:background="@drawable/bg_top_radius"
+                  android:paddingTop="10dp"
+                  android:paddingHorizontal="10dp"
+                  android:id="@+id/list_selected_food"
+                  android:visibility="visible" android:animateLayoutChanges="true"
+                  app:layout_constraintBottom_toTopOf="@+id/linearLayout2" app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintStart_toStartOf="parent">
+        <ListView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/selected_food_list"
+                  tools:listitem="@layout/selected_food_listview"/>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="411dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_button_radius"
+            android:id="@+id/linearLayout2"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <ImageView android:layout_width="40dp" android:layout_height="40dp"
+                   android:src="@drawable/ic_baseline_expand_circle_down_24"
+                   android:rotation="180"
+                   android:layout_margin="20dp"
+
+                   android:id="@+id/show_selected_food" app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+        <TextView android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:text="Toplam: 0 Kcal"
+                  android:textSize="22sp"
+                  android:id="@+id/add_food_total_calorie"
+                  android:layout_marginStart="10dp"
+                  app:layout_constraintEnd_toStartOf="@+id/add_food_button"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintStart_toEndOf="@+id/show_selected_food"
+                  app:layout_constraintTop_toTopOf="parent"/>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/add_1"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_bg"
+                android:padding="1dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:id="@+id/add_food_button"/>
+        <TextView android:layout_width="15sp"
+                  android:textAlignment="center"
+                  android:visibility="gone"
+                  android:layout_height="15sp"
+                  android:textSize="10sp"
+                  android:background="@drawable/bg_lineat"
+                  android:id="@+id/add_food_selected_food_count"
+                  android:text="1"
+                  android:layout_marginTop="10dp"
+                  app:layout_constraintBottom_toTopOf="@+id/add_food_button"
+                  app:layout_constraintEnd_toEndOf="@+id/add_food_button"
+                  app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

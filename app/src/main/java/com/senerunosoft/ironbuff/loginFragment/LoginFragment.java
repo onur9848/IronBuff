@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.senerunosoft.ironbuff.activity.MainMenuActivity;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.FragmentLoginBinding;
@@ -26,6 +29,7 @@ public class LoginFragment extends Fragment {
 
     FragmentLoginBinding binding;
     FirebaseAuth auth;
+    FirebaseFirestore firestore;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +45,7 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         buttonProcess();
     }
 

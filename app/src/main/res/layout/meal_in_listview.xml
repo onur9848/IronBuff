@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="horizontal"
+              android:weightSum="15"
+              android:layout_height="50dp">
+    <TextView android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:layout_weight="4"
+              android:textSize="24sp"
+              android:paddingStart="20dp"
+              android:id="@+id/listview_food_name"
+              android:gravity="fill_vertical"
+              android:text="Yumurta"
+    />
+    <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="6"
+              android:id="@+id/listview_food_gram"
+              android:gravity="center|end"
+              android:text="100g"
+    />
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="5"
+              android:id="@+id/listview_food_kalori"
+              android:gravity="center|end"
+              android:text="200 Kcal"
+    />
+
+    <ImageView android:layout_width="40dp"
+               android:id="@+id/listview_add_food_button"
+               android:layout_height="match_parent"
+               android:layout_weight="0"
+               android:src="@drawable/ic_baseline_navigate_next_24"
+    />
+
+
+</LinearLayout>

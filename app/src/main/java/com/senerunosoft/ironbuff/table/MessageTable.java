@@ -4,16 +4,25 @@ import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class MessageTable implements Comparable<MessageTable> {
 
     private int ViewType;
     private String sendMessageByUser;
-    private String getMessageByUser;
     private String message;
     private String messageClock;
     private Date messageDate;
 
+    public MessageTable() {
+    }
+
+    public MessageTable(Map params) {
+        this.sendMessageByUser = params.get("sendMessageByUser").toString();
+        this.message = params.get("message").toString();
+        this.messageClock = params.get("messageClock").toString();
+
+    }
 
     public int getViewType() {
         return ViewType;
@@ -29,14 +38,6 @@ public class MessageTable implements Comparable<MessageTable> {
 
     public void setSendMessageByUser(String sendMessageByUser) {
         this.sendMessageByUser = sendMessageByUser;
-    }
-
-    public String getGetMessageByUser() {
-        return getMessageByUser;
-    }
-
-    public void setGetMessageByUser(String getMessageByUser) {
-        this.getMessageByUser = getMessageByUser;
     }
 
     public String getMessage() {
@@ -65,7 +66,7 @@ public class MessageTable implements Comparable<MessageTable> {
 
     @Override
     public int compareTo(MessageTable table) {
-        if (getMessageDate() == null || table.getMessageDate()==null){
+        if (getMessageDate() == null || table.getMessageDate() == null) {
             return 0;
         }
         return getMessageDate().compareTo(table.getMessageDate());

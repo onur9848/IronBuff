@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#00000000"
+              xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:gravity="center"
+                  android:layout_height="wrap_content"
+                  android:background="@drawable/bg_button_radius"
+                  android:orientation="vertical">
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="5sp"
+                  android:text="@string/add_food"
+                  android:textSize="24sp"
+                  android:textStyle="bold"
+        />
+        <com.google.android.material.divider.MaterialDivider android:layout_width="match_parent"
+                                                             android:layout_height="1dp"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:text="Yumurta" android:gravity="center"
+                  android:id="@+id/bottom_sheet_food_name"
+                  android:textSize="24sp"
+                  android:textStyle="bold"
+        />
+        <com.google.android.material.divider.MaterialDivider android:layout_width="match_parent"
+                                                             android:layout_height="1dp"
+                                                             android:layout_marginHorizontal="100dp"/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:layout_marginVertical="10sp"
+                      android:layout_height="80dp">
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:orientation="vertical"
+            >
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:text="@string/protein"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:id="@+id/bottom_sheet_protein"
+                          android:text="18"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider android:layout_width="1dp"
+                                                                 android:layout_height="match_parent"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:orientation="vertical"
+                          android:layout_weight="1"
+            >
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:text="@string/fat"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+                <TextView android:layout_width="match_parent"
+                          android:id="@+id/bottom_sheet_fat"
+                          android:layout_height="match_parent"
+                          android:text="18"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+
+
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider android:layout_width="1dp"
+                                                                 android:layout_height="match_parent"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:layout_weight="1"
+                          android:orientation="vertical"
+            >
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:text="@string/carbonhydrat"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+                <TextView android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:id="@+id/bottom_sheet_carbonhydrat"
+                          android:text="18"
+                          android:gravity="center"
+                          android:textSize="18sp"
+                          android:textStyle="bold"
+                          android:layout_weight="1"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="100 gram"
+                android:id="@+id/bottom_sheet_gram"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="24sp"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="214 Kcal"
+                  android:id="@+id/bottom_sheet_calorie"
+                  android:gravity="center"
+                  android:textStyle="bold"
+                  android:textSize="18sp"
+                  android:layout_marginTop="5dp"
+        />
+        <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/bottom_sheet_number_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_marginBottom="15sp"
+                app:np_orientation="horizontal"
+                app:np_min="1"
+                app:np_max="999"
+                app:np_value="100"
+                app:np_itemSpacing="25dp"
+                app:np_selectedTextSize="30sp"
+                app:np_dividerDistance="60dp"
+                app:np_wheelItemCount="20"
+                app:np_textSize="16sp"
+                app:np_dividerLength="40dp"
+
+
+        />
+
+        <Button android:layout_width="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add_1"
+                android:id="@+id/add_select_food"
+                android:background="@drawable/btn_bg"
+        />
+    </LinearLayout>
+
+
+</LinearLayout>

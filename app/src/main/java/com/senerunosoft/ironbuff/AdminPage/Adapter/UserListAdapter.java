@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.senerunosoft.ironbuff.AdminPage.AdminFragmentDirections;
 import com.senerunosoft.ironbuff.MainMenuFragment.adapter.TrainingListViewAdapter;
 import com.senerunosoft.ironbuff.R;
+import com.senerunosoft.ironbuff.table.UserTable;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,19 +25,15 @@ import java.util.List;
 
 public class UserListAdapter extends ArrayAdapter<String> {
 
-    private List<String> userList;
-    private List<Uri> userImg;
-    private List<String> userDocList;
+    private List<UserTable> list;
     private final Context context;
     private final LayoutInflater inflater;
     private ViewHolder holder;
 
-    public UserListAdapter(@NonNull Context context, List<String> userList, List<String> userDocList, List<Uri> userImg) {
+    public UserListAdapter(@NonNull Context context, List<UserTable> list) {
         super(context, 0);
         this.context = context;
-        this.userList = userList;
-        this.userDocList = userDocList;
-        this.userImg = userImg;
+        this.list = list;
         this.inflater = LayoutInflater.from(context);
     }
 
@@ -44,46 +41,39 @@ public class UserListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        if (convertView == null){
-            convertView = inflater.inflate(R.layout.user_list,null);
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.user_list, null);
 
             holder = new ViewHolder();
             holder.userName = (TextView) convertView.findViewById(R.id.user_list_view);
             holder.userImgView = (ImageView) convertView.findViewById(R.id.listview_user_image);
             convertView.setTag(holder);
-        }
-        else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if (userImg != null && userList != null){
-            holder.userName.setText(userList.get(position).toString());
-            Picasso.get().load(userImg.get(position)).into(holder.userImgView);
+        if (list !=null) {
+            UserTable table = list.get(position);
+            holder.userName.setText(table.getUserName());
+            Picasso.get().load(table.getImageUrl()).into(holder.userImgView);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getContext(), "position"+position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "position" + position, Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
-                    bundle.putString("DocId",userDocList.get(position));
+                    bundle.putString("DocId", table.getDocId());
                     NavDirections directions = AdminFragmentDirections.adminToAddUserTrainingProgram();
-                    Navigation.findNavController(view).navigate(directions.getActionId(),bundle);
-
-
+                    Navigation.findNavController(view).navigate(directions.getActionId(), bundle);
                 }
             });
-
         }
-
         return convertView;
     }
 
-    @Override
-    public int getPosition(@Nullable String item) {
-        return super.getPosition(item);
-    }
+
 
     @Override
     public int getCount() {
-        return userList.size();
+        return list.size();
     }
 
     private static class ViewHolder {

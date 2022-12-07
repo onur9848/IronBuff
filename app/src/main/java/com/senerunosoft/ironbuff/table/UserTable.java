@@ -4,8 +4,11 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 public class UserTable {
 
+    String docId;
     String userName;
     String nameSurname;
     String sex;
@@ -14,13 +17,19 @@ public class UserTable {
     String height;
     String weight;
     String imageUrl;
+    boolean isAdmin;
 
     public UserTable(){
 
     }
 
+    public String getDocId() {
+        return docId;
+    }
 
-
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 
     public String getUserName() {
         return userName;
@@ -86,5 +95,11 @@ public class UserTable {
         this.imageUrl = imageUrl;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 }

@@ -6,9 +6,10 @@
               android:layout_height="match_parent"
               tools:context=".MainMenuFragment.MessageFragment">
     <ListView android:layout_width="match_parent"
-              android:background="#039BE5"
+
               android:id="@+id/message_user_list"
               android:layout_weight="1"
               android:layout_height="match_parent"/>
+
 
 </LinearLayout>

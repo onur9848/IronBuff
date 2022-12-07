@@ -17,12 +17,10 @@ public class TrainingListViewAdapter extends ArrayAdapter<String> {
     private ArrayList<String> exerciseCount;
     private final LayoutInflater inflater;
     private ViewHolder holder;
-    private final Context context;
 
 
     public TrainingListViewAdapter(@NonNull Context context, ArrayList<String> exerciseZone, ArrayList<String> exerciseCount) {
         super(context,0);
-        this.context = context;
         this.exerciseZone = exerciseZone;
         this.exerciseCount =exerciseCount;
         inflater = LayoutInflater.from(context);

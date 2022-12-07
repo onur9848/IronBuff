@@ -122,7 +122,7 @@ public class MainMenuActivity extends AppCompatActivity {
         firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                if (error == null){
+                if (error == null) {
                     getNavData();
                 }
 
@@ -133,7 +133,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void getNavData() {
 
-//        QuerySnapshot snapshots = firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().getResult();
         firestore.collection("userTable").whereEqualTo("E-mail", auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
@@ -142,6 +141,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         String email = (String) doc.getData().get("E-mail");
                         String namesurname = (String) doc.getData().get("NameSurname");
                         String url = doc.getData().get("imageUrl").toString();
+
                         Picasso.get().load(url).into(headerImg);
                         headerNameSurname.setText(namesurname);
                         headerEmail.setText(email);
@@ -156,6 +156,27 @@ public class MainMenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+        firestore.collection("userTable").document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                if (error == null) {
+                    if (value.exists()){
+                        UserTable table = value.toObject(UserTable.class);
+                        Picasso.get().load(table.getImageUrl()).into(headerImg);
+                        headerNameSurname.setText(table.getNameSurname());
+                        headerEmail.setText(table.getE_mail());
+                        if (table.isAdmin()) {
+                            binding.navigationView.getMenu().findItem(R.id.adminFragment).setVisible(true);
+                            binding.navigationView.getMenu().findItem(R.id.mainMenuFragment).setChecked(true);
+
+                        }
+
+                    }
+                }
+            }
+        });
+
     }
 
 

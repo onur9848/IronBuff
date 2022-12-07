@@ -56,4 +56,18 @@
     <string name="lunch">Öğle Yemeği</string>
     <string name="extra">Ekstra</string>
     <string name="dinner">Akşam Yemeği</string>
+    <string name="add">+ Ekle</string>
+    <string name="exercise_detail">Egzersiz Detayları:</string>
+    <string name="exercise_target">Egzersiz Hedefi:</string>
+    <string name="reps">Tekrar:</string>
+    <string name="sets">"Set: "</string>
+    <string name="add_1">Ekle</string>
+    <string name="carbonhydrat">Karbonhidrat</string>
+    <string name="profil_username">Kullanıcı Adı:</string>
+    <string name="profil_height">Boy:</string>
+    <string name="profil_weight">Kilogram:</string>
+    <string name="profil_sex">Cinsiyet:</string>
+    <string name="profil_name_surname">İsim Soyisim:</string>
+    <string name="profil_age">Yaş:</string>
+    <string name="add_food">Yemek Ekle</string>
 </resources>

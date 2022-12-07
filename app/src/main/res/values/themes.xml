@@ -34,5 +34,25 @@
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_linear_color_primary</item>
+        <item name="background">?colorPrimary</item>
+    </style>
+    <style name="ProfilTextView1" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">24sp</item>
+    </style>
+    <style name="ProfilTextView2" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">40sp</item>
+        <item name="android:gravity">fill_vertical</item>
+        <item name="android:paddingStart">20sp</item>
+        <item name="android:layout_marginTop">35dp</item>
+        <item name="android:layout_marginHorizontal">10sp</item>
+        <item name="android:background">@drawable/tv_background</item>
+    </style>
 
 </resources>

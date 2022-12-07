@@ -14,7 +14,6 @@
     >
 
 
-
         <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/main_menu_show_measurement"
                 android:layout_width="match_parent"
@@ -36,10 +35,20 @@
                         android:layout_height="200dp"
                         android:layout_weight="1"
                         android:padding="5dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:text="@string/protein" android:gravity="center" android:textSize="16sp"
+                              android:textStyle="bold"
+                              app:layout_constraintStart_toStartOf="@+id/proteinPieChart"
+                              app:layout_constraintEnd_toEndOf="@+id/proteinPieChart"
+                              android:id="@+id/main_menu_protein_percent"
+                              app:layout_constraintTop_toTopOf="parent"/>
                     <org.eazegraph.lib.charts.PieChart
                             android:layout_weight="1"
                             android:id="@+id/proteinPieChart"
+                            app:egInnerPadding="80"
+                            app:egInnerPaddingOutline="3"
                             app:egLegendTextSize="18sp"
+                            android:layout_marginTop="30dp"
                             app:egInnerPaddingColor="?colorPrimaryVariant"
                             app:egInnerValueColor="@color/black"
                             android:layout_width="wrap_content"
@@ -49,44 +58,67 @@
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:text="@string/protein"
+                              android:id="@+id/main_menu_protein_text"
                               app:layout_constraintBottom_toBottomOf="@+id/proteinPieChart"
-                              app:layout_constraintTop_toTopOf="parent"
+                              app:layout_constraintTop_toTopOf="@+id/proteinPieChart"
                               app:layout_constraintEnd_toEndOf="@+id/proteinPieChart"
-                              app:layout_constraintStart_toStartOf="parent"/>
+                              app:layout_constraintStart_toStartOf="@+id/proteinPieChart"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
                                                                    android:layout_height="match_parent"
                                                                    android:layout_weight="1"
                                                                    android:padding="5dp">
-                    <org.eazegraph.lib.charts.PieChart
-                            android:layout_weight="1"
-                            android:id="@+id/carbonhydratPieChart"
-                            android:layout_width="wrap_content"
-                            app:egInnerPaddingColor="?colorPrimaryVariant"
-                            android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="@string/fat"
-                              app:layout_constraintTop_toTopOf="@+id/carbonhydratPieChart"
-                              app:layout_constraintEnd_toEndOf="parent"
-                              app:layout_constraintStart_toStartOf="@+id/carbonhydratPieChart"
-                              app:layout_constraintBottom_toBottomOf="@+id/carbonhydratPieChart"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                                   android:layout_height="match_parent"
-                                                                   android:layout_weight="1"
-                                                                   android:padding="5dp">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:text="@string/fat" android:gravity="center" android:textSize="16sp"
+                              android:textStyle="bold"
+                              app:layout_constraintStart_toStartOf="@+id/fatPieChart"
+                              app:layout_constraintEnd_toEndOf="@+id/fatPieChart"
+                              app:layout_constraintTop_toTopOf="parent" android:id="@+id/main_menu_fat_percent"/>
 
                     <org.eazegraph.lib.charts.PieChart
                             android:layout_weight="1"
                             android:id="@+id/fatPieChart"
+                            app:egInnerPadding="80"
+                            app:egInnerPaddingOutline="3"
                             android:layout_width="wrap_content"
+                            android:layout_marginTop="30dp"
                             app:egInnerPaddingColor="?colorPrimaryVariant"
+                            android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="0dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/fat"
+                              android:id="@+id/main_menu_fat_text"
+                              app:layout_constraintTop_toTopOf="@+id/fatPieChart"
+                              app:layout_constraintEnd_toEndOf="@+id/fatPieChart"
+                              app:layout_constraintStart_toStartOf="@+id/fatPieChart"
+                              app:layout_constraintBottom_toBottomOf="@+id/fatPieChart"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                                   android:layout_height="match_parent"
+                                                                   android:layout_weight="1"
+                                                                   android:padding="5dp">
+
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                              android:text="@string/carbonhydrat" android:gravity="center"
+                              android:textSize="18sp"
+                              android:textStyle="bold" android:layout_marginTop="0dp"
+                              android:id="@+id/main_menu_carbonhydrat_percent"
+                              app:layout_constraintStart_toStartOf="@+id/carbonhydratPieChart"
+                              app:layout_constraintEnd_toEndOf="@+id/carbonhydratPieChart"
+                              app:layout_constraintTop_toTopOf="parent"/>
+                    <org.eazegraph.lib.charts.PieChart
+                            android:layout_weight="1"
+                            android:id="@+id/carbonhydratPieChart"
+                            android:layout_width="wrap_content"
+                            app:egInnerPadding="80"
+                            app:egInnerPaddingOutline="3"
+                            app:egInnerPaddingColor="?colorPrimaryVariant"
+                            android:layout_marginTop="30dp"
                             android:layout_height="0dp" app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -94,9 +126,11 @@
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:text="@string/karbonhidrat"
-                              app:layout_constraintBottom_toBottomOf="@+id/fatPieChart"
-                              app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                              app:layout_constraintStart_toStartOf="@+id/fatPieChart"/>
+                              android:id="@+id/main_menu_carbonhydrat_text"
+                              app:layout_constraintBottom_toBottomOf="@+id/carbonhydratPieChart"
+                              app:layout_constraintTop_toTopOf="@+id/carbonhydratPieChart"
+                              app:layout_constraintEnd_toEndOf="@+id/carbonhydratPieChart"
+                              app:layout_constraintStart_toStartOf="@+id/carbonhydratPieChart"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -120,7 +154,7 @@
                     />
                     <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
                                android:layout_weight="4" android:src="@drawable/ic_baseline_navigate_next_24"
-                               android:scaleType="fitEnd"
+                               android:scaleType="fitEnd" android:id="@+id/calorie_detail_button"
                     />
                 </LinearLayout>
                 <com.google.android.material.divider.MaterialDivider
@@ -171,7 +205,7 @@
                                 app:cardBackgroundColor="?colorPrimary"
                                 app:cardCornerRadius="20dp"
                         >
-                            <androidx.constraintlayout.widget.ConstraintLayout
+                            <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="55dp" app:layout_constraintBottom_toBottomOf="@+id/textView2"
                                     app:layout_constraintTop_toBottomOf="@+id/textView2">
@@ -179,6 +213,7 @@
                                 <androidx.cardview.widget.CardView
                                         android:layout_width="15sp"
                                         android:layout_height="15sp"
+                                        android:layout_gravity="center"
                                         app:cardBackgroundColor="@color/black"
                                         app:cardCornerRadius="10dp"
                                         android:id="@+id/cardView1"
@@ -188,25 +223,26 @@
                                         android:layout_marginStart="16dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         android:layout_marginEnd="9dp"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="0 Kcal"
-                                        android:textSize="24sp"
-                                        android:id="@+id/breakfast_kcal_text_piechart"
-                                        app:layout_constraintStart_toEndOf="@+id/cardView1"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="46dp"
-                                        app:layout_constraintVertical_bias="0.075"
-                                        android:fontFamily="serif"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/breakfast"
-                                        app:layout_constraintTop_toBottomOf="@+id/breakfast_kcal_text_piechart"
-                                        app:layout_constraintStart_toStartOf="@+id/breakfast_kcal_text_piechart"/>
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                <LinearLayout android:layout_width="match_parent"
+                                              android:orientation="vertical"
+                                              android:layout_height="match_parent">
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:text="0 Kcal"
+                                            android:layout_weight="2"
+                                            android:gravity="bottom"
+                                            android:textSize="22sp"
+                                            android:id="@+id/breakfast_kcal_text_piechart"
+                                            android:fontFamily="serif"/>
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_weight="3"
+                                            android:layout_height="match_parent"
+                                            android:text="@string/breakfast"
+                                    />
+                                </LinearLayout>
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
@@ -216,14 +252,15 @@
                                 app:cardCornerRadius="20dp"
                         >
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
+                            <LinearLayout
+                                    android:layout_width="match_parent" android:orientation="horizontal"
                                     android:layout_height="55dp" app:layout_constraintBottom_toBottomOf="@+id/textView2"
                                     app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                                 <androidx.cardview.widget.CardView
                                         android:layout_width="15sp"
                                         android:layout_height="15sp"
+                                        android:layout_gravity="center"
                                         app:cardBackgroundColor="@color/black"
                                         app:cardCornerRadius="10dp"
                                         android:id="@+id/cardView2"
@@ -233,24 +270,27 @@
                                         android:layout_marginStart="16dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         android:layout_marginEnd="9dp"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="0 Kcal"
-                                        android:textSize="24sp"
-                                        android:id="@+id/lunch_kcal_text_piechart"
-                                        app:layout_constraintStart_toEndOf="@+id/cardView2"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="46dp"
-                                        app:layout_constraintVertical_bias="0.075" android:fontFamily="serif"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/lunch"
-                                        app:layout_constraintTop_toBottomOf="@+id/lunch_kcal_text_piechart"
-                                        app:layout_constraintStart_toStartOf="@+id/lunch_kcal_text_piechart"/>
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                <LinearLayout android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:orientation="vertical"
+                                >
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:text="0 Kcal"
+                                            android:layout_weight="2"
+                                            android:gravity="bottom"
+                                            android:textSize="22sp"
+                                            android:id="@+id/lunch_kcal_text_piechart"
+                                            android:fontFamily="serif"/>
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="3"
+                                            android:text="@string/lunch"
+                                    />
+                                </LinearLayout>
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
@@ -260,8 +300,8 @@
                                 app:cardCornerRadius="20dp"
                         >
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
+                            <LinearLayout
+                                    android:layout_width="match_parent" android:orientation="horizontal"
                                     android:layout_height="55dp" app:layout_constraintBottom_toBottomOf="@+id/textView2"
                                     app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -270,6 +310,7 @@
                                         android:layout_height="15sp"
                                         app:cardBackgroundColor="@color/black"
                                         app:cardCornerRadius="10dp"
+                                        android:layout_gravity="center"
                                         android:id="@+id/cardView3"
                                         app:layout_constraintEnd_toStartOf="@+id/dinner_kcal_text_piechart"
                                         app:layout_constraintTop_toTopOf="parent"
@@ -277,24 +318,28 @@
                                         android:layout_marginStart="16dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         android:layout_marginEnd="9dp"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="0 Kcal"
-                                        android:textSize="24sp"
-                                        android:id="@+id/dinner_kcal_text_piechart"
-                                        app:layout_constraintStart_toEndOf="@+id/cardView3"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="46dp"
-                                        app:layout_constraintVertical_bias="0.075" android:fontFamily="serif"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/dinner"
-                                        app:layout_constraintTop_toBottomOf="@+id/dinner_kcal_text_piechart"
-                                        app:layout_constraintStart_toStartOf="@+id/dinner_kcal_text_piechart"/>
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                <LinearLayout android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:orientation="vertical"
+                                >
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2"
+                                            android:gravity="bottom"
+                                            android:text="0 Kcal"
+                                            android:textSize="22sp"
+                                            android:id="@+id/dinner_kcal_text_piechart"
+                                            android:fontFamily="serif"/>
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="3"
+                                            android:text="@string/dinner"
+                                    />
+                                </LinearLayout>
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <androidx.cardview.widget.CardView
                                 android:layout_width="match_parent"
@@ -304,14 +349,15 @@
                                 app:cardCornerRadius="20dp"
                         >
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:layout_width="match_parent"
+                            <LinearLayout
+                                    android:layout_width="match_parent" android:orientation="horizontal"
                                     android:layout_height="55dp" app:layout_constraintBottom_toBottomOf="@+id/textView2"
                                     app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                                 <androidx.cardview.widget.CardView
                                         android:layout_width="15sp"
                                         android:layout_height="15sp"
+                                        android:layout_gravity="center"
                                         app:cardBackgroundColor="@color/black"
                                         app:cardCornerRadius="10dp"
                                         android:id="@+id/cardView4"
@@ -321,24 +367,27 @@
                                         android:layout_marginStart="16dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         android:layout_marginEnd="9dp"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="0 Kcal"
-                                        android:textSize="24sp"
-                                        android:id="@+id/extra_kcal_text_piechart"
-                                        app:layout_constraintStart_toEndOf="@+id/cardView4"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="46dp"
-                                        app:layout_constraintVertical_bias="0.075" android:fontFamily="serif"/>
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/extra"
-                                        app:layout_constraintTop_toBottomOf="@+id/extra_kcal_text_piechart"
-                                        app:layout_constraintStart_toStartOf="@+id/extra_kcal_text_piechart"/>
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                <LinearLayout android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:orientation="vertical"
+                                >
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="2"
+                                            android:gravity="bottom"
+                                            android:text="0 Kcal"
+                                            android:textSize="22sp"
+                                            android:id="@+id/extra_kcal_text_piechart"
+                                            android:fontFamily="serif"/>
+                                    <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="3"
+                                            android:text="@string/extra"
+                                    />
+                                </LinearLayout>
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
 

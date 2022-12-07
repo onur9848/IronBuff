@@ -1,77 +1,116 @@
 package com.senerunosoft.ironbuff.table;
 
+import java.util.Map;
+
 public class UserMacroDetailTable {
 
-    private String dailyMaxProtein;
-    private String dailyProtein;
-    private String dailyMaxCarbonhydrat;
-    private String dailyCarbonhydrat;
-    private String dailyMaxFat;
-    private String dailyFat;
-    private String dailyMaxCalori;
-    private String dailyCalori;
+    private float dailyProtein;
+    private float dailyCarbonhydrat;
+    private float dailyFat;
+    private float dailyMaxCalorie;
+    private float dailyCalorie;
+    private float dailyGram;
+    private float dailyBreakfastCalorie;
+    private float dailyLunchCalorie;
+    private float dailyDinnerCalorie;
+    private float dailyExtraCalorie;
 
-    public String getDailyMaxProtein() {
-        return dailyMaxProtein;
+    public UserMacroDetailTable() {
     }
+    public UserMacroDetailTable(Map params) {
+        this.dailyProtein = Float.parseFloat(params.get("dailyProtein").toString());
+        this.dailyCarbonhydrat = Float.parseFloat(params.get("dailyCarbonhydrat").toString());
+        this.dailyFat = Float.parseFloat(params.get("dailyFat").toString());
+        this.dailyMaxCalorie = Float.parseFloat(params.get("dailyMaxCalorie").toString());
+        this.dailyCalorie = Float.parseFloat(params.get("dailyCalorie").toString());
+        this.dailyGram = Float.parseFloat(params.get("dailyGram").toString());
+        this.dailyBreakfastCalorie =Float.parseFloat(params.get("dailyBreakfastCalorie").toString()) ;
+        this.dailyLunchCalorie=Float.parseFloat(params.get("dailyLunchCalorie").toString());
+        this.dailyDinnerCalorie=Float.parseFloat(params.get("dailyDinnerCalorie").toString());
+        this.dailyExtraCalorie=Float.parseFloat(params.get("dailyExtraCalorie").toString());
 
-    public void setDailyMaxProtein(String dailyMaxProtein) {
-        this.dailyMaxProtein = dailyMaxProtein;
+
     }
-
-    public String getDailyProtein() {
+    public float getDailyProtein() {
         return dailyProtein;
     }
 
-    public void setDailyProtein(String dailyProtein) {
+    public void setDailyProtein(float dailyProtein) {
         this.dailyProtein = dailyProtein;
     }
 
-    public String getDailyMaxCarbonhydrat() {
-        return dailyMaxCarbonhydrat;
-    }
 
-    public void setDailyMaxCarbonhydrat(String dailyMaxCarbonhydrat) {
-        this.dailyMaxCarbonhydrat = dailyMaxCarbonhydrat;
-    }
-
-    public String getDailyCarbonhydrat() {
+    public float getDailyCarbonhydrat() {
         return dailyCarbonhydrat;
     }
 
-    public void setDailyCarbonhydrat(String dailyCarbonhydrat) {
+    public void setDailyCarbonhydrat(float dailyCarbonhydrat) {
         this.dailyCarbonhydrat = dailyCarbonhydrat;
     }
 
-    public String getDailyMaxFat() {
-        return dailyMaxFat;
-    }
 
-    public void setDailyMaxFat(String dailyMaxFat) {
-        this.dailyMaxFat = dailyMaxFat;
-    }
-
-    public String getDailyFat() {
+    public float getDailyFat() {
         return dailyFat;
     }
 
-    public void setDailyFat(String dailyFat) {
+    public void setDailyFat(float dailyFat) {
         this.dailyFat = dailyFat;
     }
 
-    public String getDailyMaxCalori() {
-        return dailyMaxCalori;
+    public float getDailyMaxCalorie() {
+        return dailyMaxCalorie;
     }
 
-    public void setDailyMaxCalori(String dailyMaxCalori) {
-        this.dailyMaxCalori = dailyMaxCalori;
+    public void setDailyMaxCalorie(float dailyMaxCalorie) {
+        this.dailyMaxCalorie = dailyMaxCalorie;
     }
 
-    public String getDailyCalori() {
-        return dailyCalori;
+    public float getDailyCalorie() {
+        return dailyCalorie;
     }
 
-    public void setDailyCalori(String dailyCalori) {
-        this.dailyCalori = dailyCalori;
+    public void setDailyCalorie(float dailyCalorie) {
+        this.dailyCalorie = dailyCalorie;
+    }
+
+    public float getDailyGram() {
+        return dailyGram;
+    }
+
+    public void setDailyGram(float dailyGram) {
+        this.dailyGram = dailyGram;
+    }
+
+
+    public float getDailyBreakfastCalorie() {
+        return dailyBreakfastCalorie;
+    }
+
+    public void setDailyBreakfastCalorie(float dailyBreakfastCalorie) {
+        this.dailyBreakfastCalorie = dailyBreakfastCalorie;
+    }
+
+    public float getDailyLunchCalorie() {
+        return dailyLunchCalorie;
+    }
+
+    public void setDailyLunchCalorie(float dailyLunchCalorie) {
+        this.dailyLunchCalorie = dailyLunchCalorie;
+    }
+
+    public float getDailyDinnerCalorie() {
+        return dailyDinnerCalorie;
+    }
+
+    public void setDailyDinnerCalorie(float dailyDinnerCalorie) {
+        this.dailyDinnerCalorie = dailyDinnerCalorie;
+    }
+
+    public float getDailyExtraCalorie() {
+        return dailyExtraCalorie;
+    }
+
+    public void setDailyExtraCalorie(float dailyExtraCalorie) {
+        this.dailyExtraCalorie = dailyExtraCalorie;
     }
 }

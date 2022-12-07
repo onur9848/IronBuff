@@ -59,8 +59,10 @@
     <!-- Sync Preferences -->
     <string name="sync_title" translatable="false">Sync email periodically</string>
     <string name="attachment_title" translatable="false">Download incoming attachments</string>
-    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested</string>
+    <string name="attachment_summary_on" translatable="false">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off" translatable="false">Only download attachments when manually requested
+    </string>
     <string name="cancel">Cancel</string>
     <string name="okey">Okey</string>
     <string name="protein">Protein</string>
@@ -72,4 +74,23 @@
     <string name="lunch">Lunch</string>
     <string name="extra">Extra</string>
     <string name="dinner">Dinner</string>
+    <string name="add">+ Add</string>
+    <string name="exercise_detail">Exercise detail:</string>
+    <string name="exercise_target">Exercise Target:</string>
+    <string name="reps">Reps:</string>
+    <string name="sets">Sets:</string>
+    <string name="add_1">Add</string>
+    <string name="carbonhydrat">Carbonhydrat</string>
+    <string name="databaseBreakfast" translatable="false">Breakfast</string>
+    <string name="databaseLunch" translatable="false">Lunch</string>
+    <string name="databaseDinner" translatable="false">Dinner</string>
+    <string name="databaseExtra" translatable="false">Extra</string>
+    <string name="profil_username">Username:</string>
+    <string name="profil_email" translatable="false">E-mail:</string>
+    <string name="profil_height">Height:</string>
+    <string name="profil_weight">Weight:</string>
+    <string name="profil_sex">Sex:</string>
+    <string name="profil_name_surname">Name Surname:</string>
+    <string name="profil_age">Age:</string>
+    <string name="add_food">Add Food</string>
 </resources>

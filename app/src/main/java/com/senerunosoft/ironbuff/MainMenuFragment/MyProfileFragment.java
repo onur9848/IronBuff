@@ -40,6 +40,7 @@ import com.senerunosoft.ironbuff.databinding.FragmentMyProfileBinding;
 import com.senerunosoft.ironbuff.table.UserTable;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +49,7 @@ import java.util.UUID;
 
 public class MyProfileFragment extends Fragment {
     private static final String COLLECTION_NAME_USER = "userTable";
-    public static final String USERNAME = "UserName";
-    public static final String NAME_SURNAME = "NameSurname";
-    public static final String SEX = "Sex";
-    public static final String AGE = "Age";
-    public static final String EMAIL = "E-mail";
-    public static final String HEIGHT = "Height";
-    public static final String WEIGHT = "Weight";
+
     public static final String IMAGE_URL = "imageUrl";
 
     FragmentMyProfileBinding binding;
@@ -67,7 +62,7 @@ public class MyProfileFragment extends Fragment {
     Uri imageData;
     ActivityResultLauncher<String> permissionLauncher;
     LinearLayout openCamera, openGallery;
-    List<UserTable> userTables;
+    UserTable table;
     String imageUrl;
 
     @Override
@@ -98,19 +93,15 @@ public class MyProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
     private void defVariable() {
         firestore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         auth = FirebaseAuth.getInstance();
-        userTables = new ArrayList<>();
+        table = new UserTable();
         bottomSheetDialog = new BottomSheetDialog(getContext());
-        userTables = new ArrayList<>();
         imageUrl = "image/" + "username" + "/profilimage";
 
-    }
-
-
+    } // değişken tanımlanması
     private void registerLauncher() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -137,8 +128,7 @@ public class MyProfileFragment extends Fragment {
                 }
             }
         });
-    }
-
+    } //resim izinleri
     private void uploadimage() {
         if (imageData != null) {
 
@@ -172,8 +162,7 @@ public class MyProfileFragment extends Fragment {
 
 
         }
-    }
-
+    } //Resim yükleme
     private void showBottomSheetDialog() {
 
         bottomSheetDialog.setContentView(R.layout.image_uploaded_bottom_sheet_diaolog);
@@ -181,12 +170,12 @@ public class MyProfileFragment extends Fragment {
         openGallery = bottomSheetDialog.findViewById(R.id.open_gallery);
         bottomSheetDialog.show();
         clickAction();
-    }
-
+    } // resim yükleme dialoğu gösterme
     private void clickAction() {
         openGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomSheetDialog.cancel();
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         Snackbar.make(view, "Needed permission for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission", new View.OnClickListener() {
@@ -199,19 +188,22 @@ public class MyProfileFragment extends Fragment {
                         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
                     }
                 } else {
-                    Intent intenToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    activityResultLauncher.launch(intenToGallery);
                     bottomSheetDialog.hide();
+                    Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    activityResultLauncher.launch(intentToGallery);
 
 
                 }
             }
         });
+        openCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
     }
-
-
     private void profilDataOnChanged() {
         firestore.collection(COLLECTION_NAME_USER).document(auth.getCurrentUser().getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -219,68 +211,25 @@ public class MyProfileFragment extends Fragment {
                 if (error != null) {
                     Toast.makeText(getContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 } else {
-                    getProfilData();
-                }
-            }
-        });
-
-    }
-
-
-
-    public void getProfilData() {
-        firestore.collection(COLLECTION_NAME_USER).whereEqualTo(EMAIL, auth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-//                    Toast.makeText(getContext(), "2", Toast.LENGTH_SHORT).show();
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-//                        Toast.makeText(getContext(), "for", Toast.LENGTH_SHORT).show();
-                        UserTable user = new UserTable();
-                        user.setNameSurname(doc.get(NAME_SURNAME).toString());
-                        user.setUserName(doc.get(USERNAME).toString());
-                        user.setAge(doc.get(AGE).toString());
-                        user.setSex(doc.get(SEX).toString());
-                        user.setHeight(doc.get(HEIGHT).toString());
-                        user.setWeight(doc.get(WEIGHT).toString());
-                        user.setE_mail(doc.get(EMAIL).toString());
-                        user.setImageUrl(doc.get(IMAGE_URL).toString());
-                        userTables.add(user);
-                    }
+                    table = value.toObject(UserTable.class);
                     setProfilData();
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-            }
         });
-        firestore.collection(COLLECTION_NAME_USER).document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-//               task.getResult().getData().t
-            }
-        });
-
-    }
-
+    }  //Profil bilgilerini veritabanından çekme
     public void setProfilData() {
-        for (UserTable user : userTables) {
-//            Toast.makeText(getContext(), "3", Toast.LENGTH_SHORT).show();
-            binding.profilUsername.setText(user.getUserName());
-            binding.profilNamesurname.setText(user.getNameSurname());
-            binding.profilEmail.setText(user.getE_mail());
-            binding.profilHeight.setText(user.getHeight());
-            binding.profilWeight.setText(user.getWeight());
-            binding.profilAge.setText(user.getAge());
-            binding.profilSex.setText(user.getSex());
+        if (binding != null) {
 
-
-            Picasso.get().load(user.getImageUrl()).into(binding.myProfilImage);
+            binding.profilUsername.setText(table.getUserName());
+            binding.profilNamesurname.setText(table.getNameSurname());
+            binding.profilEmail.setText(table.getE_mail());
+            binding.profilHeight.setText(table.getHeight());
+            binding.profilWeight.setText(table.getWeight());
+            binding.profilAge.setText(table.getAge());
+            binding.profilSex.setText(table.getSex());
+            Picasso.get().load(table.getImageUrl()).into(binding.myProfilImage);
 
 
         }
-    }
+    } // profil bilgilerini gösterme
 }

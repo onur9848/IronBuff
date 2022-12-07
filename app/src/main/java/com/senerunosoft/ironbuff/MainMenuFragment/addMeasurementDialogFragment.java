@@ -74,10 +74,17 @@ public class addMeasurementDialogFragment extends DialogFragment {
         binding.addMeasurementCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dismiss();
                 onDestroyView();
             }
         });
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     private void getNewBodyMeasurement() throws IllegalAccessException {
@@ -97,26 +104,30 @@ public class addMeasurementDialogFragment extends DialogFragment {
                 binding.addMeasurementLCalfText.getText().toString().isEmpty() || binding.addMeasurementRCalfText.getText().toString().isEmpty() || binding.addMeasurementLThighText.getText().toString().isEmpty() ||
                 binding.addMeasurementRThighText.getText().toString().isEmpty() || binding.addMeasurementWeightText.getText().toString().isEmpty();
 
-        Map map = new HashMap();
-        Field[] fields = table.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            Object value = field.get(table);
-            map.put(field.getName(), value);
-        }
+
         if (!checkFields) {
-            colref.add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            colref.add(table).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                 @Override
                 public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
                     if (task.isSuccessful()){
+                        dismiss();
                         onDestroyView();
 
                     }
                 }
             });
+            Map weight = new HashMap();
+            weight.put("weight",table.getWeight());
+            firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).update(weight).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task task) {
+                    if (task.isSuccessful()) {
+                    }
+                }
+            });
 
         }else{
-            Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "test1", Toast.LENGTH_SHORT).show();
         }
 
 

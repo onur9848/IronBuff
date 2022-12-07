@@ -5,24 +5,30 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.*;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.senerunosoft.ironbuff.MainMenuFragment.adapter.BodyMeasurementPageAdapter;
 import com.senerunosoft.ironbuff.databinding.FragmentMainMenuBinding;
+import com.senerunosoft.ironbuff.table.UserMacroDetailTable;
 import com.senerunosoft.ironbuff.table.UserMeasurementTable;
 import org.eazegraph.lib.models.PieModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 
 
@@ -30,12 +36,17 @@ public class MainMenuFragment extends Fragment {
 
     private static final String COLLECTION_USER_TABLE = "userTable";
     private static final String COLLECTION_BODY_MEASUREMENT_TABLE = "bodyMeasurement";
+    private static final String COLLECTION_DAILY_MACRO = "DailyCalorie";
+    private static final String COLLECTION_FOOD_TABLE = "foodTable";
     FragmentMainMenuBinding binding;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
     FirebaseStorage storage;
     ViewPager2 measurementViewCard;
-
+    float totalMacro;
+    UserMacroDetailTable macroDetailTable;
+    SimpleDateFormat sdfFormat;
+    String dateString;
     List<UserMeasurementTable> userMeasurementTables;
     int i = 0;
 
@@ -57,74 +68,92 @@ public class MainMenuFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
-        //root.findViewById(R.layout.add_body_measurement);
         userMeasurementTables = new ArrayList<>();
+        sdfFormat = new SimpleDateFormat("dd.MM.yyyy");
+        dateString = sdfFormat.format(Date.from(Instant.now()));
+        macroDetailTable = new UserMacroDetailTable();
+
 
         getBodymeasurement();
-        pieCharts();
+        gotoCalorieView();
+        getPieChartData();
 
     }
 
-    private TypedValue value;
+    public void gotoCalorieView() {
+        binding.calorieDetailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavDirections directions = MainMenuFragmentDirections.gotoCalorieFragment();
+                Navigation.findNavController(getView()).navigate(directions);
 
+            }
+        });
+
+    }
+    private TypedValue value;
     private void pieCharts() {
         value = new TypedValue();
         Resources.Theme theme = getContext().getTheme();
         theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, value, true);
-
+        totalMacro = macroDetailTable.getDailyProtein() + macroDetailTable.getDailyFat() + macroDetailTable.getDailyCarbonhydrat();
         proteinPieChart();
         carbonhydratPieChart();
         fatPieChart();
         caloriePieChart();
     }
-
     private void fatPieChart() {
 
-        float dailyFat = 100, Fat = 15;
-        dailyFat = dailyFat - Fat;
-        PieModel model = new PieModel("Karbonhidrat", Fat, Color.parseColor("#C5120B"));
-        PieModel model1 = new PieModel("DailyMacro", dailyFat, value.data);
+
+        PieModel model = new PieModel("fat", macroDetailTable.getDailyFat(), Color.parseColor("#C5120B"));
+        PieModel model1 = new PieModel("DailyMacro", totalMacro - macroDetailTable.getDailyFat(), value.data);
         binding.fatPieChart.addPieSlice(model);
         binding.fatPieChart.addPieSlice(model1);
         binding.fatPieChart.startAnimation();
+        binding.mainMenuFatText.setText(round(macroDetailTable.getDailyFat()) + "g /\n" + round(totalMacro) + "g");
+        float percent = (macroDetailTable.getDailyFat()/totalMacro)*100;
+        binding.mainMenuFatPercent.setText(binding.mainMenuFatPercent.getText()+"\n%"+round(percent));
     }
-
     private void carbonhydratPieChart() {
 
-        float dailyCarbonhydrat = 100, Carbonhydrat = 90;
-        dailyCarbonhydrat = dailyCarbonhydrat - Carbonhydrat;
-        PieModel model = new PieModel("Karbonhidrat", Carbonhydrat, Color.parseColor("#2F61AD"));
-        PieModel model1 = new PieModel("DailyMacro", dailyCarbonhydrat, value.data);
+
+        PieModel model = new PieModel("Karbonhidrat", macroDetailTable.getDailyCarbonhydrat(), Color.parseColor("#2F61AD"));
+        PieModel model1 = new PieModel("DailyMacro", totalMacro - macroDetailTable.getDailyCarbonhydrat(), value.data);
         binding.carbonhydratPieChart.addPieSlice(model);
         binding.carbonhydratPieChart.addPieSlice(model1);
         binding.carbonhydratPieChart.startAnimation();
+        binding.mainMenuCarbonhydratText.setText(round(macroDetailTable.getDailyCarbonhydrat()) + "g /\n" + round(totalMacro) + "g");
+        float percent = (macroDetailTable.getDailyCarbonhydrat()/totalMacro)*100;
+        binding.mainMenuCarbonhydratPercent.setText(binding.mainMenuCarbonhydratPercent.getText()+"\n%"+round(percent));
 
     }
-
     private void proteinPieChart() {
 
-        float dailyprotein = 100, protein = 15;
-        dailyprotein = dailyprotein - protein;
-        PieModel model = new PieModel("Protein", protein, Color.parseColor("#F5D20D"));
-        PieModel model1 = new PieModel("DailyMacro", dailyprotein, value.data);
+        PieModel model = new PieModel("Protein", macroDetailTable.getDailyProtein(), Color.parseColor("#F5D20D"));
+        PieModel model1 = new PieModel("DailyMacro", totalMacro - macroDetailTable.getDailyProtein(), value.data);
         binding.proteinPieChart.addPieSlice(model);
         binding.proteinPieChart.addPieSlice(model1);
         binding.proteinPieChart.startAnimation();
-
+        binding.mainMenuProteinText.setText(round(macroDetailTable.getDailyProtein()) + "g /\n" + round(totalMacro) + "g");
+        float percent = (macroDetailTable.getDailyProtein()/totalMacro)*100;
+        binding.mainMenuProteinPercent.setText(binding.mainMenuProteinPercent.getText()+"\n%"+round(percent));
     }
-
     private void caloriePieChart() {
-        PieModel model = new PieModel("Calorie", 25, Color.YELLOW);
-        PieModel model1 = new PieModel("totalCalorie", 100, value.data);
-
-
+        PieModel model = new PieModel("Calorie", macroDetailTable.getDailyCalorie(), Color.YELLOW);
+        PieModel model1 = new PieModel("totalCalorie", macroDetailTable.getDailyMaxCalorie()-macroDetailTable.getDailyCalorie(), value.data);
         binding.caloriePieChart.addPieSlice(model);
         binding.caloriePieChart.addPieSlice(model1);
         binding.caloriePieChart.startAnimation();
 
+        binding.breakfastKcalTextPiechart.setText(macroDetailTable.getDailyBreakfastCalorie()+" Kcal");
+        binding.lunchKcalTextPiechart.setText(macroDetailTable.getDailyLunchCalorie()+" Kcal");
+        binding.dinnerKcalTextPiechart.setText(macroDetailTable.getDailyDinnerCalorie()+" Kcal");
+        binding.extraKcalTextPiechart.setText(macroDetailTable.getDailyExtraCalorie()+" Kcal");
+
+
+
 
     }
-
     private void getBodymeasurement() {
 
         CollectionReference colref = firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_BODY_MEASUREMENT_TABLE);
@@ -140,14 +169,16 @@ public class MainMenuFragment extends Fragment {
                         table.setDate(snapshot.getDate("date"));
                         userMeasurementTables.add(table);
                     }
-                    if (userMeasurementTables.isEmpty()){
+                    if (userMeasurementTables.isEmpty()) {
                         userMeasurementTables = new ArrayList<>();
                         userMeasurementTables.add(new UserMeasurementTable(Calendar.getInstance().getTime()));
                     }
-                    binding.mainMenuShowMeasurement.setAdapter(new BodyMeasurementPageAdapter(getContext(), userMeasurementTables, measurementViewCard,getChildFragmentManager()));
-                }
-                else {
-                    Toast.makeText(getContext(), "deneme", Toast.LENGTH_SHORT).show();
+                    Collections.sort(userMeasurementTables);
+                    BodyMeasurementPageAdapter adapter = new BodyMeasurementPageAdapter(getContext(), userMeasurementTables, measurementViewCard, getChildFragmentManager());
+                    binding.mainMenuShowMeasurement.setAdapter(adapter);
+                    binding.mainMenuShowMeasurement.setCurrentItem(adapter.getItemCount());
+                } else {
+
                 }
             }
         });
@@ -170,7 +201,29 @@ public class MainMenuFragment extends Fragment {
 
     }
 
+    private void getPieChartData() {
+        DocumentReference reference = firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid());
+        reference.collection(COLLECTION_DAILY_MACRO).document(dateString).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        macroDetailTable = new UserMacroDetailTable(doc.getData());
+                        pieCharts();
+                    }
+                }
+            }
+        });
+    }
 
+
+
+
+    float round(float sayi) {
+        sayi = (float) (Math.round(sayi * 100.0) / 100.0);
+        return sayi;
+    }
 
 
     @Override

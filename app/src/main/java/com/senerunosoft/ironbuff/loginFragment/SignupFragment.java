@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -73,6 +75,7 @@ public class SignupFragment extends Fragment {
             public void onClick(View view) {
 
                 if (checkField()) {
+                    Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/iron-buff-b521e.appspot.com/o/ironbuff%2Fprofil.png?alt=media&token=118a4b1d-59c7-4298-9f9e-c51082596b4d");
                     user.setNameSurname(binding.signupNamesurname.getText().toString());
                     user.setUserName(binding.signupUsername.getText().toString());
                     user.setE_mail(binding.signupEmail.getText().toString());
@@ -80,7 +83,10 @@ public class SignupFragment extends Fragment {
                     user.setWeight(binding.signupWeight.getText().toString());
                     user.setHeight(binding.signupHeight.getText().toString());
                     user.setSex(getSex());
-                    uploadimage();
+                    user.setImageUrl(uri.toString());
+                    user.setAdmin(false);
+//                    registerButtonProcess(uri);
+                    registerButtonProcessV2();
                 }
 
 
@@ -89,8 +95,6 @@ public class SignupFragment extends Fragment {
     }
 
     private void uploadimage() {
-        Uri uri = Uri.parse("https://firebasestorage.googleapis.com/v0/b/iron-buff-b521e.appspot.com/o/ironbuff%2Fprofil.png?alt=media&token=118a4b1d-59c7-4298-9f9e-c51082596b4d");
-        registerButtonProcess(uri);
         /*
         String url = "image/" + user.getUserName() + "/profilimage";
         StorageReference reference = storage.getReference().child(url);
@@ -128,6 +132,49 @@ public class SignupFragment extends Fragment {
         firestore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
     }
+    private void registerButtonProcessV2(){
+        auth.createUserWithEmailAndPassword(user.getE_mail(),binding.signupPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                signin();
+                user.setDocId(authResult.getUser().getUid());
+                userDetailAddFirestore();
+                Intent intent = new Intent(getActivity(), MainMenuActivity.class);
+                startActivity(intent);
+                finishActivity();
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getContext(), "Error: "+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private void signin(){
+        auth.signInWithEmailAndPassword(user.getE_mail(),binding.signupPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+
+            }
+        });
+    }
+    private void userDetailAddFirestore(){
+        firestore.collection(COLLECTION_NAME_USER).document(user.getDocId()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+    }
+
 
     private void registerButtonProcess(Uri uri) {
 
@@ -144,7 +191,8 @@ public class SignupFragment extends Fragment {
                 userData.put("Weight", user.getWeight());
                 userData.put("Sex", user.getSex());
                 userData.put("Height", user.getHeight());
-                userData.put("imageUrl", uri);
+                userData.put("imageUrl", uri); user.setImageUrl(uri.toString());
+
                 auth.signInWithEmailAndPassword(user.getE_mail(), binding.signupPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -179,6 +227,7 @@ public class SignupFragment extends Fragment {
 
 
     }
+
 
     private String getSex() {
 

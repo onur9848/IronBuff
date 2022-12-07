@@ -3,7 +3,7 @@ package com.senerunosoft.ironbuff.table;
 import java.util.Date;
 import java.util.Map;
 
-public class UserMeasurementTable {
+public class UserMeasurementTable implements Comparable<UserMeasurementTable> {
 
     private String chest, leftArm, rightArm, waist, hips, leftThigh, rightThigh, leftCalf, rightCalf, weight;
 
@@ -119,4 +119,13 @@ public class UserMeasurementTable {
     public void setWeight(String weight) {
         this.weight = weight;
     }
+
+    @Override
+    public int compareTo(UserMeasurementTable table) {
+        if (getDate() == null || table.getDate()==null){
+            return 0;
+        }
+        return getDate().compareTo(table.getDate());
+    }
+
 }

@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,35 +12,33 @@ import androidx.fragment.app.Fragment;
 import android.view.View;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.*;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firestore.v1.Document;
+import com.google.firebase.firestore.EventListener;
+import com.senerunosoft.ironbuff.MainMenuFragment.adapter.MessageListAdapter;
 import com.senerunosoft.ironbuff.databinding.FragmentMessageBinding;
-import com.senerunosoft.ironbuff.databinding.FragmentTrainingProgramBinding;
+import com.senerunosoft.ironbuff.table.MessageListTable;
 import com.senerunosoft.ironbuff.table.UserTable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class MessageFragment extends Fragment {
 
     private static final String COLLECTION_USER_TABLE = "userTable";
+    private static final String COLLECTION_MESSAGE_TABLE = "MessageBox";
 
     FragmentMessageBinding binding;
     FirebaseFirestore firestore;
     FirebaseAuth auth;
-    ArrayList<String> userDocId, userName;
-    ArrayList<String> adminList;
-
+    List<UserTable> userTables;
+    List<MessageListTable> messageListTables;
+    UserTable CurrentUser;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -59,91 +56,141 @@ public class MessageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        adminList = new ArrayList<>();
-
-        isAdminUser();
-        gotoMessageScreen();
-
-    }
-
-    private void isAdminUser() {
-
-        firestore.collection("adminTable").document("admins").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    adminList = (ArrayList<String>) task.getResult().get("userUid");
-                    if (adminList.contains(auth.getCurrentUser().getUid())) {
-                        getAdminList();
-                    } else
-                        getUserList();
-                }
-            }
-        });
-
-    }
+        CurrentUser = new UserTable();
 
 
-    private void getAdminList() {
-
-        firestore.collection(COLLECTION_USER_TABLE).whereNotEqualTo(FieldPath.documentId(), auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                userDocId = new ArrayList<>();
-                userName = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : task.getResult()) {
-
-                    if (!adminList.contains(doc.getId())) {
-                        userDocId.add(doc.getId());
-                        userName.add(doc.get("UserName").toString());
-                    }
-                }
-                Log.d(getTag(), "onComplete: " + userDocId.toString());
-                Log.d(getTag(), "onComplete: " + userName.toString());
-                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, userName);
-                binding.messageUserList.setAdapter(adapter);
-
-            }
-        });
+        getUserList();
+        getMessageDatabase();
 
     }
 
     private void getUserList() {
-        firestore.collection(COLLECTION_USER_TABLE).whereNotEqualTo(FieldPath.documentId(), auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firestore.collection(COLLECTION_USER_TABLE).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
-                userDocId = new ArrayList<>();
-                userName = new ArrayList<>();
-                for (QueryDocumentSnapshot doc : task.getResult()) {
-
-                    if (adminList.contains(doc.getId())) {
-                        userDocId.add(doc.getId());
-                        userName.add(doc.get("UserName").toString());
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                if (error == null) {
+                    userTables = new ArrayList<>();
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        userTables.add(doc.toObject(UserTable.class));
+                    }
+                    if (userTables.size() > 0) {
+                        listUsers();
                     }
                 }
-                Log.d(getTag(), "onComplete: " + userDocId.toString());
-                Log.d(getTag(), "onComplete: " + userName.toString());
-                ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, userName);
-                binding.messageUserList.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void listUsers() {
+        for (int i = 0; i < userTables.size(); i++) {
+            if (userTables.get(i).getDocId().equals(auth.getUid())) {
+                CurrentUser = userTables.get(i);
+                userTables.remove(i);
+            }
+        }
+
+        if (CurrentUser.isAdmin()) {
+            for (int i = 0; i < userTables.size(); i++) {
+                if (userTables.get(i).isAdmin())
+                    userTables.remove(i);
+                setAdapter();
+            }
+        } else {
+            for (int i = 0; i < userTables.size(); i++) {
+                if (!userTables.get(i).isAdmin())
+                    userTables.remove(i);
+                setAdapter();
+            }
+        }
+
+    }
+
+    private void setAdapter() {
+        if (userTables != null) {
+            MessageListAdapter adapter = new MessageListAdapter(getContext(), userTables);
+            binding.messageUserList.setAdapter(adapter);
+        }
+    }
+
+
+    private void getMessageDatabase() {
+        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection("messageList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    messageListTables = task.getResult().toObjects(MessageListTable.class);
+                    gotoMessageScreenV2();
+                }
             }
         });
 
 
     }
 
-    private void gotoMessageScreen() {
+    private void gotoMessageScreenV2() {
+
 
         binding.messageUserList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle bundle =new Bundle();
-                bundle.putString("userDocID",userDocId.get(i));
-                NavDirections directions = MessageFragmentDirections.gotoSendMessageUsers();
-                Navigation.findNavController(getView()).navigate(directions.getActionId(),bundle);
+                boolean isFind = false;
+                MessageListTable selectUsers = new MessageListTable();
+                for (MessageListTable table : messageListTables) {
+                    if (table.getUsers().contains(userTables.get(i).getDocId())) {
+//                        Toast.makeText(getContext(), "find", Toast.LENGTH_SHORT).show();
+                        selectUsers = table;
+                        isFind = true;
+                    }
+                }
 
+                if (isFind) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("messageDocID", selectUsers.getUuid());
+                    bundle.putString("userName", userTables.get(i).getUserName());
+                    NavDirections directions = MessageFragmentDirections.gotoSendMessageUsers();
+                    Navigation.findNavController(getView()).navigate(directions.getActionId(), bundle);
+
+
+                } else {
+                    MessageListTable messageListTable = new MessageListTable();
+                    List<String> strings = new ArrayList<>();
+
+                    strings.add(auth.getCurrentUser().getUid());
+                    strings.add(userTables.get(i).getDocId());
+
+                    messageListTable.setUuid(UUID.randomUUID().toString());
+                    messageListTable.setUsers(strings);
+
+
+                    firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection("messageList").document(messageListTable.getUuid()).set(messageListTable).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+
+                        }
+                    });
+                    firestore.collection(COLLECTION_USER_TABLE).document(userTables.get(i).getDocId()).collection("messageList").document(messageListTable.getUuid()).set(messageListTable).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+
+                        }
+                    });
+                    firestore.collection(COLLECTION_MESSAGE_TABLE).document(messageListTable.getUuid()).set(messageListTable).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+
+                        }
+                    });
+                    Bundle bundle = new Bundle();
+                    bundle.putString("messageDocID", messageListTable.getUuid());
+                    bundle.putString("userName", userTables.get(i).getUserName());
+                    NavDirections directions = MessageFragmentDirections.gotoSendMessageUsers();
+                    Navigation.findNavController(getView()).navigate(directions.getActionId(), bundle);
+
+
+                }
             }
         });
-
 
     }
 
@@ -153,6 +200,5 @@ public class MessageFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 
 }

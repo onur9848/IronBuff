@@ -71,7 +71,7 @@
                           android:orientation="horizontal"
                           android:layout_height="40dp">
                 <TextView android:layout_width="match_parent"
-                          android:text="Reps: "
+                          android:text="@string/reps"
                           android:gravity="fill_vertical"
                           android:textSize="20sp"
                           android:layout_height="match_parent"
@@ -85,7 +85,7 @@
                           android:id="@+id/training_detail_reps"
                 />
                 <TextView android:layout_width="match_parent"
-                          android:text="Sets: "
+                          android:text="@string/sets"
                           android:gravity="fill_vertical"
                           android:textSize="20sp"
                           android:layout_height="match_parent"
@@ -103,7 +103,7 @@
                           android:layout_marginHorizontal="30sp"
                           android:layout_height="40dp">
                 <TextView android:layout_width="match_parent"
-                          android:text="Exercise Target: "
+                          android:text="@string/exercise_target"
                           android:gravity="fill_vertical"
                           android:textSize="20sp"
                           android:layout_height="match_parent"
@@ -123,7 +123,7 @@
                           android:layout_marginHorizontal="30sp"
                           android:layout_height="40dp">
                 <TextView android:layout_width="match_parent"
-                          android:text="Exercise detail:"
+                          android:text="@string/exercise_detail"
                           android:gravity="fill_vertical"
                           android:textSize="20sp"
                           android:layout_height="match_parent"
