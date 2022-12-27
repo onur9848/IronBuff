@@ -1,10 +1,12 @@
 package com.senerunosoft.ironbuff.AdminPage;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -20,8 +22,11 @@ import androidx.navigation.Navigation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
+import com.senerunosoft.ironbuff.AdminPage.Adapter.ExerciseNameGridViewAdapter;
 import com.senerunosoft.ironbuff.AdminPage.Adapter.GridViewAdapter;
+import com.senerunosoft.ironbuff.activity.MainMenuActivity;
 import com.senerunosoft.ironbuff.databinding.FragmentAdminAddUserProgramBinding;
+import com.senerunosoft.ironbuff.table.ExerciseTable;
 import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,9 +44,13 @@ public class AdminAddUserProgramFragment extends Fragment {
     FirebaseFirestore firestore;
     ArrayList<String> exerciseZone, exerciseName, listExercise, exerciseDetails;
     ArrayList<String> addExerciseZone, addExerciseName, addExerciseSetsAndReps, addListView, addExerciseDetail;
+    List<UserTrainingTable> userTrainingTables;
+    List<ExerciseTable> exerciseTables;
     DocumentReference documentReference;
     UserTrainingTable table;
     private String DOC_ID_USER;
+    Calendar myCalender = Calendar.getInstance();
+    int Id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +70,7 @@ public class AdminAddUserProgramFragment extends Fragment {
         listExercise = new ArrayList<>();
         table = new UserTrainingTable();
         DOC_ID_USER = getArguments().getString("docIDUser");
+        userTrainingTables = new ArrayList<>();
 
         showHideButton();
         getSetAndReps();
@@ -105,24 +115,19 @@ public class AdminAddUserProgramFragment extends Fragment {
             }
         });
     }
-    String selectedDetails;
 
     private void getExerciseName() {
         documentReference.collection(binding.selectedExerciseZoneText.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        exerciseName.add(doc.get("exerciseName").toString());
-                        exerciseDetails.add(doc.get("exerciseDetail").toString());
+                    exerciseTables = task.getResult().toObjects(ExerciseTable.class);
 
-                    }
-                    GridViewAdapter adapter = new GridViewAdapter(getContext(), exerciseName, binding.selectedExerciseName);
+                    ExerciseNameGridViewAdapter adapter = new ExerciseNameGridViewAdapter(getContext(), exerciseTables, binding.selectedExerciseName, Id);
                     binding.addUserProgramExercisenameGridview.setVisibility(View.VISIBLE);
                     binding.addUserProgramExercisenameGridview.setAdapter(adapter);
 
 
-//                    exerciseName = new ArrayList<>();
                 }
 
             }
@@ -192,6 +197,8 @@ public class AdminAddUserProgramFragment extends Fragment {
                         if (binding.gridviewAddReps.getText().toString().isEmpty() || binding.gridviewAddSets.getText().toString().isEmpty()) {
                             Toast.makeText(getContext(), "Lütfen Değerleri giriniz", Toast.LENGTH_SHORT).show();
                         } else {
+                            InputMethodManager Imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                            Imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             String setAndReps = binding.gridviewAddSets.getText().toString() + "x" + binding.gridviewAddReps.getText().toString();
                             binding.selectedExerciseSetsAndReps.setText(setAndReps);
                             binding.addUserProgramSetAndRepsGridview.setVisibility(View.GONE);
@@ -229,7 +236,7 @@ public class AdminAddUserProgramFragment extends Fragment {
 
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.getDefault());
-        Calendar myCalender = Calendar.getInstance();
+
         binding.gridviewDateText.setText(dateFormat.format(myCalender.getTime()));
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -258,12 +265,8 @@ public class AdminAddUserProgramFragment extends Fragment {
     private void addTrainingProgram() {
         boolean bool = binding.selectedExerciseDate.getText().toString().isEmpty() || binding.selectedExerciseName.getText().toString().isEmpty()
                 || binding.selectedExerciseZoneText.getText().toString().isEmpty() || binding.selectedExerciseSetsAndReps.getText().toString().isEmpty();
-        addExerciseName = new ArrayList<>();
-        addExerciseZone = new ArrayList<>();
-        addExerciseSetsAndReps = new ArrayList<>();
-        addListView = new ArrayList<>();
-        addExerciseDetail = new ArrayList<>();
 
+        addListView = new ArrayList<>();
 
         binding.addUserExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,31 +277,30 @@ public class AdminAddUserProgramFragment extends Fragment {
                     addItem();
                     removeItem();
                 }
-                table.setDate(binding.selectedExerciseDate.getText().toString());
-                table.setExerciseZone(addExerciseZone);
-                table.setExerciseCount(addExerciseName.size());
-                table.setExerciseName(addExerciseName);
-                table.setExerciseRepsAndSets(addExerciseSetsAndReps);
-                table.setExerciseDetail(addExerciseDetail);
-                table.setExerciseZoneCount(getZone());
-                try {
-                    tableToMap();
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
 
+
+                addDatabase();
 
             }
         });
     }
 
     private void addItem() {
-        int i = exerciseName.indexOf(binding.selectedExerciseName.getText().toString());
-        addExerciseName.add(binding.selectedExerciseName.getText().toString());
-        addExerciseSetsAndReps.add(binding.selectedExerciseSetsAndReps.getText().toString());
-        addExerciseZone.add(binding.selectedExerciseZoneText.getText().toString());
-        addExerciseDetail.add(exerciseDetails.get(i));
-        addListView.add(binding.selectedExerciseZoneText.getText().toString() + ": " + binding.selectedExerciseName.getText().toString() + "--" + binding.selectedExerciseSetsAndReps.getText().toString());
+        table.setDate(binding.selectedExerciseDate.getText().toString());
+        table.getExerciseZone().add(binding.selectedExerciseZoneText.getText().toString());
+        table.getExerciseName().add(binding.selectedExerciseName.getText().toString());
+        table.getExerciseRepsAndSets().add(binding.selectedExerciseSetsAndReps.getText().toString());
+        for (ExerciseTable exerciseTable : exerciseTables) {
+            if (exerciseTable.getExerciseName().equals(binding.selectedExerciseName.getText().toString())) {
+                table.getExerciseImg1().add(exerciseTable.getExerciseImg1());
+                table.getExerciseImg2().add(exerciseTable.getExerciseImg2());
+                table.getExerciseDetail().add(exerciseTable.getExerciseDetail());
+            }
+        }
+        table.setExerciseZoneCount(getZone());
+        table.setExerciseCount(table.getExerciseName().size());
+
+        addListView.add(binding.selectedExerciseName.getText().toString() + ": " + binding.selectedExerciseSetsAndReps.getText().toString() + " - " + binding.selectedExerciseZoneText.getText().toString());
 
         listItem();
     }
@@ -307,11 +309,11 @@ public class AdminAddUserProgramFragment extends Fragment {
         binding.listviewExerciseZoneAndExercise.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                addExerciseName.remove(i);
-                addExerciseSetsAndReps.remove(i);
-                addExerciseZone.remove(i);
+                table.getExerciseName().remove(i);
+                table.getExerciseRepsAndSets().remove(i);
+                table.getExerciseZone().remove(i);
+                table.getExerciseDetail().remove(i);
                 addListView.remove(i);
-                addExerciseDetail.remove(i);
                 listItem();
             }
         });
@@ -323,36 +325,34 @@ public class AdminAddUserProgramFragment extends Fragment {
         binding.listviewExerciseZoneAndExercise.setAdapter(adapter);
     }
 
-    private void tableToMap() throws IllegalAccessException {
-        Map map = new HashMap();
-        Field[] fields = table.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            Object value = field.get(table);
-            map.put(field.getName(), value);
-        }
-
+    private void addDatabase() {
 
         binding.addUserProgramButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (table.getExerciseName().size() > 0) {
-                    firestore.collection(COLLECTION_NAME_USER_TABLE).document(DOC_ID_USER).collection(COLLECTION_NAME_EXERCISE_TABLE).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    String docId = UUID.randomUUID().toString();
+                    table.setDocID(docId);
+                    firestore.collection(COLLECTION_NAME_USER_TABLE).document(DOC_ID_USER).collection(COLLECTION_NAME_EXERCISE_TABLE).document(docId).set(table).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Succes" + map.values(), Toast.LENGTH_SHORT).show();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("DocId", DOC_ID_USER);
-                                NavDirections directions = AdminAddUserProgramFragmentDirections.gotoAdminUserAddProgram();
-                                Navigation.findNavController(view).navigate(directions.getActionId(), bundle);
-
-                            }
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            getActivity().onBackPressed();
                         }
                     });
+//                    firestore.collection(COLLECTION_NAME_USER_TABLE).document(DOC_ID_USER).collection(COLLECTION_NAME_EXERCISE_TABLE).add(table).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                        @Override
+//                        public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+//                            if (task.isSuccessful()) {
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("DocId", DOC_ID_USER);
+//                                NavDirections directions = AdminAddUserProgramFragmentDirections.gotoAdminUserAddProgram();
+//                                Navigation.findNavController(view).navigate(directions.getActionId(), bundle);
+//
+//                            }
+//                        }
+//                    });
 
                 }
-                Log.d(getTag(), "onClickMap: " + map);
                 Log.d(getTag(), "onClickUser: " + table);
             }
         });
@@ -362,7 +362,7 @@ public class AdminAddUserProgramFragment extends Fragment {
 
     public int getZone() {
         ArrayList<String> zonecount = new ArrayList<>();
-        for (String st : addExerciseZone) {
+        for (String st : table.getExerciseZone()) {
             if (!zonecount.contains(st)) {
                 zonecount.add(st);
             }
@@ -372,7 +372,7 @@ public class AdminAddUserProgramFragment extends Fragment {
 
     private String getExerciseText() {
         String getText;
-        getText = getZone() + " zone " + addExerciseName.size() + " exercise";
+        getText = getZone() + " zone " + table.getExerciseName().size() + " exercise";
         return getText;
     }
 

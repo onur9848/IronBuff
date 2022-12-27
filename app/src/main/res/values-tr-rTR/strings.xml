@@ -70,4 +70,5 @@
     <string name="profil_name_surname">İsim Soyisim:</string>
     <string name="profil_age">Yaş:</string>
     <string name="add_food">Yemek Ekle</string>
+    <string name="statictics">İstatistik</string>
 </resources>

@@ -17,12 +17,7 @@ public class MessageTable implements Comparable<MessageTable> {
     public MessageTable() {
     }
 
-    public MessageTable(Map params) {
-        this.sendMessageByUser = params.get("sendMessageByUser").toString();
-        this.message = params.get("message").toString();
-        this.messageClock = params.get("messageClock").toString();
 
-    }
 
     public int getViewType() {
         return ViewType;

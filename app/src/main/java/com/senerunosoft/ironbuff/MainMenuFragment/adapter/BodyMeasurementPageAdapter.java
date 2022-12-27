@@ -2,6 +2,7 @@ package com.senerunosoft.ironbuff.MainMenuFragment.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +20,21 @@ import com.senerunosoft.ironbuff.table.UserMeasurementTable;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class BodyMeasurementPageAdapter extends RecyclerView.Adapter<BodyMeasurementPageAdapter.ViewHolder> {
 
     private final List<UserMeasurementTable> table;
-    ViewPager2 viewPager2;
     LayoutInflater layoutInflater;
     FragmentManager manager;
 
-    public BodyMeasurementPageAdapter(Context context, List<UserMeasurementTable> table, ViewPager2 viewPager2, FragmentManager manager) {
+    public BodyMeasurementPageAdapter(Context context, List<UserMeasurementTable> table, FragmentManager manager) {
+        if (table.size() == 0){
+            table.add(new UserMeasurementTable(Date.from(Instant.now())));
+        }
         this.table = table;
-        this.viewPager2 = viewPager2;
         this.layoutInflater = LayoutInflater.from(context);
         this.manager = manager;
 
@@ -46,7 +50,7 @@ public class BodyMeasurementPageAdapter extends RecyclerView.Adapter<BodyMeasure
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
         holder.chest.setText(table.get(position).getChest() + " cm");
@@ -64,8 +68,10 @@ public class BodyMeasurementPageAdapter extends RecyclerView.Adapter<BodyMeasure
         holder.addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("measurement",table.get(position).getChest());
 
-                addMeasurementDialogFragment dialogFragment = new addMeasurementDialogFragment();
+                addMeasurementDialogFragment dialogFragment = new addMeasurementDialogFragment(table.get(0));
                 dialogFragment.show(manager,"DialogFragment");
             }
         });
@@ -100,6 +106,22 @@ public class BodyMeasurementPageAdapter extends RecyclerView.Adapter<BodyMeasure
             date = itemView.findViewById(R.id.measurement_date);
             addImage = itemView.findViewById(R.id.add_measurement_button);
 
+        }
+        @SuppressLint("SetTextI18n")
+        void bind(UserMeasurementTable userMeasurementTable){
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+            chest.setText(userMeasurementTable.getChest()+" cm");
+            leftArm.setText(userMeasurementTable.getLeftArm()+" cm");
+            rightArm.setText(userMeasurementTable.getRightArm()+" cm");
+            waist.setText(userMeasurementTable.getWaist()+" cm");
+            hips.setText(userMeasurementTable.getHips()+" cm");
+            leftThigh.setText(userMeasurementTable.getLeftThigh()+" cm");
+            rightThigh.setText(userMeasurementTable.getRightThigh()+" cm");
+            leftCalf.setText(userMeasurementTable.getLeftCalf()+" cm");
+            rightCalf.setText(userMeasurementTable.getRightCalf()+" cm");
+            weight.setText(userMeasurementTable.getRightCalf()+" kg");
+            date.setText(myFormat.format(userMeasurementTable.getDate()));
         }
     }
 }

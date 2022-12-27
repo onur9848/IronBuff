@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.table.UserTrainingTable;
+import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -47,6 +48,8 @@ public class TrainingDetailAdapter extends RecyclerView.Adapter<TrainingDetailAd
         holder.setsText.setText(repsAndSets[sets]);
         holder.detailText.setText(tables.getExerciseDetail().get(position));
         holder.targetText.setText(tables.getExerciseZone().get(position));
+        Picasso.get().load(tables.getExerciseImg1().get(position)).into(holder.exerciseImg1);
+        Picasso.get().load(tables.getExerciseImg2().get(position)).into(holder.exerciseImg2);
 
         if (position > 0) {
             holder.backbutton.setVisibility(View.VISIBLE);

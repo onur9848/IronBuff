@@ -13,20 +13,19 @@ public class UserTrainingTable {
     private ArrayList<String> exerciseName;
     private ArrayList<String> exerciseRepsAndSets;
     private ArrayList<String> exerciseDetail;
+    private ArrayList<String> exerciseImg1;
+    private ArrayList<String> exerciseImg2;
+
 
 
     public UserTrainingTable() {
+        exerciseZone = new ArrayList<>();
+        exerciseName = new ArrayList<>();
+        exerciseRepsAndSets = new ArrayList<>();
+        exerciseDetail = new ArrayList<>();
+        exerciseImg1 = new ArrayList<>();
+        exerciseImg2 = new ArrayList<>();
 
-    }
-
-    public UserTrainingTable(Map param) {
-        this.date = param.get("date").toString();
-        this.exerciseZone = (ArrayList<String>) param.get("exerciseZone");
-        this.exerciseCount = Integer.parseInt(param.get("exerciseCount").toString());
-        this.exerciseZoneCount = Integer.parseInt(param.get("exerciseZoneCount").toString());
-        this.exerciseName = (ArrayList<String>) param.get("exerciseName");
-        this.exerciseRepsAndSets = (ArrayList<String>) param.get("exerciseRepsAndSets");
-        this.exerciseDetail = (ArrayList<String>) param.get("exerciseDetail");
     }
 
     public String getDocID() {
@@ -91,5 +90,21 @@ public class UserTrainingTable {
 
     public void setExerciseDetail(ArrayList<String> exerciseDetail) {
         this.exerciseDetail = exerciseDetail;
+    }
+
+    public ArrayList<String> getExerciseImg1() {
+        return exerciseImg1;
+    }
+
+    public void setExerciseImg1(ArrayList<String> exerciseImg1) {
+        this.exerciseImg1 = exerciseImg1;
+    }
+
+    public ArrayList<String> getExerciseImg2() {
+        return exerciseImg2;
+    }
+
+    public void setExerciseImg2(ArrayList<String> exerciseImg2) {
+        this.exerciseImg2 = exerciseImg2;
     }
 }

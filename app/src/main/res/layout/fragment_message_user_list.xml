@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              tools:context=".MainMenuFragment.MessageUserListFragment">
+    <TextView android:layout_width="match_parent" android:text="deneme" android:layout_height="wrap_content"/>
+    <ListView android:layout_width="match_parent"
+              android:id="@+id/message_list_user"
+              android:layout_height="wrap_content"
+              tools:listitem="@layout/user_list"
+    />
+
+</LinearLayout>

@@ -10,12 +10,14 @@ import com.senerunosoft.ironbuff.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<String> list;
     private String selecTedExerciseZone;
     TextView textView;
+    private ArrayList<String> img;
 
     public GridViewAdapter(Context context, ArrayList<String> exerciseZone,TextView textView) {
         this.context = context;
@@ -38,9 +40,6 @@ public class GridViewAdapter extends BaseAdapter {
         return i;
     }
 
-    public String getSelecTedExerciseZone() {
-        return selecTedExerciseZone;
-    }
 
     public void setSelecTedExerciseZone(String selecTedExerciseZone) {
         this.selecTedExerciseZone = selecTedExerciseZone;

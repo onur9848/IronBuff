@@ -7,7 +7,7 @@
     <TextView android:layout_width="match_parent"
               android:layout_height="50dp"
               android:layout_weight="4"
-              android:textSize="24sp"
+              android:textSize="22sp"
               android:paddingStart="20dp"
               android:id="@+id/listview_food_name"
               android:gravity="fill_vertical"

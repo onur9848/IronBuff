@@ -2,6 +2,7 @@ package com.senerunosoft.ironbuff.loginFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -88,6 +89,7 @@ public class LoginFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull @NotNull Exception e) {
                             Toast.makeText(getContext(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            Log.d(getTag(), "onFailure: "+e.getLocalizedMessage());
                         }
                     });
                 }

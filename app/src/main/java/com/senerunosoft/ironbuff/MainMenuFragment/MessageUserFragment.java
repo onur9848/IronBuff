@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.senerunosoft.ironbuff.MainMenuFragment.adapter.MessageViewAdapter;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.activity.MainMenuActivity;
 import com.senerunosoft.ironbuff.databinding.FragmentMessageUserBinding;
+import com.senerunosoft.ironbuff.table.MessageListTable;
 import com.senerunosoft.ironbuff.table.MessageTable;
 import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
@@ -51,11 +53,10 @@ public class MessageUserFragment extends Fragment {
     FragmentMessageUserBinding binding;
     FirebaseAuth auth;
     FirebaseFirestore firestore;
-    Calendar calendar;
     MessageTable message;
-    MessageViewAdapter adapter;
-    private String CurrentUserDocId, GetterUserDocId;
-    List<MessageTable> getMessageList, setMessageList, messageList;
+    private String CurrentUserDocId, GetterMessageDocId;
+    List<MessageTable> messageList;
+    Context context;
 
 
     @Override
@@ -72,10 +73,11 @@ public class MessageUserFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         messageList = new ArrayList<>();
+        CurrentUserDocId = auth.getCurrentUser().getUid();
+        context = getContext();
 
-        CurrentUserDocId = Objects.requireNonNull(auth.getCurrentUser()).getUid();
         assert getArguments() != null;
-        GetterUserDocId = getArguments().getString("messageDocID");
+        GetterMessageDocId = getArguments().getString("messageDocID");
         String label = getArguments().getString("userName");
         ((MainMenuActivity) getActivity()).getSupportActionBar().setTitle(label);
 
@@ -90,33 +92,36 @@ public class MessageUserFragment extends Fragment {
         binding.sendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
-                Date now = Date.from(Instant.now());
+                if (!binding.messageText.getText().toString().isEmpty()) {
 
-                message = new MessageTable();
-                message.setMessage(binding.messageText.getText().toString());
-                message.setSendMessageByUser(auth.getCurrentUser().getUid());
-                message.setMessageClock(timeformat.format(now));
-                message.setMessageDate(now);
-                message.setViewType(0);
-                binding.messageText.setText("");
+                    SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
+                    Date now = Date.from(Instant.now());
 
-                firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterUserDocId).collection(COLLECTION_MESSAGE).add(message).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+
+                    message = new MessageTable();
+                    message.setMessage(binding.messageText.getText().toString());
+                    message.setSendMessageByUser(auth.getCurrentUser().getUid());
+                    message.setMessageClock(timeformat.format(now));
+                    message.setMessageDate(now);
+                    message.setViewType(0);
+                    binding.messageText.setText("");
+
+                    setMessageBoxDetail(message);
+
+                    firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterMessageDocId).collection(COLLECTION_MESSAGE).add(message).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
 //                        Toast.makeText(getContext(), "send message", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
+                        }
+                    });
+                }
             }
         });
-
     }
 
     private void listMessageV2() {
 
-        firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterUserDocId).collection(COLLECTION_MESSAGE).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterMessageDocId).collection(COLLECTION_MESSAGE).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
                 if (error == null) {
@@ -131,12 +136,15 @@ public class MessageUserFragment extends Fragment {
                         }
                         messageList.add(table);
                     }
-                    MessageViewAdapter messageAdapter = new MessageViewAdapter(getContext(), messageList);
-                    binding.chatMessage.setAdapter(messageAdapter);
-                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                    manager.setOrientation(RecyclerView.VERTICAL);
-                    manager.setStackFromEnd(true);
-                    binding.chatMessage.setLayoutManager(manager);
+                    if (messageList != null) {
+
+                        MessageViewAdapter messageAdapter = new MessageViewAdapter(getContext(), messageList);
+                        binding.chatMessage.setAdapter(messageAdapter);
+                        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                        manager.setOrientation(RecyclerView.VERTICAL);
+                        manager.setStackFromEnd(true);
+                        binding.chatMessage.setLayoutManager(manager);
+                    }
                 }
             }
         });
@@ -144,6 +152,24 @@ public class MessageUserFragment extends Fragment {
     }
 
 
+    private void setMessageBoxDetail(MessageTable message) {
+        firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterMessageDocId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                MessageListTable listTable = task.getResult().toObject(MessageListTable.class);
+                listTable.setLastMessage(message.getMessage());
+                listTable.setLastMessageTime(message.getMessageDate());
+
+                firestore.collection(COLLECTION_NAME_MESSAGE_BOX).document(GetterMessageDocId).set(listTable).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+
+                    }
+                });
+            }
+        });
+
+    }
 //    private void messageTextControl() { // Textbox Boş olduğunda mesaj gönderme butonunu devre dışı bırakılması
 //        binding.messageText.addTextChangedListener(new TextWatcher() {
 //            @Override

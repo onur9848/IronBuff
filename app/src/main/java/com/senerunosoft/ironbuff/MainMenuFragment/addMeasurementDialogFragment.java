@@ -1,6 +1,5 @@
 package com.senerunosoft.ironbuff.MainMenuFragment;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.FragmentAddMeasurementDialogBinding;
 import com.senerunosoft.ironbuff.table.UserMeasurementTable;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Field;
 import java.time.Instant;
 import java.util.*;
 
@@ -38,6 +34,11 @@ public class addMeasurementDialogFragment extends DialogFragment {
     FirebaseFirestore firestore;
     FirebaseAuth auth;
     CollectionReference colref;
+    UserMeasurementTable oldTable;
+
+    public addMeasurementDialogFragment(UserMeasurementTable table) {
+        oldTable = table;
+    }
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -58,17 +59,32 @@ public class addMeasurementDialogFragment extends DialogFragment {
         table = new UserMeasurementTable();
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-
         colref = firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).collection(COLLECTION_BODY_MEASUREMENT_TABLE);
 
+        setHintText();
+        buttonProcess();
+
+    }
+
+    private void setHintText() {
+        binding.addMeasurementWeightText.setHint(oldTable.getWeight() + " kg");
+        binding.addMeasurementChestText.setHint(oldTable.getChest() + " cm");
+        binding.addMeasurementLArmText.setHint(oldTable.getLeftArm() + " cm");
+        binding.addMeasurementRArmText.setHint(oldTable.getRightArm() + " cm");
+        binding.addMeasurementWaistText.setHint(oldTable.getWaist() + " cm");
+        binding.addMeasurementHipsText.setHint(oldTable.getHips() + " cm");
+        binding.addMeasurementLThighText.setHint(oldTable.getLeftThigh() + " cm");
+        binding.addMeasurementRThighText.setHint(oldTable.getRightThigh() + " cm");
+        binding.addMeasurementLCalfText.setHint(oldTable.getLeftCalf() + " cm");
+        binding.addMeasurementRCalfText.setHint(oldTable.getRightCalf() + " cm");
+
+    }
+
+    private void buttonProcess() {
         binding.addMeasurementOkeyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    getNewBodyMeasurement();
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
+                getNewBodyMeasurement();
             }
         });
         binding.addMeasurementCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +94,6 @@ public class addMeasurementDialogFragment extends DialogFragment {
                 onDestroyView();
             }
         });
-
     }
 
     @Override
@@ -87,7 +102,7 @@ public class addMeasurementDialogFragment extends DialogFragment {
         binding = null;
     }
 
-    private void getNewBodyMeasurement() throws IllegalAccessException {
+    private void getNewBodyMeasurement() {
         table.setChest(binding.addMeasurementChestText.getText().toString());
         table.setHips(binding.addMeasurementHipsText.getText().toString());
         table.setLeftArm(binding.addMeasurementLArmText.getText().toString());
@@ -98,39 +113,63 @@ public class addMeasurementDialogFragment extends DialogFragment {
         table.setLeftThigh(binding.addMeasurementLThighText.getText().toString());
         table.setRightThigh(binding.addMeasurementRThighText.getText().toString());
         table.setWeight(binding.addMeasurementWeightText.getText().toString());
+
+        CheckFields();
+
+
         table.setDate(Date.from(Instant.now()));
-        boolean checkFields = binding.addMeasurementChestText.getText().toString().isEmpty() || binding.addMeasurementHipsText.getText().toString().isEmpty() ||
-                binding.addMeasurementLArmText.getText().toString().isEmpty() || binding.addMeasurementRArmText.getText().toString().isEmpty() || binding.addMeasurementWaistText.getText().toString().isEmpty() ||
-                binding.addMeasurementLCalfText.getText().toString().isEmpty() || binding.addMeasurementRCalfText.getText().toString().isEmpty() || binding.addMeasurementLThighText.getText().toString().isEmpty() ||
-                binding.addMeasurementRThighText.getText().toString().isEmpty() || binding.addMeasurementWeightText.getText().toString().isEmpty();
 
+        colref.add(table).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    dismiss();
+                    onDestroyView();
 
-        if (!checkFields) {
-            colref.add(table).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                    if (task.isSuccessful()){
-                        dismiss();
-                        onDestroyView();
-
-                    }
                 }
-            });
-            Map weight = new HashMap();
-            weight.put("weight",table.getWeight());
-            firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).update(weight).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull @NotNull Task task) {
-                    if (task.isSuccessful()) {
-                    }
-                }
-            });
-
-        }else{
-            Toast.makeText(getContext(), "test1", Toast.LENGTH_SHORT).show();
-        }
+            }
+        });
+        Map<String, Object> weight = new HashMap<String, Object>();
+        weight.put("weight", table.getWeight());
+        firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).update(weight).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task task) {
+            }
+        });
 
 
+    }
+
+    private void CheckFields() {
+        if (table.getChest().isEmpty())
+            table.setChest(oldTable.getChest());
+
+        if (table.getHips().isEmpty())
+            table.setHips(oldTable.getHips());
+
+        if (table.getLeftArm().isEmpty())
+            table.setLeftArm(oldTable.getLeftArm());
+
+        if (table.getRightArm().isEmpty())
+            table.setRightArm(oldTable.getRightArm());
+
+        if (table.getWaist().isEmpty())
+            table.setWaist(oldTable.getWaist());
+
+        if (table.getLeftCalf().isEmpty())
+            table.setLeftCalf(oldTable.getLeftCalf());
+
+        if (table.getRightCalf().isEmpty())
+            table.setRightCalf(oldTable.getRightCalf());
+
+        if (table.getLeftThigh().isEmpty())
+            table.setLeftThigh(oldTable.getLeftThigh());
+
+        if (table.getRightThigh().isEmpty())
+            table.setRightThigh(oldTable.getRightThigh());
+
+        if (table.getWeight().isEmpty())
+            table.setWeight(oldTable.getWeight());
     }
 
 

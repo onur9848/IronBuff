@@ -59,15 +59,23 @@ public class CalorieDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCalorieDetailBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
         // Inflate the layout for this fragment
-        return view;
+        return binding.getRoot();
     }
 
-    @SuppressLint("SimpleDateFormat")
+
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        defVariable();
+        setPieChart();
+        buttonProcess();
+        getFoodLists();
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private void defVariable() {
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         sdfFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -79,10 +87,6 @@ public class CalorieDetailFragment extends Fragment {
         extraStr = "Extra";
         context = (MainMenuActivity) getContext();
         mealFoodList = new MealFoodList();
-
-        buttonProcess();
-        getFoodLists();
-
     }
 
     private void buttonProcess() {
@@ -131,7 +135,6 @@ public class CalorieDetailFragment extends Fragment {
 
     }
 
-
     private void getFoodLists() {
 
         reference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -142,7 +145,7 @@ public class CalorieDetailFragment extends Fragment {
                     mealFoodList = value.toObject(MealFoodList.class);
 
 
-                    if (getContext() != null) {
+                    if (getContext() != null && mealFoodList != null) {
                         setList();
                     }
                 }
@@ -151,8 +154,6 @@ public class CalorieDetailFragment extends Fragment {
 
 
     }
-
-
 
     private void setList() {
 
@@ -266,15 +267,14 @@ public class CalorieDetailFragment extends Fragment {
         setPieChart();
 
     }
-    private int getValue(List<FoodTable> list){
-        if (list == null){
+
+    private int getValue(List<FoodTable> list) {
+        if (list == null) {
             return 0;
-        }
-        else {
+        } else {
             return list.size();
         }
     }
-
 
     private ViewGroup.LayoutParams listviewHeight(int listsize, ListView view) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -321,10 +321,12 @@ public class CalorieDetailFragment extends Fragment {
     private void setPieChart() {
 
         firestore.collection(COLLECTION_USER_TABLE).document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     UserTable table = task.getResult().toObject(UserTable.class);
+
                     float height = Float.parseFloat(table.getHeight());
                     float weight = Float.parseFloat(table.getWeight());
                     float age = Float.parseFloat(table.getAge());
@@ -338,14 +340,16 @@ public class CalorieDetailFragment extends Fragment {
                     binding.calorieDetailTotalCalorie.setText(totalCalorie + " Kcal");
 
                     PieModel model1 = new PieModel(dailyCalorie, Color.RED);
-                    PieModel model2 = new PieModel(totalCalorie - dailyCalorie, Color.WHITE);
+                    PieModel model2 = new PieModel(totalCalorie - dailyCalorie, Color.DKGRAY);
                     binding.calorieDetailPiechart.clearChart();
                     binding.calorieDetailPiechart.addPieSlice(model1);
                     binding.calorieDetailPiechart.addPieSlice(model2);
+                    binding.calorieDetailPiechart.setUsePieRotation(false);
                     float percent = (dailyCalorie / totalCalorie) * 100;
                     binding.calorieDetailPercent.setText("%" + round(percent));
 
-                    addMacroDetailTable(weight);
+                    if (mealFoodList != null)
+                        addMacroDetailTable(weight);
 
 
                 }
@@ -381,6 +385,7 @@ public class CalorieDetailFragment extends Fragment {
 
 
     }
+
     private float getFatMeal(List<FoodTable> list) {
         float fat = 0;
         if (list != null) {
@@ -391,6 +396,7 @@ public class CalorieDetailFragment extends Fragment {
         }
         return fat;
     }
+
     private float getProteinMeal(List<FoodTable> list) {
         float protein = 0;
         if (list != null) {
@@ -402,6 +408,7 @@ public class CalorieDetailFragment extends Fragment {
         return protein;
 
     }
+
     private float getCarbonhydratMeal(List<FoodTable> list) {
         float carbonhydrat = 0;
         if (list != null) {
@@ -412,6 +419,7 @@ public class CalorieDetailFragment extends Fragment {
         }
         return carbonhydrat;
     }
+
     private float getGramMeal(List<FoodTable> list) {
 
         float gram = 0;
@@ -423,6 +431,7 @@ public class CalorieDetailFragment extends Fragment {
         }
         return gram;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

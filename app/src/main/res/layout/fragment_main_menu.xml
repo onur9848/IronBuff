@@ -43,14 +43,18 @@
                               android:id="@+id/main_menu_protein_percent"
                               app:layout_constraintTop_toTopOf="parent"/>
                     <org.eazegraph.lib.charts.PieChart
+                            app:egAutoCenter="false"
                             android:layout_weight="1"
                             android:id="@+id/proteinPieChart"
+                            app:egOpenClockwise="true"
                             app:egInnerPadding="80"
                             app:egInnerPaddingOutline="3"
                             app:egLegendTextSize="18sp"
                             android:layout_marginTop="30dp"
                             app:egInnerPaddingColor="?colorPrimaryVariant"
-                            app:egInnerValueColor="@color/black"
+                            app:egUseCustomInnerValue="true"
+                            app:egLegendHeight="0dp"
+
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -78,10 +82,14 @@
                               app:layout_constraintTop_toTopOf="parent" android:id="@+id/main_menu_fat_percent"/>
 
                     <org.eazegraph.lib.charts.PieChart
+                            app:egAutoCenter="false"
                             android:layout_weight="1"
+                            app:egOpenClockwise="true"
                             android:id="@+id/fatPieChart"
                             app:egInnerPadding="80"
                             app:egInnerPaddingOutline="3"
+                            app:egLegendHeight="0dp"
+                            app:egUseCustomInnerValue="true"
                             android:layout_width="wrap_content"
                             android:layout_marginTop="30dp"
                             app:egInnerPaddingColor="?colorPrimaryVariant"
@@ -112,10 +120,13 @@
                               app:layout_constraintEnd_toEndOf="@+id/carbonhydratPieChart"
                               app:layout_constraintTop_toTopOf="parent"/>
                     <org.eazegraph.lib.charts.PieChart
+                            app:egAutoCenter="false"
                             android:layout_weight="1"
                             android:id="@+id/carbonhydratPieChart"
                             android:layout_width="wrap_content"
                             app:egInnerPadding="80"
+                            app:egUseCustomInnerValue="true"
+                            app:egLegendHeight="0dp"
                             app:egInnerPaddingOutline="3"
                             app:egInnerPaddingColor="?colorPrimaryVariant"
                             android:layout_marginTop="30dp"
@@ -175,10 +186,13 @@
                         <org.eazegraph.lib.charts.PieChart
                                 android:layout_width="200dp"
                                 android:layout_height="260dp"
+                                app:egAutoCenter="false"
                                 app:egInnerPadding="90"
-                                app:egInnerPaddingOutline="3"
+                                app:egInnerPaddingOutline="4"
+                                app:egUseCustomInnerValue="true"
+                                app:egLegendHeight="0dp"
+                                app:egOpenClockwise="true"
                                 app:egInnerPaddingColor="?colorPrimaryVariant"
-                                app:egInnerValueString="deneme"
                                 android:id="@+id/caloriePieChart"
                                 app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -190,7 +204,7 @@
                                   app:layout_constraintStart_toStartOf="@+id/caloriePieChart"
                                   app:layout_constraintTop_toTopOf="@+id/caloriePieChart"
                                   app:layout_constraintEnd_toEndOf="@+id/caloriePieChart"
-                                  app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/textView"/>
+                                  app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/caloriePieChartPercentText"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <LinearLayout android:layout_width="match_parent"

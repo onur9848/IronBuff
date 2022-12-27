@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".MainMenuFragment.addBeforeAfterPostFragment">
+
+    <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_linear_color_primary"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/img_view"
+            android:id="@+id/add_post_image_viewPager"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView android:layout_width="300dp"
+              android:gravity="center"
+              android:id="@+id/observerText"
+              android:text="24"
+              android:textSize="24sp"
+              android:layout_height="wrap_content" app:layout_constraintBottom_toTopOf="@+id/add_post_button"
+              app:layout_constraintTop_toBottomOf="@+id/add_post_image_viewPager"
+              app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Güncelle"
+            android:background="@drawable/btn_bg"
+            android:id="@+id/add_post_button"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_post_image_viewPager"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

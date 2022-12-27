@@ -1,36 +1,31 @@
 package com.senerunosoft.ironbuff.table;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-public class UserMeasurementTable implements Comparable<UserMeasurementTable> {
+public class UserMeasurementTable implements Comparable<UserMeasurementTable>, Serializable {
 
     private String chest, leftArm, rightArm, waist, hips, leftThigh, rightThigh, leftCalf, rightCalf, weight;
 
     Date date;
+
     public UserMeasurementTable() {
     }
 
     public UserMeasurementTable(Date date) {
         this.date = date;
+        this.chest = "0";
+        this.leftArm = "0";
+        this.rightArm = "0";
+        this.waist= "0";
+        this.hips= "0";
+        this.leftThigh= "0";
+        this.rightThigh= "0";
+        this.leftCalf= "0";
+        this.rightCalf= "0";
+        this.weight= "0";
     }
-
-    public UserMeasurementTable(Map param){
-        this.chest = param.get("chest").toString();
-        this.leftArm = param.get("leftArm").toString();
-        this.rightArm = param.get("rightArm").toString();
-        this.waist = param.get("waist").toString();
-        this.hips = param.get("hips").toString();
-        this.leftThigh = param.get("leftThigh").toString();
-        this.rightThigh = param.get("rightThigh").toString();
-        this.leftCalf = param.get("leftCalf").toString();
-        this.rightCalf = param.get("rightCalf").toString();
-        this.weight = param.get("weight").toString();
-
-    }
-
-
-
 
 
     public Date getDate() {
@@ -108,6 +103,7 @@ public class UserMeasurementTable implements Comparable<UserMeasurementTable> {
     public String getRightCalf() {
         return rightCalf;
     }
+
     public void setRightCalf(String rightCalf) {
         this.rightCalf = rightCalf;
     }
@@ -122,7 +118,7 @@ public class UserMeasurementTable implements Comparable<UserMeasurementTable> {
 
     @Override
     public int compareTo(UserMeasurementTable table) {
-        if (getDate() == null || table.getDate()==null){
+        if (getDate() == null || table.getDate() == null) {
             return 0;
         }
         return getDate().compareTo(table.getDate());

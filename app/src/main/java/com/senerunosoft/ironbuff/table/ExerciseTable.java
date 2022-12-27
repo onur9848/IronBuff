@@ -14,6 +14,7 @@ public class ExerciseTable {
 
     public ExerciseTable(){
 
+
     }
 
     public String getExerciseTarget(){

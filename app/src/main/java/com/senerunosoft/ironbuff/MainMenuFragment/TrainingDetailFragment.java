@@ -64,9 +64,7 @@ public class TrainingDetailFragment extends Fragment {
         userProramDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
-                Map map = task.getResult().getData();
-                trainingProgram = new UserTrainingTable(map);
-                trainingProgram.setDocID(task.getResult().getId());
+                trainingProgram = task.getResult().toObject(UserTrainingTable.class);
                 getExerciseDetail();
             }
         });

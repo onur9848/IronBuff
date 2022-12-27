@@ -1,8 +1,10 @@
 package com.senerunosoft.ironbuff.MainMenuFragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,17 +58,21 @@ public class TrainingProgramFragment extends Fragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot doc:task.getResult()){
-                        Map map = doc.getData();
-                        UserTrainingTable table = new UserTrainingTable(map);
-                        table.setDocID(doc.getId());
-                        trainingTables.add(table);
-                    }
+                    trainingTables = task.getResult().toObjects(UserTrainingTable.class);
                     getCardView();
                 }
 
             }
         });
+    }
+    private void trainingSettings(){
+    binding.trainingSettings.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            TrainingSettingsFragment trainingSettingsFragment = new TrainingSettingsFragment();
+            trainingSettingsFragment.show();
+        }
+    });
     }
 
     private void getCardView() {

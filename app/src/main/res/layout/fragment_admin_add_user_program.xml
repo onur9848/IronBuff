@@ -251,6 +251,7 @@
                 <EditText android:layout_width="match_parent"
                           android:layout_weight="2"
                           android:singleLine="true"
+                          android:inputType="number"
                           android:layout_marginRight="50dp"
                           android:id="@+id/gridview_add_sets"
                           android:layout_height="wrap_content"/>

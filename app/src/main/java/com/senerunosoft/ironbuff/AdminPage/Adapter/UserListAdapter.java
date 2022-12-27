@@ -26,13 +26,11 @@ import java.util.List;
 public class UserListAdapter extends ArrayAdapter<String> {
 
     private List<UserTable> list;
-    private final Context context;
     private final LayoutInflater inflater;
     private ViewHolder holder;
 
     public UserListAdapter(@NonNull Context context, List<UserTable> list) {
         super(context, 0);
-        this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(context);
     }
@@ -55,16 +53,7 @@ public class UserListAdapter extends ArrayAdapter<String> {
             UserTable table = list.get(position);
             holder.userName.setText(table.getUserName());
             Picasso.get().load(table.getImageUrl()).into(holder.userImgView);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getContext(), "position" + position, Toast.LENGTH_SHORT).show();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("DocId", table.getDocId());
-                    NavDirections directions = AdminFragmentDirections.adminToAddUserTrainingProgram();
-                    Navigation.findNavController(view).navigate(directions.getActionId(), bundle);
-                }
-            });
+
         }
         return convertView;
     }

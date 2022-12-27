@@ -9,9 +9,9 @@
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
 <!--    light theme color  -->
-    <color name="primaryColor">#64dd17</color>
-    <color name="primaryLightColor">#9cff57</color>
-    <color name="primaryDarkColor">#1faa00</color>
+    <color name="primaryColor">#10D56F</color>
+    <color name="primaryLightColor">#57FFB1</color>
+    <color name="primaryDarkColor">#3E9F75</color>
     <color name="secondaryColor">#0d47a1</color>
     <color name="secondaryLightColor">#5472d3</color>
     <color name="secondaryDarkColor">#002171</color>

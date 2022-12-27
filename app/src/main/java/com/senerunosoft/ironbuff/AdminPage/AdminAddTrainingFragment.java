@@ -26,19 +26,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.*;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.databinding.FragmentAdminAddTrainingBinding;
 import com.senerunosoft.ironbuff.table.ExerciseTable;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AdminAddTrainingFragment extends Fragment {
     private static final String COLLECTION_EXERCISE_TABLE = "exerciseTable";
@@ -53,6 +56,7 @@ public class AdminAddTrainingFragment extends Fragment {
     FirebaseFirestore firestore;
     Uri imageData;
     ExerciseTable exercise;
+    FirebaseStorage storage;
     int i = 0;
 
     LinearLayout openCamera, openGallery;
@@ -74,6 +78,7 @@ public class AdminAddTrainingFragment extends Fragment {
         exerciseFreeWeight = new ArrayList<>();
         exercise = new ExerciseTable();
         bottomSheetDialog = new BottomSheetDialog(getContext());
+        storage = FirebaseStorage.getInstance();
 
         getImage();
         changeFirebaseTable();
@@ -165,11 +170,45 @@ public class AdminAddTrainingFragment extends Fragment {
     }
 
     private void uploadImage() {
+        String uuid = UUID.randomUUID().toString();
+        String imageUrl = "exerciseImg/" + uuid.toUpperCase(Locale.ROOT).substring(0, 10).replace("-", "");
         if (imageData != null) {
             if (i == 1) {
-                Picasso.get().load(imageData).into(binding.addTrainingImage1);
+                imageUrl += "/img1";
+                exercise.setExerciseImg1(imageData.toString());
+                UploadTask img1Task = storage.getReference(imageUrl).putFile(imageData);
+                String finalImageUrl = imageUrl;
+                img1Task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        StorageReference newReg = storage.getReference(finalImageUrl);
+                        newReg.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get().load(uri).into(binding.addTrainingImage1);
+                                exercise.setExerciseImg1(uri.toString());
+                            }
+                        });
+                    }
+                });
             } else {
-                Picasso.get().load(imageData).into(binding.addTrainingImage2);
+                imageUrl += "/img2";
+                exercise.setExerciseImg2(imageData.toString());
+                UploadTask img2Task = storage.getReference(imageUrl).putFile(imageData);
+                String finalImageUrl1 = imageUrl;
+                img2Task.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        StorageReference newRef = storage.getReference(finalImageUrl1);
+                        newRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get().load(uri).into(binding.addTrainingImage2);
+                                exercise.setExerciseImg2(uri.toString());
+                            }
+                        });
+                    }
+                });
             }
 
 
@@ -197,11 +236,11 @@ public class AdminAddTrainingFragment extends Fragment {
         DocumentReference docref = firestore.collection(COLLECTION_EXERCISE_TABLE).document(DOCUMENT_IN_EXERCISE_TABLE);
 
         docref.collection(exercise.getExerciseTarget()).add(exercise).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
 
-                    }
-                });
+            }
+        });
 
     }
 
