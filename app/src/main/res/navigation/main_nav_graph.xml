@@ -102,18 +102,5 @@
     <fragment android:id="@+id/statisticFragment"
               android:name="com.senerunosoft.ironbuff.MainMenuFragment.StatisticFragment"
               android:label="fragment_statistic" tools:layout="@layout/fragment_statistic"/>
-    <fragment android:id="@+id/postFragment" android:name="com.senerunosoft.ironbuff.MainMenuFragment.PostFragment"
-              android:label="fragment_post" tools:layout="@layout/fragment_post">
-        <action android:id="@+id/goto_add_post_page"
-                app:destination="@id/addBeforeAfterPostFragment"/>
-    </fragment>
-    <fragment android:id="@+id/addBeforeAfterPostFragment"
-              android:name="com.senerunosoft.ironbuff.MainMenuFragment.addBeforeAfterPostFragment"
-              android:label="fragment_add_before_after_post" tools:layout="@layout/fragment_add_before_after_post">
-        <action android:id="@+id/action_addBeforeAfterPostFragment_to_openBottomDialog"
-                app:destination="@id/openBottomDialog"/>
-    </fragment>
-    <dialog android:id="@+id/openBottomDialog" android:name="com.senerunosoft.ironbuff.dialog.OpenBottomDialog"
-            android:label="OpenBottomDialog"/>
 
 </navigation>

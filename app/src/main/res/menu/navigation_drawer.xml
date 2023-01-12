@@ -24,11 +24,7 @@
             android:icon="@drawable/ic_baseline_insert_chart_24"
             android:title="@string/statictics"
         />
-        <item
-                android:id="@+id/postFragment"
-                android:icon="@drawable/ic_baseline_compare_24"
-                android:title="Before/After"
-        />
+
         <item
                 android:id="@+id/messageFragment"
                 android:icon="@drawable/ic_baseline_message_24"

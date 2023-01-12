@@ -1,12 +1,13 @@
 package com.senerunosoft.ironbuff.table;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class UserTrainingTable {
 
     private String docID;
-    private String date;
+    private Date date;
     private ArrayList<String> exerciseZone;
     private int exerciseCount;
     private int exerciseZoneCount;
@@ -36,11 +37,11 @@ public class UserTrainingTable {
         this.docID = docID;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -1,31 +1,15 @@
 package com.senerunosoft.ironbuff.MainMenuFragment.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.recyclerview.widget.RecyclerView;
-import com.github.mikephil.charting.components.IMarker;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.senerunosoft.ironbuff.MainMenuFragment.addBeforeAfterPostFragment;
 import com.senerunosoft.ironbuff.R;
-import com.senerunosoft.ironbuff.table.PostTable;
 import com.squareup.picasso.Picasso;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

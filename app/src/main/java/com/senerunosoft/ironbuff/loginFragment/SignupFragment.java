@@ -57,7 +57,6 @@ public class SignupFragment extends Fragment {
 
 
     private void finishActivity() {
-        //fragment sonlandırma
         if (getActivity() != null) {
             getActivity().finish();
         }

@@ -17,15 +17,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.senerunosoft.ironbuff.databinding.FragmentAdminUserDetailBinding;
+import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminUserDetailFragment extends Fragment {
     private static final String COLLECTION_USER_TABLE = "userTable";
     private static final String COLLECTION_USER_EXERCISE_TABLE = "exerciseTable";
-    private static final String DOC_GET_FIELD_EXERCISEZONE ="exerciseZone";
-    private static final String DOC_GET_FIELD_EXERCISEDATE ="date";
     FragmentAdminUserDetailBinding binding;
     FirebaseFirestore firestore;
     private String DOC_ID;
@@ -60,13 +61,17 @@ public class AdminUserDetailFragment extends Fragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
+                    List<UserTrainingTable> table = task.getResult().toObjects(UserTrainingTable.class);
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        String st = (String) doc.get(DOC_GET_FIELD_EXERCISEDATE);
-                        st +=" - Zone: "+doc.get(DOC_GET_FIELD_EXERCISEZONE);
-                        userTrainingID.add(st);
                         docIdList.add(doc.getId());
                     }
+                    SimpleDateFormat myformat = new SimpleDateFormat("dd.MM.yyyy");
+                    for (int i=0; i<table.size();i++){
+                        String st = myformat.format(table.get(i).getDate());
+                        st +=" "+ table.get(i).getExerciseZone().toString();
+                        userTrainingID.add(st);
+                    }
+
                     ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1,userTrainingID);
                     binding.adminUserTrainingList.setAdapter(adapter);
                     binding.adminUserTrainingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

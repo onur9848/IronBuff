@@ -70,12 +70,14 @@ public class TrainingProgramFragment extends Fragment {
         @Override
         public void onClick(View view) {
             TrainingSettingsFragment trainingSettingsFragment = new TrainingSettingsFragment();
-            trainingSettingsFragment.show();
+
         }
     });
     }
 
     private void getCardView() {
+        checkTable();
+
         TrainingViewPageAdapter adapter = new TrainingViewPageAdapter(getContext(), trainingTables);
         binding.trainingRecyclerView.setAdapter(adapter);
 
@@ -83,6 +85,10 @@ public class TrainingProgramFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.trainingRecyclerView.setLayoutManager(linearLayoutManager);
 
+
+    }
+
+    private void checkTable() {
 
     }
 

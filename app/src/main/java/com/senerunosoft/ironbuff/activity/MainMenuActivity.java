@@ -96,7 +96,7 @@ public class MainMenuActivity extends AppCompatActivity {
         onChangeFireStore();
 
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.myProfileFragment, R.id.mainMenuFragment, R.id.trainingProgramFragment,R.id.statisticFragment,R.id.postFragment, R.id.messageFragment, R.id.settingsFragment, R.id.adminFragment, R.id.logout_drawer)
+                R.id.myProfileFragment, R.id.mainMenuFragment, R.id.trainingProgramFragment,R.id.statisticFragment, R.id.messageFragment, R.id.settingsFragment, R.id.adminFragment, R.id.logout_drawer)
                 .setOpenableLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

@@ -15,6 +15,7 @@ import com.senerunosoft.ironbuff.R;
 import com.senerunosoft.ironbuff.table.UserTrainingTable;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TrainingViewPageAdapter extends RecyclerView.Adapter<TrainingViewPageAdapter.ViewHolder> {
@@ -41,8 +42,8 @@ public class TrainingViewPageAdapter extends RecyclerView.Adapter<TrainingViewPa
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         final UserTrainingTable getPositionTable = trainingTables.get(position);
-
-        holder.dateText.setText(getPositionTable.getDate());
+        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+        holder.dateText.setText(myFormat.format(getPositionTable.getDate()));
         TrainingListViewAdapter adapter = new TrainingListViewAdapter(layoutInflater.getContext(),getPositionTable.getExerciseName(),getPositionTable.getExerciseRepsAndSets());
         holder.listView.setAdapter(adapter);
         holder.button.setOnClickListener(new View.OnClickListener() {

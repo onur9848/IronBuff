@@ -43,7 +43,7 @@ public class AdminAddUserProgramFragment extends Fragment {
     FragmentAdminAddUserProgramBinding binding;
     FirebaseFirestore firestore;
     ArrayList<String> exerciseZone, exerciseName, listExercise, exerciseDetails;
-    ArrayList<String> addExerciseZone, addExerciseName, addExerciseSetsAndReps, addListView, addExerciseDetail;
+    ArrayList<String>  addListView;
     List<UserTrainingTable> userTrainingTables;
     List<ExerciseTable> exerciseTables;
     DocumentReference documentReference;
@@ -286,7 +286,7 @@ public class AdminAddUserProgramFragment extends Fragment {
     }
 
     private void addItem() {
-        table.setDate(binding.selectedExerciseDate.getText().toString());
+        table.setDate(myCalender.getTime());
         table.getExerciseZone().add(binding.selectedExerciseZoneText.getText().toString());
         table.getExerciseName().add(binding.selectedExerciseName.getText().toString());
         table.getExerciseRepsAndSets().add(binding.selectedExerciseSetsAndReps.getText().toString());
